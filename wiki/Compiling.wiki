@@ -11,7 +11,7 @@ Tao framework: http://www.mono-project.com/Tao. I'll most likely change that to 
 
 You need to recompile SFML.Net with small modifications for input system to work:
 in sfml-window\EventArgs.cs change KeyEventArgs constructor to:
-<code language="csharp">
+{{{
 public KeyEventArgs(KeyEvent e, bool down)
 {
     Code    = e.Code;
@@ -21,14 +21,14 @@ public KeyEventArgs(KeyEvent e, bool down)
     System  = e.System != 0;
     Down = down;
 }
-</code>
+}}}
 and add
-<code language="csharp">public bool Down;</code>
+{{{public bool Down;}}}
 to the KeyEventArgs class.
 
 Similarly, change MouseButtonEventArgs constructor
 
-<code language="csharp">
+{{{
 public MouseButtonEventArgs(MouseButtonEvent e, bool down)
 {
     Button = e.Button;
@@ -36,13 +36,13 @@ public MouseButtonEventArgs(MouseButtonEvent e, bool down)
     Y      = e.Y;
     Down = down;
 }
-</code>
+}}}
 and add Down field to the class:
-<code language="csharp">public bool Down;</code>
+{{{public bool Down;}}}
 
 In Window.cs change Window::CallEventHandler(Event e)
 
-<code language="csharp">
+{{{
 case EventType.KeyPressed :
     if (KeyPressed != null)
         KeyPressed(this, new KeyEventArgs(e.Key, true));
@@ -62,7 +62,7 @@ case EventType.MouseButtonReleased :
     if (MouseButtonReleased != null)
         MouseButtonReleased(this, new MouseButtonEventArgs(e.MouseButton, false));
     break;
-</code>
+}}}
 
 After recompiling SFML.Net you can build GwenCS.
 
