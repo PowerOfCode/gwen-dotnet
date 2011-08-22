@@ -1,4 +1,4 @@
-#summary Compiling guide.
+#summary SFML renderer compiling guide.
 
 = Prerequisites =
 SFML.Net: https://github.com/LaurentGomila/SFML.Net
