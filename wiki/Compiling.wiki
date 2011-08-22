@@ -1,0 +1,72 @@
+#summary Compiling guide.
+
+= Prerequisites =
+SFML.Net: https://github.com/LaurentGomila/SFML.Net
+
+CSFML: https://github.com/LaurentGomila/CSFML
+
+SFML.Net contains latest Windows CSFML libraries, so CSFML is only needed for Linux build.
+
+Tao framework: http://www.mono-project.com/Tao. I'll most likely change that to OpenTK later.
+
+You need to recompile SFML.Net with small modifications for input system to work:
+in sfml-window\EventArgs.cs change KeyEventArgs constructor to:
+<code language="csharp">
+public KeyEventArgs(KeyEvent e, bool down)
+{
+    Code    = e.Code;
+    Alt     = e.Alt != 0;
+    Control = e.Control != 0;
+    Shift   = e.Shift != 0;
+    System  = e.System != 0;
+    Down = down;
+}
+</code>
+and add
+<code language="csharp">public bool Down;</code>
+to the KeyEventArgs class.
+
+Similarly, change MouseButtonEventArgs constructor
+
+<code language="csharp">
+public MouseButtonEventArgs(MouseButtonEvent e, bool down)
+{
+    Button = e.Button;
+    X      = e.X;
+    Y      = e.Y;
+    Down = down;
+}
+</code>
+and add Down field to the class:
+<code language="csharp">public bool Down;</code>
+
+In Window.cs change Window::CallEventHandler(Event e)
+
+<code language="csharp">
+case EventType.KeyPressed :
+    if (KeyPressed != null)
+        KeyPressed(this, new KeyEventArgs(e.Key, true));
+    break;
+
+case EventType.KeyReleased :
+    if (KeyReleased != null)
+        KeyReleased(this, new KeyEventArgs(e.Key, false));
+    break;
+
+case EventType.MouseButtonPressed :
+    if (MouseButtonPressed != null)
+        MouseButtonPressed(this, new MouseButtonEventArgs(e.MouseButton, true));
+    break;
+
+case EventType.MouseButtonReleased :
+    if (MouseButtonReleased != null)
+        MouseButtonReleased(this, new MouseButtonEventArgs(e.MouseButton, false));
+    break;
+</code>
+
+After recompiling SFML.Net you can build GwenCS.
+
+= Linux =
+
+You need to compile SFML and CSFML. SFML.Net needs following libraries: <todo>
+<todo: mono assembly config to remap names>
