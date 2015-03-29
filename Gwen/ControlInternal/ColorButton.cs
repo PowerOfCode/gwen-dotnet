@@ -30,7 +30,7 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.Renderer.DrawColor = m_Color;
             skin.Renderer.DrawFilledRect(RenderBounds);

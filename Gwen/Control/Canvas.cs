@@ -62,7 +62,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="Canvas"/> class.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        public Canvas(Skin.Base skin)
+        public Canvas(Skin.SkinBase skin)
         {
             SetBounds(0, 0, 10000, 10000);
             SetSkin(skin);
@@ -141,7 +141,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             //skin.Renderer.rnd = new Random(1);
             base.Render(skin);

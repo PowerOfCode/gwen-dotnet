@@ -40,7 +40,7 @@ namespace Gwen.Control
 
         private ControlBase m_ToolTip;
 
-        private Skin.Base m_Skin;
+        private Skin.SkinBase m_Skin;
 
         private Rectangle m_Bounds;
         private Rectangle m_RenderBounds;
@@ -196,7 +196,7 @@ namespace Gwen.Control
         /// <summary>
         /// Current skin.
         /// </summary>
-        public Skin.Base Skin
+        public Skin.SkinBase Skin
         {
             get
             {
@@ -1059,7 +1059,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected virtual void Render(Skin.Base skin)
+        protected virtual void Render(Skin.SkinBase skin)
         {
         }
 
@@ -1068,7 +1068,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="skin">Skin to use.</param>
         /// <param name="master">Root parent.</param>
-        protected virtual void DoCacheRender(Skin.Base skin, ControlBase master)
+        protected virtual void DoCacheRender(Skin.SkinBase skin, ControlBase master)
         {
             Renderer.RendererBase render = skin.Renderer;
             Renderer.ICacheToTexture cache = render.CTT;
@@ -1136,7 +1136,7 @@ namespace Gwen.Control
         /// Rendering logic implementation.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        internal virtual void DoRender(Skin.Base skin)
+        internal virtual void DoRender(Skin.SkinBase skin)
         {
             // If this control has a different skin, 
             // then so does its children.
@@ -1165,7 +1165,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="skin">Skin to use.</param>
         /// <param name="clipRect">Clipping rectangle.</param>
-        protected virtual void RenderRecursive(Skin.Base skin, Rectangle clipRect)
+        protected virtual void RenderRecursive(Skin.SkinBase skin, Rectangle clipRect)
         {
             Renderer.RendererBase render = skin.Renderer;
             Point oldRenderOffset = render.RenderOffset;
@@ -1218,7 +1218,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="skin">New skin.</param>
         /// <param name="doChildren">Deterines whether to change children skin.</param>
-        public virtual void SetSkin(Skin.Base skin, bool doChildren = false)
+        public virtual void SetSkin(Skin.SkinBase skin, bool doChildren = false)
         {
             if (m_Skin == skin)
                 return;
@@ -1240,7 +1240,7 @@ namespace Gwen.Control
         /// Handler invoked when control's skin changes.
         /// </summary>
         /// <param name="newSkin">New skin.</param>
-        protected virtual void OnSkinChanged(Skin.Base newSkin)
+        protected virtual void OnSkinChanged(Skin.SkinBase newSkin)
         {
 
         }
@@ -1493,7 +1493,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected virtual void Layout(Skin.Base skin)
+        protected virtual void Layout(Skin.SkinBase skin)
         {
             if (skin.Renderer.CTT != null && ShouldCacheToTexture)
                 skin.Renderer.CTT.CreateControlCacheTexture(this);
@@ -1503,7 +1503,7 @@ namespace Gwen.Control
         /// Recursively lays out the control's interior according to alignment, margin, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected virtual void RecurseLayout(Skin.Base skin)
+        protected virtual void RecurseLayout(Skin.SkinBase skin)
         {
             if (m_Skin != null)
                 skin = m_Skin;
@@ -1874,7 +1874,7 @@ namespace Gwen.Control
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected virtual void PostLayout(Skin.Base skin)
+        protected virtual void PostLayout(Skin.SkinBase skin)
         {
 
         }
@@ -2172,7 +2172,7 @@ namespace Gwen.Control
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected virtual void RenderFocus(Skin.Base skin)
+        protected virtual void RenderFocus(Skin.SkinBase skin)
         {
             if (InputHandler.KeyboardFocus != this)
                 return;
@@ -2186,7 +2186,7 @@ namespace Gwen.Control
         /// Renders under the actual control (shadows etc).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected virtual void RenderUnder(Skin.Base skin)
+        protected virtual void RenderUnder(Skin.SkinBase skin)
         {
 
         }
@@ -2195,7 +2195,7 @@ namespace Gwen.Control
         /// Renders over the actual control (overlays).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected virtual void RenderOver(Skin.Base skin)
+        protected virtual void RenderOver(Skin.SkinBase skin)
         {
 
         }

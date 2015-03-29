@@ -27,7 +27,7 @@ namespace Gwen.Control.Layout
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout(Skin.Base skin)
+        protected override void PostLayout(Skin.SkinBase skin)
         {
             foreach (ControlBase child in Children) // ok?
             {
