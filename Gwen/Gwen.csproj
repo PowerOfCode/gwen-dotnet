@@ -176,6 +176,7 @@
     <Compile Include="Renderer\RendererBase.cs" />
     <Compile Include="Skin\SkinBase.cs" />
     <Compile Include="Defaults.cs" />
+    <Compile Include="Serialization\ButtonConverter.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -194,5 +195,8 @@
   -->
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Serialization\" />
   </ItemGroup>
 </Project>
