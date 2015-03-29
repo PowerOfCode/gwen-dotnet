@@ -118,7 +118,7 @@ namespace Gwen.UnitTest
             m_Splitter.SplittersVisible = !m_Splitter.SplittersVisible;
         }
 
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void Layout(Skin.Base skin)
         {
             
         }

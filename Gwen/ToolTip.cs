@@ -47,7 +47,7 @@ namespace Gwen
         /// Renders the currently visible tooltip.
         /// </summary>
         /// <param name="skin"></param>
-        public static void RenderToolTip(Skin.SkinBase skin)
+        public static void RenderToolTip(Skin.Base skin)
         {
             if (null == g_ToolTip) return;
 

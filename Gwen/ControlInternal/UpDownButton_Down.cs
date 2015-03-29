@@ -22,7 +22,7 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
             skin.DrawNumericUpDownButton(this, IsDepressed, false);
         }

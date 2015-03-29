@@ -44,7 +44,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
             //Is there any way to move this into skin? Not for now, no idea how we'll "actually" render these
 

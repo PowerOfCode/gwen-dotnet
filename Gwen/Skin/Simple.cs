@@ -7,7 +7,7 @@ namespace Gwen.Skin
     /// Simple skin (non-textured). Deprecated and incomplete, do not use.
     /// </summary>
     [Obsolete]
-    public class Simple : Skin.SkinBase
+    public class Simple : Skin.Base
     {
         private readonly Color m_colBorderColor;
         private readonly Color m_colControlOutlineLight;

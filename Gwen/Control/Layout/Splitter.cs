@@ -58,12 +58,12 @@ namespace Gwen.Control.Layout
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void Layout(Skin.Base skin)
         {
             LayoutVertical(skin);
         }
 
-        protected virtual void LayoutVertical(Skin.SkinBase skin)
+        protected virtual void LayoutVertical(Skin.Base skin)
         {
             int w = Width;
             int h = Height;
@@ -87,7 +87,7 @@ namespace Gwen.Control.Layout
             }
         }
 
-        protected virtual void LayoutHorizontal(Skin.SkinBase skin)
+        protected virtual void LayoutHorizontal(Skin.Base skin)
         {
             throw new NotImplementedException();
         }

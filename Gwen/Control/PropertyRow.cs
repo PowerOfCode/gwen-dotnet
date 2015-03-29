@@ -68,7 +68,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
             /* SORRY */
             if (IsEditing != m_LastEditing)
@@ -91,7 +91,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void Layout(Skin.Base skin)
         {
             Properties parent = Parent as Properties;
             if (null == parent) return;

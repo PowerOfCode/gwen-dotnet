@@ -204,7 +204,7 @@ namespace Gwen.DragDrop
             hoveredControl.Redraw();
         }
 
-        public static void RenderOverlay(Canvas canvas, Skin.SkinBase skin)
+        public static void RenderOverlay(Canvas canvas, Skin.Base skin)
         {
             if (CurrentPackage == null) 
                 return;

@@ -175,7 +175,7 @@ namespace Gwen.Control
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout(Skin.SkinBase skin)
+        protected override void PostLayout(Skin.Base skin)
         {
             base.PostLayout(skin);
             HandleOverflow();

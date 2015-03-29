@@ -87,7 +87,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
             base.Render(skin);
             skin.DrawCheckBox(this, m_Checked, IsDepressed);

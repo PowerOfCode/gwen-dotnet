@@ -46,7 +46,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void Layout(Skin.Base skin)
         {
             m_SliderBar.SetSize(Width, 15);
             UpdateBarFromValue();
@@ -56,7 +56,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
             skin.DrawSlider(this, false, m_SnapToNotches ? m_NotchCount : 0, m_SliderBar.Height);
         }

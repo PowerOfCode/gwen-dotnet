@@ -35,7 +35,7 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
             skin.DrawScrollBarBar(this, m_Held, IsHovered, m_Horizontal);
             base.Render(skin);
@@ -73,7 +73,7 @@ namespace Gwen.ControlInternal
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void Layout(Skin.Base skin)
         {
             if (null == Parent)
                 return;

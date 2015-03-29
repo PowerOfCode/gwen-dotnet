@@ -106,7 +106,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
 
         }
@@ -418,7 +418,7 @@ namespace Gwen.Control
         /// Renders over the actual control (overlays).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderOver(Skin.SkinBase skin)
+        protected override void RenderOver(Skin.Base skin)
         {
             if (!m_DrawHover)
                 return;

@@ -149,7 +149,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void Render(Skin.Base skin)
         {
             bool hasFocus = IsOnTop;
 
@@ -165,7 +165,7 @@ namespace Gwen.Control
         /// Renders under the actual control (shadows etc).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderUnder(Skin.SkinBase skin)
+        protected override void RenderUnder(Skin.Base skin)
         {
             base.RenderUnder(skin);
             skin.DrawShadow(this);
@@ -181,7 +181,7 @@ namespace Gwen.Control
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.SkinBase skin)
+        protected override void RenderFocus(Skin.Base skin)
         {
             
         }
