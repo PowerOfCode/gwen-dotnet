@@ -4,6 +4,7 @@ using System.Drawing;
 using Gwen.Anim;
 using Gwen.DragDrop;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
@@ -26,6 +27,7 @@ namespace Gwen.Control
         /// <summary>
         /// Scale for rendering.
         /// </summary>
+        [JsonProperty]
         public float Scale
         {
             get { return m_Scale; }

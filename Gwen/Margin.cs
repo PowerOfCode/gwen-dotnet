@@ -25,12 +25,13 @@ namespace Gwen
         public static Margin Nine = new Margin(9, 9, 9, 9);
         public static Margin Ten = new Margin(10, 10, 10, 10);
 
-        public Margin(int left, int top, int right, int bottom)
+        [Newtonsoft.Json.JsonConstructor]
+        public Margin(int Left, int Top, int Right, int Bottom)
         {
-            Top = top;
-            Bottom = bottom;
-            Left = left;
-            Right = right;
+            this.Top = Top;
+            this.Bottom = Bottom;
+            this.Left = Left;
+            this.Right = Right;
         }
 
         public bool Equals(Margin other)

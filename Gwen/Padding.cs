@@ -20,12 +20,13 @@ namespace Gwen
         public static Padding Four = new Padding(4, 4, 4, 4);
         public static Padding Five = new Padding(5, 5, 5, 5);
 
-        public Padding(int left, int top, int right, int bottom)
+        [Newtonsoft.Json.JsonConstructor]
+        public Padding(int Left, int Top, int Right, int Bottom)
         {
-            Top = top;
-            Bottom = bottom;
-            Left = left;
-            Right = right;
+            this.Top = Top;
+            this.Bottom = Bottom;
+            this.Left = Left;
+            this.Right = Right;
         }
 
         public bool Equals(Padding other)

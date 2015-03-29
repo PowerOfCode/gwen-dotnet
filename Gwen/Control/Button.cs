@@ -1,5 +1,6 @@
 ﻿using System;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
@@ -57,11 +58,13 @@ namespace Gwen.Control
         /// <summary>
         /// Indicates whether the button is toggleable.
         /// </summary>
+        [JsonProperty]
         public bool IsToggle { get { return m_Toggle; } set { m_Toggle = value; } }
 
         /// <summary>
         /// Determines the button's toggle state.
         /// </summary>
+        [JsonProperty]
         public bool ToggleState
         {
             get { return m_ToggleStatus; }
