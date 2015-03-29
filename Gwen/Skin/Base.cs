@@ -9,7 +9,7 @@ namespace Gwen.Skin
     public class Base : IDisposable
     {
         protected Font m_DefaultFont;
-        protected readonly Renderer.Base m_Renderer;
+        protected readonly Renderer.RendererBase m_Renderer;
 
         /// <summary>
         /// Colors of various UI elements.
@@ -32,13 +32,13 @@ namespace Gwen.Skin
         /// <summary>
         /// Renderer used.
         /// </summary>
-        public Renderer.Base Renderer { get { return m_Renderer; } }
+        public Renderer.RendererBase Renderer { get { return m_Renderer; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Base"/> class.
         /// </summary>
         /// <param name="renderer">Renderer to use.</param>
-        protected Base(Renderer.Base renderer)
+        protected Base(Renderer.RendererBase renderer)
         {
             m_DefaultFont = new Font(renderer);
             m_Renderer = renderer;

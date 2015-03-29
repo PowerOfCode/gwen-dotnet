@@ -24,7 +24,7 @@ namespace Gwen.Skin
         private readonly Color m_colToolTipBorder;
         private readonly Color m_colModal;
 
-        public Simple(Renderer.Base renderer) : base(renderer)
+        public Simple(Renderer.RendererBase renderer) : base(renderer)
         {
             m_colBorderColor = Color.FromArgb(255, 80, 80, 80);
             //m_colBG = Color.FromArgb(255, 248, 248, 248);

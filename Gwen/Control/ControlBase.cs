@@ -1025,7 +1025,7 @@ namespace Gwen.Control
         /// <param name="master">Root parent.</param>
         protected virtual void DoCacheRender(Skin.Base skin, ControlBase master)
         {
-            Renderer.Base render = skin.Renderer;
+            Renderer.RendererBase render = skin.Renderer;
             Renderer.ICacheToTexture cache = render.CTT;
 
             if (cache == null)
@@ -1101,7 +1101,7 @@ namespace Gwen.Control
             // Do think
             Think();
 
-            Renderer.Base render = skin.Renderer;
+            Renderer.RendererBase render = skin.Renderer;
 
             if (render.CTT != null && ShouldCacheToTexture)
             {
@@ -1122,7 +1122,7 @@ namespace Gwen.Control
         /// <param name="clipRect">Clipping rectangle.</param>
         protected virtual void RenderRecursive(Skin.Base skin, Rectangle clipRect)
         {
-            Renderer.Base render = skin.Renderer;
+            Renderer.RendererBase render = skin.Renderer;
             Point oldRenderOffset = render.RenderOffset;
 
             render.AddRenderOffset(clipRect);

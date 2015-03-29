@@ -51,7 +51,7 @@ namespace Gwen
         {
             if (null == g_ToolTip) return;
 
-            Renderer.Base render = skin.Renderer;
+            Renderer.RendererBase render = skin.Renderer;
 
             Point oldRenderOffset = render.RenderOffset;
             Point mousePos = Input.InputHandler.MousePosition;

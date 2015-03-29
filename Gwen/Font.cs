@@ -35,12 +35,12 @@ namespace Gwen
         /// </summary>
         public float RealSize { get; set; }
 
-        private readonly Renderer.Base m_Renderer;
+        private readonly Renderer.RendererBase m_Renderer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Font"/> class.
         /// </summary>
-        public Font(Renderer.Base renderer)
+        public Font(Renderer.RendererBase renderer)
             : this(renderer, "Arial", 10)
         {
 
@@ -52,7 +52,7 @@ namespace Gwen
         /// <param name="renderer">Renderer to use.</param>
         /// <param name="faceName">Face name.</param>
         /// <param name="size">Font size.</param>
-        public Font(Renderer.Base renderer, string faceName, int size = 10)
+        public Font(Renderer.RendererBase renderer, string faceName, int size = 10)
         {
             m_Renderer = renderer;
             FaceName = faceName;

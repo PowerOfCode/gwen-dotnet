@@ -108,7 +108,7 @@ namespace Gwen.Control
         {
             DoThink();
 
-            Renderer.Base render = Skin.Renderer;
+            Renderer.RendererBase render = Skin.Renderer;
 
             render.Begin();
 

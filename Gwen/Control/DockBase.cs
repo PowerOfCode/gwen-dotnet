@@ -423,7 +423,7 @@ namespace Gwen.Control
             if (!m_DrawHover)
                 return;
 
-            Renderer.Base render = skin.Renderer;
+            Renderer.RendererBase render = skin.Renderer;
             render.DrawColor = Color.FromArgb(20, 255, 200, 255);
             render.DrawFilledRect(RenderBounds);
 

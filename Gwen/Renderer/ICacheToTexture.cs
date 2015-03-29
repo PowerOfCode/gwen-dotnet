@@ -31,6 +31,6 @@ namespace Gwen.Renderer
         void CreateControlCacheTexture(Control.ControlBase control);
         
         void UpdateControlCacheTexture(Control.ControlBase control);
-        void SetRenderer(Base renderer);
+        void SetRenderer(RendererBase renderer);
     }
 }
