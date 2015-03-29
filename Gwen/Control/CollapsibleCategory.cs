@@ -123,7 +123,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawCategoryInner(this, m_HeaderButton.ToggleState);
             base.Render(skin);
@@ -148,7 +148,7 @@ namespace Gwen.Control
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout(Skin.Base skin)
+        protected override void PostLayout(Skin.SkinBase skin)
         {
             if (IsCollapsed)
             {

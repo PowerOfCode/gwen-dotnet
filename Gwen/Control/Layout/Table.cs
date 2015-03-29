@@ -174,7 +174,7 @@ namespace Gwen.Control.Layout
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.Base skin)
+        protected override void Layout(Skin.SkinBase skin)
         {
             base.Layout(skin);
 
@@ -190,7 +190,7 @@ namespace Gwen.Control.Layout
             }
         }
 
-        protected override void PostLayout(Skin.Base skin)
+        protected override void PostLayout(Skin.SkinBase skin)
         {
             base.PostLayout(skin);
             if (m_SizeToContents)

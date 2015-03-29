@@ -47,7 +47,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawMenu(this, IconMarginDisabled);
         }
@@ -56,7 +56,7 @@ namespace Gwen.Control
         /// Renders under the actual control (shadows etc).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderUnder(Skin.Base skin)
+        protected override void RenderUnder(Skin.SkinBase skin)
         {
             base.RenderUnder(skin);
             skin.DrawShadow(this);
@@ -78,7 +78,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.Base skin)
+        protected override void Layout(Skin.SkinBase skin)
         {
             int childrenHeight = Children.Sum(child => child != null ? child.Height : 0);
 

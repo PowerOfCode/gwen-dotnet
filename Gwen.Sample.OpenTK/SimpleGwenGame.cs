@@ -17,7 +17,7 @@ namespace Gwen.Sample.OpenTK
     {
         private Gwen.Input.OpenTK input;
         private Gwen.Renderer.OpenTK renderer;
-        private Gwen.Skin.Base skin;
+        private Gwen.Skin.SkinBase skin;
         private Gwen.Control.Canvas canvas;
         private UnitTest.UnitTest test;
 

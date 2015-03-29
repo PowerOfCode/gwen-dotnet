@@ -31,7 +31,7 @@ namespace Gwen.Control
         /// Renders under the actual control (shadows etc).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderUnder(Skin.Base skin)
+        protected override void RenderUnder(Skin.SkinBase skin)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawMenuStrip(this);
         }
@@ -48,7 +48,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.Base skin)
+        protected override void Layout(Skin.SkinBase skin)
         {
             //TODO: We don't want to do vertical sizing the same as Menu, do nothing for now
         }

@@ -110,7 +110,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.Base skin)
+        protected override void Layout(Skin.SkinBase skin)
         {
             m_HSplitter.SetSize(m_BarSize, Height);
             

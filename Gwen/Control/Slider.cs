@@ -225,7 +225,7 @@ namespace Gwen.Control
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.Base skin)
+        protected override void RenderFocus(Skin.SkinBase skin)
         {
             if (InputHandler.KeyboardFocus != this) return;
             if (!IsTabable) return;

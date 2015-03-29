@@ -6,7 +6,7 @@ namespace Gwen.Skin
     /// <summary>
     /// Base skin.
     /// </summary>
-    public class Base : IDisposable
+    public class SkinBase : IDisposable
     {
         protected Font m_DefaultFont;
         protected readonly Renderer.RendererBase m_Renderer;
@@ -38,7 +38,7 @@ namespace Gwen.Skin
         /// Initializes a new instance of the <see cref="Base"/> class.
         /// </summary>
         /// <param name="renderer">Renderer to use.</param>
-        protected Base(Renderer.RendererBase renderer)
+        protected SkinBase(Renderer.RendererBase renderer)
         {
             m_DefaultFont = new Font(renderer);
             m_Renderer = renderer;
@@ -54,7 +54,7 @@ namespace Gwen.Skin
         }
 
 #if DEBUG
-        ~Base()
+        ~SkinBase()
         {
             throw new InvalidOperationException(String.Format("IDisposable object finalized: {0}", GetType()));
             //Debug.Print(String.Format("IDisposable object finalized: {0}", GetType()));

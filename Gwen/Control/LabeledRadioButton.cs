@@ -40,7 +40,7 @@ namespace Gwen.Control
             m_Label.KeyboardInputEnabled = false;
         }
 
-        protected override void Layout(Skin.Base skin)
+        protected override void Layout(Skin.SkinBase skin)
         {
             // ugly stuff because we don't have anchoring without docking (docking resizes children)
             if (m_Label.Height > m_RadioButton.Height) // usually radio is smaller than label so it gets repositioned to avoid clipping with negative Y
@@ -56,7 +56,7 @@ namespace Gwen.Control
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.Base skin)
+        protected override void RenderFocus(Skin.SkinBase skin)
         {
             if (InputHandler.KeyboardFocus != this) return;
             if (!IsTabable) return;
