@@ -13,6 +13,7 @@ namespace Gwen.Control
     /// <summary>
     /// Base control class.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class ControlBase : IDisposable
     {
         /// <summary>
