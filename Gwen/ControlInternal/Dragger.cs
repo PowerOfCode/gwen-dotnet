@@ -8,6 +8,7 @@ namespace Gwen.ControlInternal
     /// <summary>
     /// Base for controls that can be dragged by mouse.
     /// </summary>
+    [Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     public class Dragger : ControlBase
     {
         protected bool m_Held;

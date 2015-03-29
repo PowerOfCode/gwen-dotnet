@@ -65,7 +65,7 @@ namespace Gwen.Control
         public Canvas(Skin.SkinBase skin)
         {
             SetBounds(0, 0, 10000, 10000);
-            SetSkin(skin);
+            SetSkin(skin ?? Defaults.Skin);
             Scale = 1.0f;
             BackgroundColor = Color.White;
             ShouldDrawBackground = false;

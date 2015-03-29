@@ -1,25 +1,30 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen
 {
     /// <summary>
     /// Represents font resource.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Font : IDisposable
     {
         /// <summary>
         /// Font face name. Exact meaning depends on renderer.
         /// </summary>
+        [JsonProperty]
         public string FaceName { get; set; }
 
         /// <summary>
         /// Font size.
         /// </summary>
+        [JsonProperty]
         public int Size { get; set; }
 
         /// <summary>
         /// Enables or disables font smoothing (default: disabled).
         /// </summary>
+        [JsonProperty]
         public bool Smooth { get; set; }
 
         //public bool Bold { get; set; }
@@ -36,6 +41,9 @@ namespace Gwen
         public float RealSize { get; set; }
 
         private readonly Renderer.RendererBase m_Renderer;
+
+        public Font() : this(null)
+        {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Font"/> class.
@@ -54,7 +62,7 @@ namespace Gwen
         /// <param name="size">Font size.</param>
         public Font(Renderer.RendererBase renderer, string faceName, int size = 10)
         {
-            m_Renderer = renderer;
+            m_Renderer = renderer ?? Defaults.Renderer;
             FaceName = faceName;
             Size = size;
             Smooth = false;

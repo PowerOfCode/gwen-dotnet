@@ -6,6 +6,7 @@ namespace Gwen.ControlInternal
     /// <summary>
     /// Window close button.
     /// </summary>
+    [Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     public class CloseButton : Button
     {
         private readonly WindowControl m_Window;

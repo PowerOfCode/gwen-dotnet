@@ -175,6 +175,7 @@
     <Compile Include="Control\ControlBase.cs" />
     <Compile Include="Renderer\RendererBase.cs" />
     <Compile Include="Skin\SkinBase.cs" />
+    <Compile Include="Defaults.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -8,6 +8,7 @@ namespace Gwen.ControlInternal
     /// <summary>
     /// Grab point for resizing.
     /// </summary>
+    [Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     public class Resizer : Dragger
     {
         private Pos m_ResizeDir;

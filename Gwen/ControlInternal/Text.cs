@@ -3,12 +3,14 @@
 using System;
 using System.Drawing;
 using Gwen.Control;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Displays text. Always sized to contents.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Text : ControlBase
     {
         private string m_String;
@@ -33,6 +35,7 @@ namespace Gwen.ControlInternal
         /// <summary>
         /// Text to display.
         /// </summary>
+        //[JsonProperty]
         public string String
         {
             get { return m_String; }

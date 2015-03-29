@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Static text label.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Label : ControlBase
     {
         protected readonly Text m_Text;
@@ -17,16 +19,19 @@ namespace Gwen.Control
         /// <summary>
         /// Text alignment.
         /// </summary>
+        [JsonProperty]
         public Pos Alignment { get { return m_Align; } set { m_Align = value; Invalidate(); } }
 
         /// <summary>
         /// Text.
         /// </summary>
+        [JsonProperty]
         public virtual string Text { get { return m_Text.String; } set { SetText(value); } }
 
         /// <summary>
         /// Font.
         /// </summary>
+        [JsonProperty]
         public Font Font
         {
             get { return m_Text.Font; }
@@ -47,6 +52,7 @@ namespace Gwen.Control
         /// <summary>
         /// Override text color (used by tooltips).
         /// </summary>
+        [JsonProperty]
         public Color TextColorOverride { get { return m_Text.TextColorOverride; } set { m_Text.TextColorOverride = value; } }
 
         /// <summary>
@@ -80,11 +86,13 @@ namespace Gwen.Control
         /// <summary>
         /// Determines if the control should autosize to its text.
         /// </summary>
+        [JsonProperty]
         public bool AutoSizeToContents { get { return m_AutoSizeToContents; } set { m_AutoSizeToContents = value; Invalidate(); InvalidateParent(); } }
 
         /// <summary>
         /// Text padding.
         /// </summary>
+        [JsonProperty]
         public Padding TextPadding { get { return m_TextPadding; } set { m_TextPadding = value; Invalidate(); InvalidateParent(); } }
 
 		public override event ControlBase.GwenEventHandler<ClickedEventArgs> Clicked {

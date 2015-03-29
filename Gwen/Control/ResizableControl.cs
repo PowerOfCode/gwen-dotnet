@@ -7,6 +7,7 @@ namespace Gwen.Control
     /// <summary>
     /// Base resizable control.
     /// </summary>
+    [Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
     public class ResizableControl : ControlBase
     {
         private bool m_ClampMovement;

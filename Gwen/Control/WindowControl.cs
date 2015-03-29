@@ -2,12 +2,14 @@
 using System.Drawing;
 using System.Linq;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Movable window with title bar.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class WindowControl : ResizableControl
     {
         private readonly Dragger m_TitleBar;
@@ -19,16 +21,19 @@ namespace Gwen.Control
         /// <summary>
         /// Window caption.
         /// </summary>
+        [JsonProperty]
         public string Title { get { return m_Title.Text; } set { m_Title.Text = value; } }
 
         /// <summary>
         /// Determines whether the window has close button.
         /// </summary>
+        [JsonProperty]
         public bool IsClosable { get { return !m_CloseButton.IsHidden; } set { m_CloseButton.IsHidden = !value; } }
 
         /// <summary>
         /// Determines whether the control should be disposed on close.
         /// </summary>
+        [JsonProperty]
         public bool DeleteOnClose { get { return m_DeleteOnClose; } set { m_DeleteOnClose = value; } }
 
         /// <summary>

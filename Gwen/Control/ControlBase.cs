@@ -77,8 +77,7 @@ namespace Gwen.Control
         /// <summary>
         /// Real list of children.
         /// </summary>
-        [JsonProperty]
-        private List<ControlBase> children { get; set; }
+        private List<ControlBase> m_Children { get; set; }
 
         /// <summary>
         /// Invoked when mouse pointer enters the control.
@@ -137,13 +136,22 @@ namespace Gwen.Control
         /// <summary>
         /// Logical list of children. If InnerPanel is not null, returns InnerPanel's children.
         /// </summary>
+        [JsonProperty]
         public List<ControlBase> Children
         {
             get
             {
                 if (m_InnerPanel != null)
                     return m_InnerPanel.Children;
-                return children;
+                return m_Children;
+            }
+            set
+            {
+                if (value != null)
+                    foreach (var item in value)
+                    {
+                        AddChild(item);
+                    }
             }
         }
 
@@ -205,6 +213,8 @@ namespace Gwen.Control
                     return m_Skin;
                 if (m_Parent != null)
                     return m_Parent.Skin;
+                if (Defaults.Skin != null)
+                    return Defaults.Skin;
 
                 throw new InvalidOperationException("GetSkin: null");
             }
@@ -285,7 +295,7 @@ namespace Gwen.Control
         /// <summary>
         /// Indicates whether the control is on top of its parent's children.
         /// </summary>
-        public virtual bool IsOnTop { get { return this == Parent.children.First(); } }
+        public virtual bool IsOnTop { get { return this == Parent.m_Children.First(); } }
         // todo: validate
 
         /// <summary>
@@ -480,7 +490,7 @@ namespace Gwen.Control
         /// <param name="parent">Parent control.</param>
         public ControlBase(ControlBase parent = null)
         {
-            children = new List<ControlBase>();
+            m_Children = new List<ControlBase>();
             m_Accelerators = new Dictionary<string, GwenEventHandler<EventArgs>>();
 
             Parent = parent;
@@ -535,10 +545,10 @@ namespace Gwen.Control
             Gwen.ToolTip.ControlDeleted(this);
             Animation.Cancel(this);
 
-            foreach (ControlBase child in children)
+            foreach (ControlBase child in m_Children)
                 child.Dispose();
 
-            children.Clear();
+            m_Children.Clear();
 
             m_Disposed = true;
             GC.SuppressFinalize(this);
@@ -579,7 +589,7 @@ namespace Gwen.Control
         {
             ControlBase canvas = m_Parent;
             if (canvas == null)
-                return null;
+                throw new InvalidOperationException("Could not retrieve canvas because m_Parent was null");
 
             return canvas.GetCanvas();
         }
@@ -654,7 +664,7 @@ namespace Gwen.Control
         /// <param name="recursive">Determines whether the operation should be carried recursively.</param>
         protected virtual void InvalidateChildren(bool recursive = false)
         {
-            foreach (ControlBase child in children)
+            foreach (ControlBase child in m_Children)
             {
                 child.Invalidate();
                 if (recursive)
@@ -663,7 +673,7 @@ namespace Gwen.Control
 
             if (m_InnerPanel != null)
             {
-                foreach (ControlBase child in m_InnerPanel.children)
+                foreach (ControlBase child in m_InnerPanel.m_Children)
                 {
                     child.Invalidate();
                     if (recursive)
@@ -691,13 +701,13 @@ namespace Gwen.Control
         {
             if (m_ActualParent == null)
                 return;
-            if (m_ActualParent.children.Count == 0)
+            if (m_ActualParent.m_Children.Count == 0)
                 return;
-            if (m_ActualParent.children.First() == this)
+            if (m_ActualParent.m_Children.First() == this)
                 return;
 
-            m_ActualParent.children.Remove(this);
-            m_ActualParent.children.Insert(0, this);
+            m_ActualParent.m_Children.Remove(this);
+            m_ActualParent.m_Children.Insert(0, this);
 
             InvalidateParent();
         }
@@ -709,11 +719,11 @@ namespace Gwen.Control
         {
             if (m_ActualParent == null)
                 return;
-            if (m_ActualParent.children.Last() == this)
+            if (m_ActualParent.m_Children.Last() == this)
                 return;
 
-            m_ActualParent.children.Remove(this);
-            m_ActualParent.children.Add(this);
+            m_ActualParent.m_Children.Remove(this);
+            m_ActualParent.m_Children.Add(this);
             InvalidateParent();
             Redraw();
         }
@@ -723,11 +733,11 @@ namespace Gwen.Control
             if (null == m_ActualParent)
                 return;
 
-            m_ActualParent.children.Remove(this);
+            m_ActualParent.m_Children.Remove(this);
 
             // todo: validate
-            int idx = m_ActualParent.children.IndexOf(child);
-            if (idx == m_ActualParent.children.Count - 1)
+            int idx = m_ActualParent.m_Children.IndexOf(child);
+            if (idx == m_ActualParent.m_Children.Count - 1)
             {
                 BringToFront();
                 return;
@@ -737,14 +747,14 @@ namespace Gwen.Control
             {
                 ++idx;
 
-                if (idx == m_ActualParent.children.Count - 1)
+                if (idx == m_ActualParent.m_Children.Count - 1)
                 {
                     BringToFront();
                     return;
                 }
             }
 
-            m_ActualParent.children.Insert(idx, this);
+            m_ActualParent.m_Children.Insert(idx, this);
             InvalidateParent();
         }
 
@@ -756,13 +766,13 @@ namespace Gwen.Control
         /// <returns>Found control or null.</returns>
         public virtual ControlBase FindChildByName(string name, bool recursive = false)
         {
-            ControlBase b = children.Find(x => x.m_Name == name);
+            ControlBase b = m_Children.Find(x => x.m_Name == name);
             if (b != null)
                 return b;
 
             if (recursive)
             {
-                foreach (ControlBase child in children)
+                foreach (ControlBase child in m_Children)
                 {
                     b = child.FindChildByName(name, true);
                     if (b != null)
@@ -787,7 +797,7 @@ namespace Gwen.Control
             }
             else
             {
-                children.Add(child);
+                m_Children.Add(child);
                 child.m_ActualParent = this;
             }
             OnChildAdded(child);
@@ -804,7 +814,7 @@ namespace Gwen.Control
             // remove our pointer to it
             if (m_InnerPanel == child)
             {
-                children.Remove(m_InnerPanel);
+                m_Children.Remove(m_InnerPanel);
                 m_InnerPanel.DelayedDelete();
                 m_InnerPanel = null;
                 return;
@@ -816,7 +826,7 @@ namespace Gwen.Control
                 return;
             }
 
-            children.Remove(child);
+            m_Children.Remove(child);
             OnChildRemoved(child);
 
             if (dispose)
@@ -829,8 +839,8 @@ namespace Gwen.Control
         public virtual void DeleteAllChildren()
         {
             // todo: probably shouldn't invalidate after each removal
-            while (children.Count > 0)
-                RemoveChild(children[0], true);
+            while (m_Children.Count > 0)
+                RemoveChild(m_Children[0], true);
         }
 
         /// <summary>
@@ -1042,7 +1052,7 @@ namespace Gwen.Control
         /// </summary>
         protected virtual void OnScaleChanged()
         {
-            foreach (ControlBase child in children)
+            foreach (ControlBase child in m_Children)
             {
                 child.OnScaleChanged();
             }
@@ -1107,10 +1117,10 @@ namespace Gwen.Control
                 //render.RenderOffset = old;
                 //render.ClipRegion = old;
 
-                if (children.Count > 0)
+                if (m_Children.Count > 0)
                 {
                     //Now render my kids
-                    foreach (ControlBase child in children)
+                    foreach (ControlBase child in m_Children)
                     {
                         if (child.IsHidden)
                             continue;
@@ -1194,10 +1204,10 @@ namespace Gwen.Control
             //Render myself first
             Render(skin);
 
-            if (children.Count > 0)
+            if (m_Children.Count > 0)
             {
                 //Now render my kids
-                foreach (ControlBase child in children)
+                foreach (ControlBase child in m_Children)
                 {
                     if (child.IsHidden)
                         continue;
@@ -1230,7 +1240,7 @@ namespace Gwen.Control
 
             if (doChildren)
             {
-                foreach (ControlBase child in children)
+                foreach (ControlBase child in m_Children)
                 {
                     child.SetSkin(skin, true);
                 }
@@ -1476,7 +1486,7 @@ namespace Gwen.Control
                 return null;
 
             // todo: convert to linq FindLast
-            var rev = ((IList<ControlBase>)children).Reverse(); // IList.Reverse creates new list, List.Reverse works in place.. go figure
+            var rev = ((IList<ControlBase>)m_Children).Reverse(); // IList.Reverse creates new list, List.Reverse works in place.. go figure
             foreach (ControlBase child in rev)
             {
                 ControlBase found = child.GetControlAt(x - child.X, y - child.Y);
@@ -1525,7 +1535,7 @@ namespace Gwen.Control
             bounds.Y += m_Padding.Top;
             bounds.Height -= m_Padding.Top + m_Padding.Bottom;
 
-            foreach (ControlBase child in children)
+            foreach (ControlBase child in m_Children)
             {
                 if (child.IsHidden)
                     continue;
@@ -1590,7 +1600,7 @@ namespace Gwen.Control
             //
             // Fill uses the left over space, so do that now.
             //
-            foreach (ControlBase child in children)
+            foreach (ControlBase child in m_Children)
             {
                 Pos dock = child.Dock;
 
@@ -1627,7 +1637,7 @@ namespace Gwen.Control
         /// <returns>True if the control is out child.</returns>
         public bool IsChild(ControlBase child)
         {
-            return children.Contains(child);
+            return m_Children.Contains(child);
         }
 
         /// <summary>
@@ -1693,7 +1703,7 @@ namespace Gwen.Control
             //Debug.Print("Base.CloseMenus: {0}", this);
 
             // todo: not very efficient with the copying and recursive closing, maybe store currently open menus somewhere (canvas)?
-            var childrenCopy = children.FindAll(x => true);
+            var childrenCopy = m_Children.FindAll(x => true);
             foreach (ControlBase child in childrenCopy)
             {
                 child.CloseMenus();
@@ -1820,7 +1830,7 @@ namespace Gwen.Control
         {
             Point size = Point.Empty;
 
-            foreach (ControlBase child in children)
+            foreach (ControlBase child in m_Children)
             {
                 if (child.IsHidden)
                     continue;
@@ -1848,7 +1858,7 @@ namespace Gwen.Control
                 }
             }
 
-            return children.Any(child => child.HandleAccelerator(accelerator));
+            return m_Children.Any(child => child.HandleAccelerator(accelerator));
         }
 
         /// <summary>
