@@ -21,7 +21,7 @@ namespace Gwen.Control
         /// <param name="parent">Parent control.</param>
         /// <param name="text">Message to display.</param>
         /// <param name="caption">Window caption.</param>
-        public MessageBox(Base parent, string text, string caption = "") 
+        public MessageBox(ControlBase parent, string text, string caption = "") 
             : base(parent, caption, true)
         {
             DeleteOnClose = true;
@@ -42,7 +42,7 @@ namespace Gwen.Control
             Align.Center(this);
         }
 
-		private void DismissedHandler(Base control, EventArgs args)
+		private void DismissedHandler(ControlBase control, EventArgs args)
         {
             if (Dismissed != null)
                 Dismissed.Invoke(this, EventArgs.Empty);

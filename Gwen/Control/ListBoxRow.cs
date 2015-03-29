@@ -15,7 +15,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="ListBoxRow"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ListBoxRow(Base parent)
+        public ListBoxRow(ControlBase parent)
             : base(parent)
         {
             MouseInputEnabled = true;

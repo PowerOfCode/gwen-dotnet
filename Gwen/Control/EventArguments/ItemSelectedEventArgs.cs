@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Gwen.Control {
 	public class ItemSelectedEventArgs : EventArgs {
-		public Base SelectedItem { get; private set; }
+		public ControlBase SelectedItem { get; private set; }
 
-		internal ItemSelectedEventArgs(Base selecteditem) {
+		internal ItemSelectedEventArgs(ControlBase selecteditem) {
 			this.SelectedItem = selecteditem;
 		}
 	}

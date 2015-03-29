@@ -47,7 +47,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ProgressBar(Base parent)
+        public ProgressBar(ControlBase parent)
             : base(parent)
         {
 			AutoSizeToContents = false;

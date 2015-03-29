@@ -6,7 +6,7 @@ namespace Gwen.UnitTest
 {
     public class ColorPickers : GUnit
     {
-        public ColorPickers(Base parent)
+        public ColorPickers(ControlBase parent)
             : base(parent)
         {
             /* RGB Picker */
@@ -37,14 +37,14 @@ namespace Gwen.UnitTest
                 OpenWindow.SetPosition(10, 200);
                 OpenWindow.SetSize(200, 20);
                 OpenWindow.Text = "Open Window";
-				OpenWindow.Clicked += delegate(Base sender, ClickedEventArgs args)
+				OpenWindow.Clicked += delegate(ControlBase sender, ClickedEventArgs args)
                 {
                     Window.Show();
                 };
             }
         }
 
-		void ColorChanged(Base control, EventArgs args)
+		void ColorChanged(ControlBase control, EventArgs args)
         {
             IColorPicker picker = control as IColorPicker;
             Color c = picker.SelectedColor;

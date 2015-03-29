@@ -10,7 +10,7 @@ namespace Gwen.Control
     public class ComboBox : Button
     {
         private readonly Menu m_Menu;
-        private readonly Base m_Button;
+        private readonly ControlBase m_Button;
         private MenuItem m_SelectedItem;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ComboBox(Base parent)
+        public ComboBox(ControlBase parent)
             : base(parent)
         {
             SetSize(100, 20);
@@ -139,7 +139,7 @@ namespace Gwen.Control
         /// Internal handler for item selected event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnItemSelected(Base control, ItemSelectedEventArgs args)
+		protected virtual void OnItemSelected(ControlBase control, ItemSelectedEventArgs args)
         {
             if (!IsDisabled)
             {

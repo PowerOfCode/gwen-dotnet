@@ -6,19 +6,19 @@ namespace Gwen.UnitTest
 {
     public class Menu : GUnit
     {
-		public Menu(Base parent) : base(parent) {
+		public Menu(ControlBase parent) : base(parent) {
 
 			/* Context Menu Strip */
 			{
 				Control.Label lblClickMe = new Control.Label(this);
 				lblClickMe.Text = "Right Click Me";
 				lblClickMe.SetPosition(10, 30);
-				lblClickMe.RightClicked += delegate(Control.Base sender, ClickedEventArgs args) {
+				lblClickMe.RightClicked += delegate(Control.ControlBase sender, ClickedEventArgs args) {
 					Control.Menu menu = new Control.Menu(this);
 					Point Local = this.CanvasPosToLocal(new Point(args.X, args.Y));
 					menu.SetPosition(Local.X, Local.Y);
 					menu.AddItem("Test");
-					menu.AddItem("Clickable").Clicked += delegate(Control.Base sender2, ClickedEventArgs args2) {
+					menu.AddItem("Clickable").Clicked += delegate(Control.ControlBase sender2, ClickedEventArgs args2) {
 						UnitPrint("Clickable item was clicked");
 					};
 					menu.Show();
@@ -113,7 +113,7 @@ namespace Gwen.UnitTest
 			}
 		}
 
-        void MenuItemSelect(Base control, EventArgs args)
+        void MenuItemSelect(ControlBase control, EventArgs args)
         {
             MenuItem item = control as MenuItem;
             UnitPrint(String.Format("Menu item selected: {0}", item.Text));

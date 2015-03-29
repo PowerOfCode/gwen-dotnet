@@ -7,7 +7,7 @@ namespace Gwen.Control
     /// <summary>
     /// Static text label.
     /// </summary>
-    public class Label : Base
+    public class Label : ControlBase
     {
         protected readonly Text m_Text;
         private Pos m_Align;
@@ -87,7 +87,7 @@ namespace Gwen.Control
         /// </summary>
         public Padding TextPadding { get { return m_TextPadding; } set { m_TextPadding = value; Invalidate(); InvalidateParent(); } }
 
-		public override event Base.GwenEventHandler<ClickedEventArgs> Clicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> Clicked {
 			add {
 				base.Clicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -98,7 +98,7 @@ namespace Gwen.Control
 			}
 		}
 
-		public override event Base.GwenEventHandler<ClickedEventArgs> DoubleClicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> DoubleClicked {
 			add {
 				base.DoubleClicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -109,7 +109,7 @@ namespace Gwen.Control
 			}
 		}
 
-		public override event Base.GwenEventHandler<ClickedEventArgs> RightClicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> RightClicked {
 			add {
 				base.RightClicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -120,7 +120,7 @@ namespace Gwen.Control
 			}
 		}
 
-		public override event Base.GwenEventHandler<ClickedEventArgs> DoubleRightClicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> DoubleRightClicked {
 			add {
 				base.DoubleRightClicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -136,7 +136,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="Label"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Label(Base parent) : base(parent)
+        public Label(ControlBase parent) : base(parent)
         {
             m_Text = new Text(this);
             //m_Text.Font = Skin.DefaultFont;

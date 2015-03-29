@@ -10,7 +10,7 @@ namespace Gwen.UnitTest
         private readonly Font m_Font2;
         private readonly Font m_Font3;
 
-        public TextBox(Base parent)
+        public TextBox(ControlBase parent)
             : base(parent) {
 			int row = 0;
 
@@ -177,13 +177,13 @@ namespace Gwen.UnitTest
             base.Dispose();
         }
 
-		void OnEdit(Base control, EventArgs args)
+		void OnEdit(ControlBase control, EventArgs args)
         {
             Control.TextBox box = control as Control.TextBox;
             UnitPrint(String.Format("TextBox: OnEdit: {0}", box.Text));
         }
 
-		void OnSubmit(Base control, EventArgs args)
+		void OnSubmit(ControlBase control, EventArgs args)
         {
             Control.TextBox box = control as Control.TextBox;
             UnitPrint(String.Format("TextBox: OnSubmit: {0}", box.Text));

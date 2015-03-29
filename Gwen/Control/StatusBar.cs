@@ -11,7 +11,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public StatusBar(Base parent) : base(parent)
+        public StatusBar(ControlBase parent) : base(parent)
         {
 			AutoSizeToContents = false;
 
@@ -27,7 +27,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="control">Control to add.</param>
         /// <param name="right">Determines whether the control should be added to the right side of the bar.</param>
-        public void AddControl(Base control, bool right)
+        public void AddControl(ControlBase control, bool right)
         {
             control.Parent = this;
             control.Dock = right ? Pos.Right : Pos.Left;

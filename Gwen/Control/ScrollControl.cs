@@ -6,7 +6,7 @@ namespace Gwen.Control
     /// <summary>
     /// Base for controls whose interior can be scrolled.
     /// </summary>
-    public class ScrollControl : Base
+    public class ScrollControl : ControlBase
     {
         private bool m_CanScrollH;
         private bool m_CanScrollV;
@@ -28,7 +28,7 @@ namespace Gwen.Control
             }
         }
 
-        public Base InnerPanel
+        public ControlBase InnerPanel
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="ScrollControl"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ScrollControl(Base parent)
+        public ScrollControl(ControlBase parent)
             : base(parent)
         {
             MouseInputEnabled = false;
@@ -75,7 +75,7 @@ namespace Gwen.Control
             m_CanScrollH = true;
             m_HorizontalScrollBar.NudgeAmount = 30;
 
-            m_InnerPanel = new Base(this);
+            m_InnerPanel = new ControlBase(this);
             m_InnerPanel.SetPosition(0, 0);
             m_InnerPanel.Margin = Margin.Five;
             m_InnerPanel.SendToBack();
@@ -140,12 +140,12 @@ namespace Gwen.Control
             m_InnerPanel.SetSize(width, height);
         }
 
-        protected virtual void VBarMoved(Base control, EventArgs args)
+        protected virtual void VBarMoved(ControlBase control, EventArgs args)
         {
             Invalidate();
         }
 
-        protected virtual void HBarMoved(Base control, EventArgs args)
+        protected virtual void HBarMoved(ControlBase control, EventArgs args)
         {
             Invalidate();
         }
@@ -155,7 +155,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="oldChildBounds"></param>
         /// <param name="child"></param>
-        protected override void OnChildBoundsChanged(System.Drawing.Rectangle oldChildBounds, Base child)
+        protected override void OnChildBoundsChanged(System.Drawing.Rectangle oldChildBounds, ControlBase child)
         {
             UpdateScrollBars();
         }

@@ -13,7 +13,7 @@ namespace Gwen.Control.Property
         /// Initializes a new instance of the <see cref="Check"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Check(Control.Base parent)
+        public Check(Control.ControlBase parent)
             : base(parent)
         {
             m_CheckBox = new Control.CheckBox(this);

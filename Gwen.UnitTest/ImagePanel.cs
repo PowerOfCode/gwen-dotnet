@@ -5,7 +5,7 @@ namespace Gwen.UnitTest
 {
     public class ImagePanel : GUnit
     {
-        public ImagePanel(Base parent)
+        public ImagePanel(ControlBase parent)
             : base(parent)
         {
             /* Normal */
@@ -34,7 +34,7 @@ namespace Gwen.UnitTest
 			}
         }
 
-		void Image_Clicked(Base control, EventArgs args) {
+		void Image_Clicked(ControlBase control, EventArgs args) {
 			UnitPrint("Image: Clicked");
 		}
     }

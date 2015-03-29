@@ -8,7 +8,7 @@ namespace Gwen.Control
     /// <summary>
     /// Base for dockable containers.
     /// </summary>
-    public class DockBase : Base
+    public class DockBase : ControlBase
     {
         private DockBase m_Left;
         private DockBase m_Right;
@@ -51,7 +51,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="DockBase"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public DockBase(Base parent)
+        public DockBase(ControlBase parent)
             : base(parent)
         {
             Padding = Padding.One;
@@ -274,7 +274,7 @@ namespace Gwen.Control
             }
         }
 
-		protected virtual void OnTabRemoved(Base control, EventArgs args)
+		protected virtual void OnTabRemoved(ControlBase control, EventArgs args)
         {
             DoRedundancyCheck();
             DoConsolidateCheck();

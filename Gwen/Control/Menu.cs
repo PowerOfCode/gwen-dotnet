@@ -31,7 +31,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="Menu"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Menu(Base parent)
+        public Menu(ControlBase parent)
             : base(parent)
         {
             SetBounds(0, 0, 10, 10);
@@ -160,7 +160,7 @@ namespace Gwen.Control
         /// Mouse hover handler.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnHoverItem(Base control, EventArgs args)
+		protected virtual void OnHoverItem(ControlBase control, EventArgs args)
         {
             if (!ShouldHoverOpenMenu) return;
 
@@ -211,7 +211,7 @@ namespace Gwen.Control
 			base.SizeToChildren(width, height);
 			if (width) {
 				int MaxWidth = this.Width;
-				foreach (Base child in Children) {
+				foreach (ControlBase child in Children) {
 					if (child.Width > MaxWidth) {
 						MaxWidth = child.Width;
 					}

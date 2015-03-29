@@ -12,7 +12,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="PropertyTree"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public PropertyTree(Base parent)
+        public PropertyTree(ControlBase parent)
             : base(parent)
         {
 

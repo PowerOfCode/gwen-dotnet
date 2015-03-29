@@ -7,13 +7,13 @@ namespace Gwen.Control
     /// <summary>
     /// Splitter control.
     /// </summary>
-    public class CrossSplitter : Base
+    public class CrossSplitter : ControlBase
     {
         private readonly SplitterBar m_VSplitter;
         private readonly SplitterBar m_HSplitter;
         private readonly SplitterBar m_CSplitter;
 
-        private readonly Base[] m_Sections;
+        private readonly ControlBase[] m_Sections;
 
         private float m_HVal; // 0-1
         private float m_VVal; // 0-1
@@ -40,10 +40,10 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="CrossSplitter"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public CrossSplitter(Base parent)
+        public CrossSplitter(ControlBase parent)
             : base(parent)
         {
-            m_Sections = new Base[4];
+            m_Sections = new ControlBase[4];
 
             m_VSplitter = new SplitterBar(this);
             m_VSplitter.SetPosition(0, 128);
@@ -123,19 +123,19 @@ namespace Gwen.Control
             m_CSplitter.MoveTo((Width - m_CSplitter.Width) * (m_HVal), (Height - m_CSplitter.Height) * (m_VVal));
         }
 
-        protected void OnCenterMoved(Base control, EventArgs args)
+        protected void OnCenterMoved(ControlBase control, EventArgs args)
         {
             CalculateValueCenter();
             Invalidate();
         }
 
-        protected void OnVerticalMoved(Base control, EventArgs args)
+        protected void OnVerticalMoved(ControlBase control, EventArgs args)
         {
             m_VVal = CalculateValueVertical();
             Invalidate();
         }
 
-        protected void OnHorizontalMoved(Base control, EventArgs args)
+        protected void OnHorizontalMoved(ControlBase control, EventArgs args)
         {
             m_HVal = CalculateValueHorizontal();
             Invalidate();
@@ -197,7 +197,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="index">Section index (0-3).</param>
         /// <param name="panel">Control to assign.</param>
-        public void SetPanel(int index, Base panel)
+        public void SetPanel(int index, ControlBase panel)
         {
             m_Sections[index] = panel;
 
@@ -215,7 +215,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="index">Section index (0-3).</param>
         /// <returns>Specified section.</returns>
-        public Base GetPanel(int index)
+        public ControlBase GetPanel(int index)
         {
             return m_Sections[index];
         }

@@ -94,7 +94,7 @@ namespace Gwen.Control
         /// Control constructor.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Button(Base parent)
+        public Button(ControlBase parent)
             : base(parent)
         {
 			AutoSizeToContents = false;
@@ -115,7 +115,7 @@ namespace Gwen.Control
         /// <summary>
         /// "Clicks" the button.
         /// </summary>
-        public virtual void Press(Base control = null)
+        public virtual void Press(ControlBase control = null)
         {
             OnClicked(0, 0);
         }

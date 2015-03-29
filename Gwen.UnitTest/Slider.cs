@@ -5,7 +5,7 @@ namespace Gwen.UnitTest
 {
     public class Slider : GUnit
     {
-        public Slider(Base parent)
+        public Slider(ControlBase parent)
             : base(parent)
         {
             {
@@ -49,7 +49,7 @@ namespace Gwen.UnitTest
             }
         }
 
-		void SliderMoved(Base control, EventArgs args)
+		void SliderMoved(ControlBase control, EventArgs args)
         {
             Control.Slider slider = control as Control.Slider;
             UnitPrint(String.Format("Slider moved: ValueChanged: {0}", slider.Value));

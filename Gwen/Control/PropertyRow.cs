@@ -6,7 +6,7 @@ namespace Gwen.Control
     /// <summary>
     /// Single property row.
     /// </summary>
-    public class PropertyRow : Base
+    public class PropertyRow : ControlBase
     {
         private readonly Label m_Label;
         private readonly Property.Base m_Property;
@@ -49,7 +49,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="parent">Parent control.</param>
         /// <param name="prop">Property control associated with this row.</param>
-        public PropertyRow(Base parent, Property.Base prop)
+        public PropertyRow(ControlBase parent, Property.Base prop)
             : base(parent)
         {
             PropertyRowLabel label = new PropertyRowLabel(this);
@@ -104,7 +104,7 @@ namespace Gwen.Control
             }
         }
 
-        protected virtual void OnValueChanged(Base control, EventArgs args)
+        protected virtual void OnValueChanged(ControlBase control, EventArgs args)
         {
             if (ValueChanged != null)
 				ValueChanged.Invoke(this, EventArgs.Empty);

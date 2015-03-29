@@ -6,7 +6,7 @@ namespace Gwen.ControlInternal
     /// <summary>
     /// ComboBox arrow.
     /// </summary>
-    public class DownArrow : Base
+    public class DownArrow : ControlBase
     {
         private readonly ComboBox m_ComboBox;
 

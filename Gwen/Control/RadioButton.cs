@@ -19,7 +19,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="RadioButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public RadioButton(Base parent)
+        public RadioButton(ControlBase parent)
             : base(parent)
         {
             SetSize(15, 15);

@@ -14,7 +14,7 @@ namespace Gwen.ControlInternal
         /// Initializes a new instance of the <see cref="ScrollBarButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ScrollBarButton(Base parent)
+        public ScrollBarButton(ControlBase parent)
             : base(parent)
         {
             SetDirectionUp();

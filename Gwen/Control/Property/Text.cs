@@ -13,7 +13,7 @@ namespace Gwen.Control.Property
         /// Initializes a new instance of the <see cref="Text"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Text(Control.Base parent) : base(parent)
+        public Text(Control.ControlBase parent) : base(parent)
         {
             m_TextBox = new TextBox(this);
             m_TextBox.Dock = Pos.Fill;

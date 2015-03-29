@@ -5,7 +5,7 @@ namespace Gwen.UnitTest
 {
     public class GroupBox : GUnit
     {
-        public GroupBox(Base parent) : base(parent)
+        public GroupBox(ControlBase parent) : base(parent)
         {
             {
                 Control.GroupBox gb = new Control.GroupBox(this);

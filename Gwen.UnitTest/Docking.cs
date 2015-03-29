@@ -8,7 +8,7 @@ namespace Gwen.UnitTest
         private readonly Font font;
         private Control.Label outer;
 
-        public Docking(Base parent)
+        public Docking(ControlBase parent)
             : base(parent)
         {
             font = Skin.DefaultFont.Copy();
@@ -67,7 +67,7 @@ namespace Gwen.UnitTest
             //DrawDebugOutlines = true;
         }
 
-        Base CreateControls(Control.Base subject, int dock_idx, string name, int x, int y)
+        ControlBase CreateControls(Control.ControlBase subject, int dock_idx, string name, int x, int y)
         {
             Control.GroupBox gb = new Control.GroupBox(this);
             gb.SetBounds(x, y, 200, 150);
@@ -138,7 +138,7 @@ namespace Gwen.UnitTest
             return gb;
         }
 
-        void PaddingChanged(Base control, EventArgs args)
+        void PaddingChanged(ControlBase control, EventArgs args)
         {
             Control.Slider val = control as Control.Slider;
             int i = (int)val.Value;
@@ -146,36 +146,36 @@ namespace Gwen.UnitTest
             outer.Invalidate();
         }
 
-        void MarginChanged(Base control, EventArgs args)
+        void MarginChanged(ControlBase control, EventArgs args)
         {
-            Base inner = control.UserData as Base;
+            ControlBase inner = control.UserData as ControlBase;
             Control.Slider val = control as Control.Slider;
             int i = (int)val.Value;
             inner.Margin = new Margin(i, i, i, i);
             outer.Invalidate();
         }
 
-        void WidthChanged(Base control, EventArgs args)
+        void WidthChanged(ControlBase control, EventArgs args)
         {
-            Base inner = control.UserData as Base;
+            ControlBase inner = control.UserData as ControlBase;
             Control.Slider val = control as Control.Slider;
             inner.Width = (int)val.Value;
             outer.Invalidate();
         }
 
-        void HeightChanged(Base control, EventArgs args)
+        void HeightChanged(ControlBase control, EventArgs args)
         {
-            Base inner = control.UserData as Base;
+            ControlBase inner = control.UserData as ControlBase;
             Control.Slider val = control as Control.Slider;
             inner.Height = (int)val.Value;
             outer.Invalidate();
         }
 
-        void DockChanged(Base control, EventArgs args)
+        void DockChanged(ControlBase control, EventArgs args)
         {
-            Base inner = (Base) control.UserData;
+            ControlBase inner = (ControlBase) control.UserData;
             RadioButtonGroup rbg = (RadioButtonGroup) control;
-            Base gb = inner.UserData as Base;
+            ControlBase gb = inner.UserData as ControlBase;
             Control.Slider w = gb.FindChildByName("Width", true) as Control.Slider;
             Control.Slider h = gb.FindChildByName("Height", true) as Control.Slider;
 

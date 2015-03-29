@@ -8,13 +8,13 @@ namespace Gwen
     /// </summary>
     public static class ToolTip
     {
-        private static Base g_ToolTip;
+        private static ControlBase g_ToolTip;
 
         /// <summary>
         /// Enables tooltip display for the specified control.
         /// </summary>
         /// <param name="control">Target control.</param>
-        public static void Enable(Base control)
+        public static void Enable(ControlBase control)
         {
             if (null == control.ToolTip)
                 return;
@@ -26,7 +26,7 @@ namespace Gwen
         /// Disables tooltip display for the specified control.
         /// </summary>
         /// <param name="control">Target control.</param>
-        public static void Disable(Base control)
+        public static void Disable(ControlBase control)
         {
             if (g_ToolTip == control)
             {
@@ -38,7 +38,7 @@ namespace Gwen
         /// Disables tooltip display for the specified control.
         /// </summary>
         /// <param name="control">Target control.</param>
-        public static void ControlDeleted(Base control)
+        public static void ControlDeleted(ControlBase control)
         {
             Disable(control);
         }

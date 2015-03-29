@@ -8,7 +8,7 @@ namespace Gwen.Control
     /// </summary>
     public class TabTitleBar : Label
     {
-        public TabTitleBar(Base parent) : base(parent)
+        public TabTitleBar(ControlBase parent) : base(parent)
         {
 			AutoSizeToContents = false;
             MouseInputEnabled = true;

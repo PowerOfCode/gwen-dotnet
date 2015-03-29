@@ -5,7 +5,7 @@ namespace Gwen.UnitTest
 {
     public class Properties : GUnit
     {
-        public Properties(Base parent)
+        public Properties(ControlBase parent)
             : base(parent)
         {
             {
@@ -52,7 +52,7 @@ namespace Gwen.UnitTest
             }
         }
 
-        void OnChanged(Base control, EventArgs args)
+        void OnChanged(ControlBase control, EventArgs args)
         {
             PropertyRow row = control as PropertyRow;
             UnitPrint(String.Format("Property changed: {0}", row.Value));

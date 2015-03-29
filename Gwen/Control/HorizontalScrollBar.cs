@@ -46,7 +46,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="HorizontalScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public HorizontalScrollBar(Base parent)
+        public HorizontalScrollBar(ControlBase parent)
             : base(parent)
         {
             m_Bar.IsHorizontal = true;
@@ -92,13 +92,13 @@ namespace Gwen.Control
             }
         }
 
-		public void NudgeLeft(Base control, EventArgs args)
+		public void NudgeLeft(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
                 SetScrollAmount(ScrollAmount - NudgeAmount, true);
         }
 
-		public void NudgeRight(Base control, EventArgs args)
+		public void NudgeRight(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
                 SetScrollAmount(ScrollAmount + NudgeAmount, true);
@@ -190,7 +190,7 @@ namespace Gwen.Control
         /// Handler for the BarMoved event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected override void OnBarMoved(Base control, EventArgs args)
+		protected override void OnBarMoved(ControlBase control, EventArgs args)
         {
             if (m_Bar.IsHeld)
             {

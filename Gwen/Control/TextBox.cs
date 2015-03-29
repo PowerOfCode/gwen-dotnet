@@ -84,7 +84,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="TextBox"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public TextBox(Base parent)
+        public TextBox(ControlBase parent)
             : base(parent)
         {
 			AutoSizeToContents = false;
@@ -235,7 +235,7 @@ namespace Gwen.Control
         /// Handler for Paste event.
         /// </summary>
         /// <param name="from">Source control.</param>
-        protected override void OnPaste(Base from, EventArgs args)
+        protected override void OnPaste(ControlBase from, EventArgs args)
         {
             base.OnPaste(from, args);
             InsertText(Platform.Neutral.GetClipboardText());
@@ -245,7 +245,7 @@ namespace Gwen.Control
         /// Handler for Copy event.
         /// </summary>
         /// <param name="from">Source control.</param>
-        protected override void OnCopy(Base from, EventArgs args)
+        protected override void OnCopy(ControlBase from, EventArgs args)
         {
             if (!HasSelection) return;
             base.OnCopy(from, args);
@@ -257,7 +257,7 @@ namespace Gwen.Control
         /// Handler for Cut event.
         /// </summary>
         /// <param name="from">Source control.</param>
-        protected override void OnCut(Base from, EventArgs args)
+        protected override void OnCut(ControlBase from, EventArgs args)
         {
             if (!HasSelection) return;
             base.OnCut(from, args);
@@ -270,7 +270,7 @@ namespace Gwen.Control
         /// Handler for Select All event.
         /// </summary>
         /// <param name="from">Source control.</param>
-        protected override void OnSelectAll(Base from, EventArgs args)
+        protected override void OnSelectAll(ControlBase from, EventArgs args)
         {
             //base.OnSelectAll(from);
             m_CursorEnd = 0;

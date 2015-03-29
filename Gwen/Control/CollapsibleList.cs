@@ -21,7 +21,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="CollapsibleList"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public CollapsibleList(Base parent) : base(parent)
+        public CollapsibleList(ControlBase parent) : base(parent)
         {
 			MouseInputEnabled = true;
             EnableScroll(false, true);
@@ -35,7 +35,7 @@ namespace Gwen.Control
         /// </summary>
         public Button GetSelectedButton()
         {
-            foreach (Base child in Children)
+            foreach (ControlBase child in Children)
             {
                 CollapsibleCategory cat = child as CollapsibleCategory;
                 if (cat == null)
@@ -92,7 +92,7 @@ namespace Gwen.Control
         /// </summary>
         public virtual void UnselectAll()
         {
-            foreach (Base child in Children)
+            foreach (ControlBase child in Children)
             {
                 CollapsibleCategory cat = child as CollapsibleCategory;
                 if (cat == null)
@@ -106,7 +106,7 @@ namespace Gwen.Control
         /// Handler for ItemSelected event.
         /// </summary>
         /// <param name="control">Event source: <see cref="CollapsibleList"/>.</param>
-		protected virtual void OnCategorySelected(Base control, EventArgs args)
+		protected virtual void OnCategorySelected(ControlBase control, EventArgs args)
         {
             CollapsibleCategory cat = control as CollapsibleCategory;
             if (cat == null) return;
@@ -119,7 +119,7 @@ namespace Gwen.Control
         /// Handler for category collapsed event.
         /// </summary>
         /// <param name="control">Event source: <see cref="CollapsibleCategory"/>.</param>
-        protected virtual void OnCategoryCollapsed(Base control, EventArgs args)
+        protected virtual void OnCategoryCollapsed(ControlBase control, EventArgs args)
         {
             CollapsibleCategory cat = control as CollapsibleCategory;
             if (cat == null) return;

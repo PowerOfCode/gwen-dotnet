@@ -6,7 +6,7 @@ namespace Gwen.Control
     /// <summary>
     /// RadioButton with label.
     /// </summary>
-    public class LabeledRadioButton : Base
+    public class LabeledRadioButton : ControlBase
     {
         private readonly RadioButton m_RadioButton;
         private readonly Label m_Label;
@@ -20,7 +20,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="LabeledRadioButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public LabeledRadioButton(Base parent)
+        public LabeledRadioButton(ControlBase parent)
             : base(parent)
         {
 			MouseInputEnabled = true;
@@ -35,7 +35,7 @@ namespace Gwen.Control
             m_Label = new Label(this);
             m_Label.Alignment = Pos.CenterV | Pos.Left;
             m_Label.Text = "Radio Button";
-			m_Label.Clicked += delegate(Base control, ClickedEventArgs args) { m_RadioButton.Press(control); };
+			m_Label.Clicked += delegate(ControlBase control, ClickedEventArgs args) { m_RadioButton.Press(control); };
             m_Label.IsTabable = false;
             m_Label.KeyboardInputEnabled = false;
         }

@@ -12,7 +12,7 @@ namespace Gwen.ControlInternal
         /// Initializes a new instance of the <see cref="UpDownButton_Down"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public UpDownButton_Down(Base parent)
+        public UpDownButton_Down(ControlBase parent)
             : base(parent)
         {
             SetSize(7, 7);

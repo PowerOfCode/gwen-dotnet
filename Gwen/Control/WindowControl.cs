@@ -55,7 +55,7 @@ namespace Gwen.Control
         /// <param name="parent">Parent control.</param>
         /// <param name="caption">Window caption.</param>
         /// <param name="modal">Determines whether the window should be modal.</param>
-        public WindowControl(Base parent, string title = "", bool modal = false)
+        public WindowControl(ControlBase parent, string title = "", bool modal = false)
             : base(parent)
         {
             m_TitleBar = new Dragger(this);
@@ -80,7 +80,7 @@ namespace Gwen.Control
             m_CloseButton.Name = "closeButton";
 
             //Create a blank content control, dock it to the top - Should this be a ScrollControl?
-            m_InnerPanel = new Base(this);
+            m_InnerPanel = new ControlBase(this);
             m_InnerPanel.Dock = Pos.Fill;
             GetResizer(8).Hide();
             BringToFront();
@@ -103,7 +103,7 @@ namespace Gwen.Control
 			CloseButtonPressed(this, EventArgs.Empty);
 		}
 
-		protected virtual void CloseButtonPressed(Base control, EventArgs args)
+		protected virtual void CloseButtonPressed(ControlBase control, EventArgs args)
         {
             IsHidden = true;
 

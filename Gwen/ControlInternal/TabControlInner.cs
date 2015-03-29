@@ -6,13 +6,13 @@ namespace Gwen.ControlInternal
     /// <summary>
     /// Inner panel of tab control.
     /// </summary>
-    public class TabControlInner : Base
+    public class TabControlInner : ControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControlInner"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        internal TabControlInner(Base parent) : base(parent)
+        internal TabControlInner(ControlBase parent) : base(parent)
         {
         }
 

@@ -106,7 +106,6 @@
     <Compile Include="ControlInternal\ScrollBarBar.cs" />
     <Compile Include="ControlInternal\ScrollBarButton.cs" />
     <Compile Include="ControlInternal\Text.cs" />
-    <Compile Include="Control\Base.cs" />
     <Compile Include="Control\ScrollBar.cs" />
     <Compile Include="Control\Button.cs" />
     <Compile Include="Control\Canvas.cs" />
@@ -172,6 +171,7 @@
     <Compile Include="Renderer\ICacheToTexture.cs" />
     <Compile Include="Skin\Base.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="Control\ControlBase.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

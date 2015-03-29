@@ -12,7 +12,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="VerticalSlider"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public VerticalSlider(Base parent)
+        public VerticalSlider(ControlBase parent)
             : base(parent)
         {
             m_SliderBar.IsHorizontal = false;

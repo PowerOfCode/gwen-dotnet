@@ -12,7 +12,7 @@ namespace Gwen.ControlInternal
         /// Initializes a new instance of the <see cref="SplitterBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public SplitterBar(Base parent)
+        public SplitterBar(ControlBase parent)
             : base(parent)
         {
             Target = this;

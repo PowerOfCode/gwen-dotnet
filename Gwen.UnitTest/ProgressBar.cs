@@ -6,7 +6,7 @@ namespace Gwen.UnitTest
 {
     public class ProgressBar : GUnit
     {
-        public ProgressBar(Base parent) : base(parent)
+        public ProgressBar(ControlBase parent) : base(parent)
         {
             {
                 Control.ProgressBar pb = new Control.ProgressBar(this);

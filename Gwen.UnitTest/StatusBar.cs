@@ -5,7 +5,7 @@ namespace Gwen.UnitTest
 {
     public class StatusBar : GUnit
     {
-        public StatusBar(Base parent)
+        public StatusBar(ControlBase parent)
             : base(parent)
         {
             Control.StatusBar sb = new Control.StatusBar(this);

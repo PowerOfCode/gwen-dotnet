@@ -6,13 +6,13 @@ namespace Gwen.ControlInternal
     /// <summary>
     /// Submenu indicator.
     /// </summary>
-    public class RightArrow : Base
+    public class RightArrow : ControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RightArrow"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public RightArrow(Base parent)
+        public RightArrow(ControlBase parent)
             : base(parent)
         {
             MouseInputEnabled = false;

@@ -6,13 +6,13 @@ namespace Gwen.ControlInternal
     /// <summary>
     /// Modal control for windows.
     /// </summary>
-    public class Modal : Base
+    public class Modal : ControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Modal"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Modal(Base parent)
+        public Modal(ControlBase parent)
             : base(parent)
         {
             KeyboardInputEnabled = true;

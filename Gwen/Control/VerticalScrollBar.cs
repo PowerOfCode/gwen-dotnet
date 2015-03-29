@@ -38,7 +38,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="VerticalScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public VerticalScrollBar(Base parent)
+        public VerticalScrollBar(ControlBase parent)
             : base(parent)
         {
             m_Bar.IsVertical = true;
@@ -85,13 +85,13 @@ namespace Gwen.Control
             }
         }
 
-		public virtual void NudgeUp(Base control, EventArgs args)
+		public virtual void NudgeUp(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
                 SetScrollAmount(ScrollAmount - NudgeAmount, true);
         }
 
-		public virtual void NudgeDown(Base control, EventArgs args)
+		public virtual void NudgeDown(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
                 SetScrollAmount(ScrollAmount + NudgeAmount, true);
@@ -180,7 +180,7 @@ namespace Gwen.Control
         /// Handler for the BarMoved event.
         /// </summary>
         /// <param name="control">The control.</param>
-		protected override void OnBarMoved(Base control, EventArgs args)
+		protected override void OnBarMoved(ControlBase control, EventArgs args)
         {
             if (m_Bar.IsHeld)
             {
