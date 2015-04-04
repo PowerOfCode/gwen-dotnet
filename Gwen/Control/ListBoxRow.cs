@@ -32,7 +32,7 @@ namespace Gwen.Control
             get { return m_Selected; }
             set
             {
-                m_Selected = value;             
+                m_Selected = value;
                 // TODO: Get these values from the skin.
                 if (value)
                     SetTextColor(Color.White);

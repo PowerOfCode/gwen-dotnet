@@ -54,8 +54,8 @@ namespace Gwen.Control
         public Color BackgroundColor { get { return m_BackgroundColor; } set { m_BackgroundColor = value; } }
 
         /// <summary>
-        /// In most situations you will be rendering the canvas every frame. 
-        /// But in some situations you will only want to render when there have been changes. 
+        /// In most situations you will be rendering the canvas every frame.
+        /// But in some situations you will only want to render when there have been changes.
         /// You can do this by checking NeedsRedraw.
         /// </summary>
         public bool NeedsRedraw { get { return m_NeedsRedraw; } set { m_NeedsRedraw = value; } }
@@ -89,8 +89,8 @@ namespace Gwen.Control
             NeedsRedraw = true;
             base.Redraw();
         }
-        
-        // Children call parent.GetCanvas() until they get to 
+
+        // Children call parent.GetCanvas() until they get to
         // this top level function.
         public override Canvas GetCanvas()
         {
@@ -173,7 +173,7 @@ namespace Gwen.Control
             // Reset tabbing
             NextTab = null;
             FirstTab = null;
-            
+
             ProcessDelayedDeletes();
 
             // Check has focus etc..

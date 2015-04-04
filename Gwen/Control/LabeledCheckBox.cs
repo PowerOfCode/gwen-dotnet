@@ -90,8 +90,8 @@ namespace Gwen.Control
         protected override bool OnKeySpace(bool down)
         {
             base.OnKeySpace(down);
-            if (!down) 
-                m_CheckBox.IsChecked = !m_CheckBox.IsChecked; 
+            if (!down)
+                m_CheckBox.IsChecked = !m_CheckBox.IsChecked;
             return true;
         }
     }

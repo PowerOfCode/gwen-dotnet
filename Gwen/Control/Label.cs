@@ -43,7 +43,7 @@ namespace Gwen.Control
                 Invalidate();
             }
         }
-        
+
         /// <summary>
         /// Text color.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Gwen.Control
         /// Text override - used to display different string.
         /// </summary>
         public string TextOverride { get { return m_Text.TextOverride; } set { m_Text.TextOverride = value; } }
-        
+
         /// <summary>
         /// Width of the text (in pixels).
         /// </summary>
@@ -163,8 +163,8 @@ namespace Gwen.Control
         /// <param name="y"></param>
         /// <returns></returns>
         protected virtual Point GetClosestCharacter(int x, int y)
-        { 
-            return new Point(m_Text.GetClosestCharacter(m_Text.CanvasPosToLocal(new Point(x, y))), 0); 
+        {
+            return new Point(m_Text.GetClosestCharacter(m_Text.CanvasPosToLocal(new Point(x, y))), 0);
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace Gwen.Control
             int x = m_TextPadding.Left + Padding.Left;
             int y = m_TextPadding.Top + Padding.Top;
 
-            if (0 != (align & Pos.Right)) 
+            if (0 != (align & Pos.Right))
                 x = Width - m_Text.Width - m_TextPadding.Right - Padding.Right;
             if (0 != (align & Pos.CenterH))
                 x = (int)((m_TextPadding.Left + Padding.Left) + ((Width - m_Text.Width - m_TextPadding.Left - Padding.Left - m_TextPadding.Right - Padding.Right) * 0.5f));
 
             if (0 != (align & Pos.CenterV))
                 y = (int)((m_TextPadding.Top + Padding.Top) + ((Height - m_Text.Height) * 0.5f) - m_TextPadding.Bottom - Padding.Bottom);
-            if (0 != (align & Pos.Bottom)) 
+            if (0 != (align & Pos.Bottom))
                 y = Height - m_Text.Height - m_TextPadding.Bottom - Padding.Bottom;
 
             m_Text.SetPosition(x, y);
@@ -236,7 +236,7 @@ namespace Gwen.Control
             m_Text.SetPosition(m_TextPadding.Left + Padding.Left, m_TextPadding.Top + Padding.Top);
             m_Text.SizeToContents();
 
-            SetSize(m_Text.Width + Padding.Left + Padding.Right + m_TextPadding.Left + m_TextPadding.Right, 
+            SetSize(m_Text.Width + Padding.Left + Padding.Right + m_TextPadding.Left + m_TextPadding.Right,
                 m_Text.Height + Padding.Top + Padding.Bottom + m_TextPadding.Top + m_TextPadding.Bottom);
             InvalidateParent();
         }

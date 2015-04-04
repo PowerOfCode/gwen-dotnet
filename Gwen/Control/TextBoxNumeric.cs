@@ -57,7 +57,7 @@ namespace Gwen.Control
                 Text = value.ToString();
             }
         }
-        
+
         // text -> value
         /// <summary>
         /// Handler for text changed event.

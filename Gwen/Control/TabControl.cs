@@ -212,7 +212,7 @@ namespace Gwen.Control
 
             // Only enable the scrollers if the tabs are at the top.
             // This is a limitation we should explore.
-            // Really TabControl should have derivitives for tabs placed elsewhere where we could specialize 
+            // Really TabControl should have derivitives for tabs placed elsewhere where we could specialize
             // some functions like this for each direction.
             bool needed = TabsSize.X > Width && m_TabStrip.Dock == Pos.Top;
 
@@ -225,9 +225,9 @@ namespace Gwen.Control
 
 #if false
     //
-    // This isn't frame rate independent. 
+    // This isn't frame rate independent.
     // Could be better. Get rid of m_ScrollOffset and just use m_TabStrip.GetMargin().left ?
-    // Then get a margin animation type and do it properly! 
+    // Then get a margin animation type and do it properly!
     // TODO!
     //
         m_TabStrip.SetMargin( Margin( Gwen::Approach( m_TabStrip.GetMargin().left, m_iScrollOffset * -1, 2 ), 0, 0, 0 ) );

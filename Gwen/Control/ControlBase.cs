@@ -29,13 +29,13 @@ namespace Gwen.Control
         private ControlBase m_Parent;
 
         /// <summary>
-        /// This is the panel's actual parent - most likely the logical 
+        /// This is the panel's actual parent - most likely the logical
         /// parent's InnerPanel (if it has one). You should rarely need this.
         /// </summary>
         private ControlBase m_ActualParent;
 
         /// <summary>
-        /// If the innerpanel exists our children will automatically become children of that 
+        /// If the innerpanel exists our children will automatically become children of that
         /// instead of us - allowing us to move them all around by moving that panel (useful for scrolling etc).
         /// </summary>
         protected ControlBase m_InnerPanel;
@@ -1150,7 +1150,7 @@ namespace Gwen.Control
         /// <param name="skin">Skin to use.</param>
         internal virtual void DoRender(Skin.SkinBase skin)
         {
-            // If this control has a different skin, 
+            // If this control has a different skin,
             // then so does its children.
             if (m_Skin != null)
                 skin = m_Skin;

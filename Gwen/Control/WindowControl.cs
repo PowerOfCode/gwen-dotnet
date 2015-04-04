@@ -57,7 +57,7 @@ namespace Gwen.Control
 
         public WindowControl(ControlBase parent) : this(parent, "Window", false)
         {
-            
+
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Gwen.Control
         /// <param name="skin">Skin to use.</param>
         protected override void RenderFocus(Skin.SkinBase skin)
         {
-            
+
         }
     }
 }

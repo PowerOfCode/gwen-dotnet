@@ -68,10 +68,10 @@ namespace Gwen.Serialization
                 var temp = def as IDisposable;
                 if (temp != null)
                     temp.Dispose();
-                
+
                 if (bol)
                     continue;
-                
+
                 writer.WritePropertyName(item.Name);
                 serializer.Serialize(writer, val);
             }
@@ -144,7 +144,7 @@ namespace Gwen.Serialization
         {
             return objectType.IsAssignableFrom(typeof(ControlBase));
         }
-            
+
         //public override bool CanRead { get { return true; } }
 
         #endregion

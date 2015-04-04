@@ -86,7 +86,7 @@ namespace Gwen.Control
 		/// </summary>
 		public Point CursorEnd {
 			get {
-				if (m_TextLines == null || m_TextLines.Count() == 0) 
+				if (m_TextLines == null || m_TextLines.Count() == 0)
 					return new Point(0, 0);
 
 				int Y = m_CursorEnd.Y;
@@ -753,7 +753,7 @@ namespace Gwen.Control
 			} else {
 				/* Remove Start */
 				if (StartPoint.X < m_TextLines[StartPoint.Y].Length) {
-					m_TextLines[StartPoint.Y] = m_TextLines[StartPoint.Y].Remove(StartPoint.X); 
+					m_TextLines[StartPoint.Y] = m_TextLines[StartPoint.Y].Remove(StartPoint.X);
 				}
 
 				/* Remove Middle */
@@ -768,7 +768,7 @@ namespace Gwen.Control
 				m_TextLines.RemoveAt(StartPoint.Y + 1);
 			}
 
-			// Move the cursor to the start of the selection, 
+			// Move the cursor to the start of the selection,
 			// since the end is probably outside of the string now.
 			m_CursorPos = StartPoint;
 			m_CursorEnd = StartPoint;
@@ -847,7 +847,7 @@ namespace Gwen.Control
 
 				Point cp = Skin.Renderer.MeasureText(Font, sub);
 
-				double XDiff = Math.Abs(cp.X - p.X); 
+				double XDiff = Math.Abs(cp.X - p.X);
 
 				if (XDiff < distance){
 					distance = XDiff;

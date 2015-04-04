@@ -503,7 +503,7 @@ namespace Gwen.Control
 
             DeleteText(start, end - start);
 
-            // Move the cursor to the start of the selection, 
+            // Move the cursor to the start of the selection,
             // since the end is probably outside of the string now.
             m_CursorPos = start;
             m_CursorEnd = start;

@@ -50,9 +50,9 @@ namespace Gwen.Control
             get { return m_Depressed; }
             set
             {
-                if (m_Depressed == value) 
+                if (m_Depressed == value)
                     return;
-                m_Depressed = value; 
+                m_Depressed = value;
                 Redraw();
             }
         }
@@ -189,7 +189,7 @@ namespace Gwen.Control
 
 			base.OnMouseClickedLeft(x, y, true);
         }
-        
+
         /// <summary>
         /// Sets the button's image.
         /// </summary>

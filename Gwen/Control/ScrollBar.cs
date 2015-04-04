@@ -34,7 +34,7 @@ namespace Gwen.Control
         /// Bar position (in pixels).
         /// </summary>
         public virtual int BarPos { get { return 0; } }
-        
+
         /// <summary>
         /// Button size (in pixels).
         /// </summary>
@@ -126,9 +126,9 @@ namespace Gwen.Control
         protected virtual int CalculateBarSize()
         {
             return 0;
-        } 
+        }
 
-        public virtual void ScrollToLeft() { } 
+        public virtual void ScrollToLeft() { }
         public virtual void ScrollToRight() { }
         public virtual void ScrollToTop() { }
         public virtual void ScrollToBottom() { }

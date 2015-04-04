@@ -75,7 +75,7 @@ namespace Gwen.Control
 
             skin.Renderer.DrawColor = Color.White;
             skin.Renderer.DrawTexturedRect(m_Texture, new Rectangle(5, 0, Width-10, Height));
-            
+
             int drawHeight = m_SelectedDist - 3;
 
             //Draw our selectors

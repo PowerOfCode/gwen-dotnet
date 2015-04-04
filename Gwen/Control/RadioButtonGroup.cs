@@ -12,7 +12,7 @@ namespace Gwen.Control
     public class RadioButtonGroup : GroupBox
     {
         private LabeledRadioButton m_Selected;
-        
+
         /// <summary>
         /// Selected radio button.
         /// </summary>

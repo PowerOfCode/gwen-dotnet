@@ -17,9 +17,9 @@ namespace Gwen.Control
         private bool m_DeleteOnClose;
 
         internal override bool IsMenuComponent { get { return true; } }
-        
+
         public bool IconMarginDisabled { get { return m_DisableIconMargin; } set { m_DisableIconMargin = value; } }
-        
+
         /// <summary>
         /// Determines whether the menu should be disposed on close.
         /// </summary>

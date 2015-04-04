@@ -177,7 +177,7 @@ namespace Gwen.Control
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
         protected override void OnMouseClickedLeft(int x, int y, bool down)
         {
-            
+
         }
 
 		protected virtual void OnMoved(ControlBase control, EventArgs args)
@@ -192,7 +192,7 @@ namespace Gwen.Control
 
         protected virtual void UpdateBarFromValue()
         {
-            
+
         }
 
         protected virtual void SetValueInternal(float val)
@@ -232,7 +232,7 @@ namespace Gwen.Control
         {
             if (InputHandler.KeyboardFocus != this) return;
             if (!IsTabable) return;
-            
+
             skin.DrawKeyboardHighlight(this, RenderBounds, 0);
         }
     }

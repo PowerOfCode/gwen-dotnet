@@ -22,7 +22,7 @@ namespace Gwen.ControlInternal
             ShouldDrawBackground = true;
             SetBounds(0, 0, GetCanvas().Width, GetCanvas().Height);
         }
-        
+
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>

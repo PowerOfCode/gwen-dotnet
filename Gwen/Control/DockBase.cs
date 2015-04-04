@@ -203,7 +203,7 @@ namespace Gwen.Control
 
         public override bool DragAndDrop_CanAcceptPackage(Package p)
         {
-            // A TAB button dropped 
+            // A TAB button dropped
             if (p.Name == "TabButtonMove")
                 return true;
 

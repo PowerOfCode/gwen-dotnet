@@ -18,7 +18,7 @@ namespace Gwen.Control
         {
 			AutoSizeToContents = false;
 
-            // Set to true, because it's likely that our  
+            // Set to true, because it's likely that our
             // children will want mouse input, and they
             // can't get it without us..
             MouseInputEnabled = true;

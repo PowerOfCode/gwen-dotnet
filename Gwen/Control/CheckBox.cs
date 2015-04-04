@@ -17,7 +17,7 @@ namespace Gwen.Control
         /// </summary>
         public bool IsChecked
         {
-            get { return m_Checked; } 
+            get { return m_Checked; }
             set
             {
                 if (m_Checked == value) return;
@@ -72,7 +72,7 @@ namespace Gwen.Control
         protected virtual void OnCheckChanged()
         {
             if (IsChecked)
-            { 
+            {
                 if (Checked != null)
 					Checked.Invoke(this, EventArgs.Empty);
             }
@@ -103,7 +103,7 @@ namespace Gwen.Control
         {
             if (IsDisabled)
                 return;
-            
+
             if (IsChecked && !AllowUncheck)
             {
                 return;
