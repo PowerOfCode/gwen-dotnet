@@ -1,10 +1,13 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Numeric text box - accepts only float numbers.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TextBoxNumeric : TextBox
     {
         /// <summary>

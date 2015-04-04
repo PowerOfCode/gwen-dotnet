@@ -1,10 +1,13 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// CollapsibleList control. Groups CollapsibleCategory controls.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CollapsibleList : ScrollControl
     {
         /// <summary>

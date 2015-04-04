@@ -1,11 +1,13 @@
-﻿using System;
-using Gwen.Control;
+﻿using Gwen.Control;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Modal control for windows.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Modal : ControlBase
     {
         /// <summary>

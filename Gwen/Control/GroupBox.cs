@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
@@ -7,6 +6,8 @@ namespace Gwen.Control
     /// Group box (container).
     /// </summary>
     /// <remarks>Don't use autosize with docking.</remarks>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class GroupBox : Label
     {
         /// <summary>

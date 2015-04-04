@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Gwen.ControlInternal;
 using Newtonsoft.Json;
 
@@ -9,6 +8,7 @@ namespace Gwen.Control
     /// Static text label.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Label : ControlBase
     {
         protected readonly Text m_Text;

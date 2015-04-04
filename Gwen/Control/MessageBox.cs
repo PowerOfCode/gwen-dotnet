@@ -1,10 +1,13 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Simple message box.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class MessageBox : WindowControl
     {
         private readonly Button m_Button;

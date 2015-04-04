@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Menu strip.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class MenuStrip : Menu
     {
         /// <summary>

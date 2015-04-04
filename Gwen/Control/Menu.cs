@@ -2,12 +2,15 @@
 using System.Drawing;
 using System.Linq;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Popup menu.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Menu : ScrollControl
     {
         private bool m_DisableIconMargin;

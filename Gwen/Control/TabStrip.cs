@@ -2,12 +2,15 @@
 using System.Drawing;
 using Gwen.ControlInternal;
 using Gwen.DragDrop;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Tab strip - groups TabButtons and allows reordering.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TabStrip : ControlBase
     {
         private ControlBase m_TabDragControl;

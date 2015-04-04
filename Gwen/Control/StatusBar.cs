@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Status bar.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class StatusBar : Label
     {
         /// <summary>

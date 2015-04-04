@@ -1,12 +1,15 @@
 ﻿using System;
 using Gwen.Control.Layout;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Numeric up/down.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class NumericUpDown : TextBoxNumeric
     {
         private int m_Max;

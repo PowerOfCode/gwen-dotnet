@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Radio button group.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class RadioButtonGroup : GroupBox
     {
         private LabeledRadioButton m_Selected;

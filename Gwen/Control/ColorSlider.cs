@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// HSV hue selector.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorSlider : ControlBase
     {
         private int m_SelectedDist;

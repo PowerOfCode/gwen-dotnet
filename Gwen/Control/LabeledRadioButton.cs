@@ -1,11 +1,13 @@
-﻿using System;
-using Gwen.Input;
+﻿using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// RadioButton with label.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class LabeledRadioButton : ControlBase
     {
         private readonly RadioButton m_RadioButton;

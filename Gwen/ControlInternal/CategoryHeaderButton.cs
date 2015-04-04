@@ -1,11 +1,13 @@
-﻿using System;
-using Gwen.Control;
+﻿using Gwen.Control;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Header of CollapsibleCategory.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CategoryHeaderButton : Button
     {
         /// <summary>

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Menu item.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class MenuItem : Button
     {
         private bool m_OnStrip;

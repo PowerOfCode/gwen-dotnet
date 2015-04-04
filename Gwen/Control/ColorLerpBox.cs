@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Linear-interpolated HSV color box.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorLerpBox : ControlBase
     {
         private Point m_CursorPos;

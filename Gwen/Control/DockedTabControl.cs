@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Docked tab control.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class DockedTabControl : TabControl
     {
         private readonly TabTitleBar m_TitleBar;

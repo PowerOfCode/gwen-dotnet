@@ -1,15 +1,18 @@
 ﻿using System;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Single property row.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class PropertyRow : ControlBase
     {
         private readonly Label m_Label;
-        private readonly Property.Base m_Property;
+        private readonly Property.PropertyBase m_Property;
         private bool m_LastEditing;
         private bool m_LastHover;
 
@@ -49,7 +52,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="parent">Parent control.</param>
         /// <param name="prop">Property control associated with this row.</param>
-        public PropertyRow(ControlBase parent, Property.Base prop)
+        public PropertyRow(ControlBase parent, Property.PropertyBase prop)
             : base(parent)
         {
             PropertyRowLabel label = new PropertyRowLabel(this);

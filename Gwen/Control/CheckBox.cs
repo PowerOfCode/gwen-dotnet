@@ -1,10 +1,13 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// CheckBox control.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CheckBox : Button
     {
         private bool m_Checked;

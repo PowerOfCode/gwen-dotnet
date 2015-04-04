@@ -14,6 +14,7 @@ namespace Gwen.Control
     /// Base control class.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ControlBase : IDisposable
     {
         /// <summary>
@@ -150,7 +151,7 @@ namespace Gwen.Control
                 if (value != null)
                     foreach (var item in value)
                     {
-                        AddChild(item);
+                        item.Parent = this;
                     }
             }
         }

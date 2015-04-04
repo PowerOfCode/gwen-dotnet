@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// RGBA color picker.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorPicker : ControlBase, IColorPicker
     {
         private Color m_Color;

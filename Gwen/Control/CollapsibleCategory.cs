@@ -1,11 +1,14 @@
 ﻿using System;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// CollapsibleCategory control. Used in CollapsibleList.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CollapsibleCategory : ControlBase
     {
         private readonly Button m_HeaderButton;
@@ -35,6 +38,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="CollapsibleCategory"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
+        [Newtonsoft.Json.JsonConstructor]
         public CollapsibleCategory(CollapsibleList parent) : base(parent)
         {
             m_HeaderButton = new CategoryHeaderButton(this);

@@ -5,13 +5,13 @@ namespace Gwen.Control.Property
     /// <summary>
     /// Base control for property entry.
     /// </summary>
-    public class Base : Control.ControlBase
+    public class PropertyBase : Control.ControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Base"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Base(Control.ControlBase parent) : base(parent)
+        public PropertyBase(Control.ControlBase parent) : base(parent)
         {
             Height = 17;
         }

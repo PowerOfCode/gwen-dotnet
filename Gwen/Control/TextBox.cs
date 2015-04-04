@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Text box (editable).
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TextBox : Label
     {
         private bool m_SelectAll;

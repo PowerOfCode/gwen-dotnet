@@ -1,11 +1,13 @@
-﻿using System;
-using Gwen.Control;
+﻿using Gwen.Control;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Label for PropertyRow.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class PropertyRowLabel : Label
     {
         private readonly PropertyRow m_PropertyRow;

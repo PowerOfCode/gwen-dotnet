@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class HorizontalSplitter : ControlBase
     {
         private readonly SplitterBar m_VSplitter;

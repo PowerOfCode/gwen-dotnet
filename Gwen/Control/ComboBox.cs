@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// ComboBox control.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ComboBox : Button
     {
         private readonly Menu m_Menu;

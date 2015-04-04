@@ -2,12 +2,15 @@
 using System.Drawing;
 using Gwen.ControlInternal;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Base slider.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Slider : ControlBase
     {
         protected readonly SliderBar m_SliderBar;

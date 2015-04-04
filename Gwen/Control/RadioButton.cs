@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Radio button.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class RadioButton : CheckBox
     {
         /// <summary>

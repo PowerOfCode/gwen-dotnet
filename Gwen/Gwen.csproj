@@ -94,7 +94,6 @@
     <Compile Include="ControlInternal\PropertyRowLabel.cs" />
     <Compile Include="Control\PropertyTree.cs" />
     <Compile Include="ControlInternal\PropertyTreeNode.cs" />
-    <Compile Include="Control\Property\Base.cs" />
     <Compile Include="Control\Property\Check.cs" />
     <Compile Include="Control\Property\Color.cs" />
     <Compile Include="Control\Property\Text.cs" />
@@ -176,7 +175,8 @@
     <Compile Include="Renderer\RendererBase.cs" />
     <Compile Include="Skin\SkinBase.cs" />
     <Compile Include="Defaults.cs" />
-    <Compile Include="Serialization\ButtonConverter.cs" />
+    <Compile Include="Serialization\GwenConverter.cs" />
+    <Compile Include="Control\Property\PropertyBase.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

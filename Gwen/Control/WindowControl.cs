@@ -10,6 +10,7 @@ namespace Gwen.Control
     /// Movable window with title bar.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class WindowControl : ResizableControl
     {
         private readonly Dragger m_TitleBar;
@@ -53,6 +54,11 @@ namespace Gwen.Control
 		public void ToggleHidden() {
 			IsHidden = !IsHidden;
 		}
+
+        public WindowControl(ControlBase parent) : this(parent, "Window", false)
+        {
+            
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowControl"/> class.

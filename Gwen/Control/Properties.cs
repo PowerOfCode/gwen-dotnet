@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Properties table.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Properties : ControlBase
     {
         private readonly SplitterBar m_SplitterBar;
@@ -78,7 +81,7 @@ namespace Gwen.Control
         /// <param name="prop">Property control.</param>
         /// <param name="value">Initial value.</param>
         /// <returns>Newly created row.</returns>
-        public PropertyRow Add(string label, Property.Base prop, string value="")
+        public PropertyRow Add(string label, Property.PropertyBase prop, string value="")
         {
             PropertyRow row = new PropertyRow(this, prop);
             row.Dock = Pos.Top;

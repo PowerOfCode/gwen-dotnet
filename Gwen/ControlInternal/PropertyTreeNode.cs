@@ -1,11 +1,13 @@
-﻿using System;
-using Gwen.Control;
+﻿using Gwen.Control;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Properties node.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class PropertyTreeNode : TreeNode
     {
         /// <summary>

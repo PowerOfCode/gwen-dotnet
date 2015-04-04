@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
@@ -8,6 +9,8 @@ namespace Gwen.Control
     /// <remarks>
     /// This class doesn't prevent programatic access to the text in any way.
     /// </remarks>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TextBoxPassword : TextBox
     {
         private string m_Mask;

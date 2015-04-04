@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Base resizable control.
     /// </summary>
-    [Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ResizableControl : ControlBase
     {
         private bool m_ClampMovement;

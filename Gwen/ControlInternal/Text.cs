@@ -11,6 +11,7 @@ namespace Gwen.ControlInternal
     /// Displays text. Always sized to contents.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Text : ControlBase
     {
         private string m_String;

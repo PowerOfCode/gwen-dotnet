@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// HSV color picker with "before" and "after" color boxes.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class HSVColorPicker : ControlBase, IColorPicker
     {
         private readonly ColorLerpBox m_LerpBox;

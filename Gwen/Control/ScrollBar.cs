@@ -1,11 +1,14 @@
 ﻿using System;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Base class for scrollbars.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ScrollBar : ControlBase
     {
         protected readonly ScrollBarButton[] m_ScrollButton;

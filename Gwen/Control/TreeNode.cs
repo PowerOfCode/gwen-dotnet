@@ -2,12 +2,15 @@
 using System.Linq;
 using Gwen.ControlInternal;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Tree control node.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TreeNode : ControlBase
     {
         public const int TreeIndentation = 14;

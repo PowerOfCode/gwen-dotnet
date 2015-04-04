@@ -2,13 +2,15 @@
 using System.Drawing;
 using Gwen.Control;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Base for controls that can be dragged by mouse.
     /// </summary>
-    [Newtonsoft.Json.JsonObject(Newtonsoft.Json.MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Dragger : ControlBase
     {
         protected bool m_Held;

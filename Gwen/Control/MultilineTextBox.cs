@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Drawing;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class MultilineTextBox : Label
     {
 		private readonly ScrollControl m_ScrollControl;

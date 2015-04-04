@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class EnumRadioButtonGroup<T> : RadioButtonGroup where T : struct, IConvertible
     {
         public EnumRadioButtonGroup(ControlBase parent) : base(parent)

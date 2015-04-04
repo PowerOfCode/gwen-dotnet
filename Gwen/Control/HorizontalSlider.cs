@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Drawing;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Horizontal slider.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class HorizontalSlider : Slider
     {
         /// <summary>

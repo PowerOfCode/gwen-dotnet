@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.Input;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Horizontal scrollbar.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class HorizontalScrollBar : ScrollBar
     {
         /// <summary>

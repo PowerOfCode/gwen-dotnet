@@ -5,7 +5,7 @@ namespace Gwen.Control.Property
     /// <summary>
     /// Checkable property.
     /// </summary>
-    public class Check : Base
+    public class Check : PropertyBase
     {
         protected readonly Control.CheckBox m_CheckBox;
 

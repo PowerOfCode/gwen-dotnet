@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
 using Gwen.ControlInternal;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Splitter control.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CrossSplitter : ControlBase
     {
         private readonly SplitterBar m_VSplitter;

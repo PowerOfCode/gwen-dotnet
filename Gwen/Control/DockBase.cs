@@ -2,12 +2,15 @@
 using System.Drawing;
 using Gwen.ControlInternal;
 using Gwen.DragDrop;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Base for dockable containers.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class DockBase : ControlBase
     {
         private DockBase m_Left;

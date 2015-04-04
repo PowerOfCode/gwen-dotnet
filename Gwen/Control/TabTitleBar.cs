@@ -1,11 +1,13 @@
-﻿using System;
-using Gwen.DragDrop;
+﻿using Gwen.DragDrop;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Titlebar for DockedTabControl.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TabTitleBar : Label
     {
         public TabTitleBar(ControlBase parent) : base(parent)

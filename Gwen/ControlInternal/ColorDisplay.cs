@@ -1,12 +1,14 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Gwen.Control;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Color square.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorDisplay : ControlBase
     {
         private Color m_Color;

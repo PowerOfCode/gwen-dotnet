@@ -8,6 +8,7 @@ namespace Gwen.Control
     /// Button control.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Button : Label
     {
         private bool m_Depressed;

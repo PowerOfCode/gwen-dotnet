@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using Gwen.Control;
+using Newtonsoft.Json;
 
 namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Property button.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorButton : Button
     {
         private Color m_Color;

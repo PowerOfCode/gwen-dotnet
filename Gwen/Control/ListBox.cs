@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Gwen.Control.Layout;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// ListBox control.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ListBox : ScrollControl
     {
         private readonly Table m_Table;

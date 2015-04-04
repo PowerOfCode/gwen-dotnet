@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Base for controls whose interior can be scrolled.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ScrollControl : ControlBase
     {
         private bool m_CanScrollH;

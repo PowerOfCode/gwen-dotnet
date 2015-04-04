@@ -11,6 +11,8 @@ namespace Gwen.Control
     /// <summary>
     /// Canvas control. It should be the root parent for all other controls.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Canvas : ControlBase
     {
         private bool m_NeedsRedraw;

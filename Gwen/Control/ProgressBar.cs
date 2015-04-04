@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Progress bar.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ProgressBar : Label
     {
         private bool m_Horizontal;

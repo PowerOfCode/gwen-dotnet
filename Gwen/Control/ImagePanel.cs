@@ -1,11 +1,13 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// Image container.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ImagePanel : ControlBase
     {
         private readonly Texture m_Texture;

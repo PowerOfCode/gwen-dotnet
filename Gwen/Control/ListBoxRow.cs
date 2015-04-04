@@ -1,12 +1,14 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Gwen.Control.Layout;
+using Newtonsoft.Json;
 
 namespace Gwen.Control
 {
     /// <summary>
     /// List box row (selectable).
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ListBoxRow : TableRow
     {
         private bool m_Selected;
