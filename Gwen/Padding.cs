@@ -1,10 +1,12 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen
 {
     /// <summary>
     /// Represents inner spacing.
     /// </summary>
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public struct Padding : IEquatable<Padding>
     {
         public readonly int Top;
@@ -20,7 +22,7 @@ namespace Gwen
         public static Padding Four = new Padding(4, 4, 4, 4);
         public static Padding Five = new Padding(5, 5, 5, 5);
 
-        [Newtonsoft.Json.JsonConstructor]
+        [JsonConstructor]
         public Padding(int Left, int Top, int Right, int Bottom)
         {
             this.Top = Top;

@@ -168,6 +168,18 @@ namespace Gwen
             }
         }
 
+        public static void Do(Type t, params CaseInfo[] cases)
+        {
+            foreach (var entry in cases)
+            {
+                if (entry.IsDefault || entry.Target.IsAssignableFrom(t))
+                {
+                    entry.Action(null);
+                    break;
+                }
+            }
+        }
+
         public static CaseInfo Case<T>(Action action)
         {
             return new CaseInfo()

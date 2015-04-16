@@ -1,10 +1,12 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gwen
 {
     /// <summary>
     /// Represents outer spacing.
     /// </summary>
+    [JsonConverter(typeof(Serialization.GwenConverter))]
     public struct Margin : IEquatable<Margin>
     {
         public int Top;
@@ -25,7 +27,7 @@ namespace Gwen
         public static Margin Nine = new Margin(9, 9, 9, 9);
         public static Margin Ten = new Margin(10, 10, 10, 10);
 
-        [Newtonsoft.Json.JsonConstructor]
+        [JsonConstructor]
         public Margin(int Left, int Top, int Right, int Bottom)
         {
             this.Top = Top;
