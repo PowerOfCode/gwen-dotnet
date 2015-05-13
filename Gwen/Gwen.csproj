@@ -177,6 +177,7 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="Serialization\GwenConverter.cs" />
     <Compile Include="Control\Property\PropertyBase.cs" />
+    <Compile Include="Control\Layout\StackPanel.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
