@@ -28,15 +28,17 @@ namespace Gwen.Control.Layout
 
         protected override void Layout(Gwen.Skin.SkinBase skin)
         {
+            int cachedSizeX = 0, cachedSizeY = 0;
+
             if (IsVertical)
             {
-                Width = Parent.Width;
-                Height = 0;
+                cachedSizeX = Parent.Width;
+                cachedSizeY = 0;
             }
             else
             {
-                Height = Parent.Height;
-                Width = 0;
+                cachedSizeY = Parent.Height;
+                cachedSizeX = 0;
             }
 
             int maxSize = 0;
@@ -49,22 +51,25 @@ namespace Gwen.Control.Layout
                 {
                     maxSize = Math.Max(cache.Width + cache.Margin.Left + cache.Margin.Right, maxSize);
                     cache.X = cache.Margin.Left;
-                    cache.Y = Height + cache.Margin.Top;
-                    Height += cache.Height + cache.Margin.Top + cache.Margin.Bottom;
+                    cache.Y = cachedSizeY + cache.Margin.Top;
+                    cachedSizeY += cache.Height + cache.Margin.Top + cache.Margin.Bottom;
                 }
                 else
                 {
                     maxSize = Math.Max(cache.Height + cache.Margin.Top + cache.Margin.Bottom, maxSize);
-                    cache.X = Width + cache.Margin.Left;
+                    cache.X = cachedSizeX + cache.Margin.Left;
                     cache.Y = cache.Margin.Top;
-                    Width += cache.Width + cache.Margin.Left + cache.Margin.Right;
+                    cachedSizeX += cache.Width + cache.Margin.Left + cache.Margin.Right;
                 }
             }
 
             if (IsVertical)
-                Width = maxSize;
+                cachedSizeX = maxSize;
             else
-                Height = maxSize;
+                cachedSizeY = maxSize;
+
+            if ((cachedSizeX != Width) || (cachedSizeY != Height))
+                SetSize(cachedSizeX, cachedSizeY);
 
             base.Layout(skin);
         }
