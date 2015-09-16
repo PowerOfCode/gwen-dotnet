@@ -47,7 +47,7 @@ namespace Gwen.UnitTest
                 Control.Label label = new Control.Label(this);
                 label.MouseInputEnabled = true; // needed for tooltip
                 label.Text = "Wow, Coloured Text (and tooltip)";
-                label.TextColor = Color.Blue;
+                label.TextColorOverride = Color.Blue;
                 label.SetToolTipText("I'm a tooltip");
                 font3 = new Font(Skin.Renderer, "Motorwerk", 20);
                 ((Control.Label) label.ToolTip).Font = font3;
@@ -56,7 +56,7 @@ namespace Gwen.UnitTest
             {
                 Control.Label label = new Control.Label(this);
                 label.Text = "Coloured Text With Alpha";
-                label.TextColor = Color.FromArgb(100, 0, 0, 255);
+                label.TextColorOverride = Color.FromArgb(100, 0, 0, 255);
                 label.SetPosition(10, 150);
             }
             {
