@@ -58,7 +58,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("Different Coloured Text, for some reason");
-				textbox.TextColor = Color.ForestGreen;
+                textbox.TextColorOverride = Color.ForestGreen;
 				textbox.SetPosition(10, 10 + 25 * row);
 				row++;
 			}
@@ -66,7 +66,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBoxNumeric(this);
 				textbox.SetText("200456698");
-				textbox.TextColor = Color.LightCoral;
+                textbox.TextColorOverride = Color.LightCoral;
 				textbox.SetPosition(10, 10 + 25 * row);
 				row++;
 			}
@@ -76,7 +76,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font3;
 				textbox.SizeToContents();
@@ -86,7 +86,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("..............................................................");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font3;
 				textbox.SizeToContents();
@@ -96,7 +96,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("public override void SetText(string str, bool doEvents = true)");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font3;
 				textbox.SizeToContents();
@@ -106,7 +106,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("あおい　うみから　やってきた");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font3;
 				textbox.SizeToContents();
@@ -118,7 +118,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font1;
 				textbox.SizeToContents();
@@ -128,7 +128,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("..............................................................");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font1;
 				textbox.SizeToContents();
@@ -138,7 +138,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("public override void SetText(string str, bool doEvents = true)");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font1;
 				textbox.SizeToContents();
@@ -148,7 +148,7 @@ namespace Gwen.UnitTest
 			{
 				Control.TextBox textbox = new Control.TextBox(this);
 				textbox.SetText("あおい　うみから　やってきた");
-				textbox.TextColor = Color.Black;
+                textbox.TextColorOverride = Color.Black;
 				textbox.SetPosition(10, 10 + 28 * row);
 				textbox.Font = m_Font1;
 				textbox.SizeToContents();

@@ -784,14 +784,16 @@ namespace Gwen.Skin
             {
                 Textures.ProgressBar.Back.Draw(Renderer, rect);
                 rect.Width = (int) (rect.Width*progress);
-                Textures.ProgressBar.Front.Draw(Renderer, rect);
+                if(rect.Width > 0)
+                    Textures.ProgressBar.Front.Draw(Renderer, rect);
             }
             else
             {
                 Textures.ProgressBar.Back.Draw(Renderer, rect);
                 rect.Y = (int) (rect.Y + rect.Height*(1 - progress));
                 rect.Height = (int)(rect.Height * progress);
-                Textures.ProgressBar.Front.Draw(Renderer, rect);
+                if(rect.Height > 0)
+                    Textures.ProgressBar.Front.Draw(Renderer, rect);
             }
         }
 

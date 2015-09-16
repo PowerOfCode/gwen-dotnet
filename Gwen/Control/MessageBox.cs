@@ -42,6 +42,8 @@ namespace Gwen.Control
             m_Button.Margin = Margin.Five;
             m_Button.SetSize(50, 20);
 
+            base.DisableResizing();
+
             Align.Center(this);
         }
 

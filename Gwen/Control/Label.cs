@@ -45,12 +45,12 @@ namespace Gwen.Control
         }
 
         /// <summary>
-        /// Text color.
+        /// Internal Text color (changes will be lost!). Use TextColorOverride to set the TextColor.
         /// </summary>
         public Color TextColor { get { return m_Text.TextColor; } set { m_Text.TextColor = value; } }
 
         /// <summary>
-        /// Override text color (used by tooltips).
+        /// Custom Text color.
         /// </summary>
         [JsonProperty]
         public Color TextColorOverride { get { return m_Text.TextColorOverride; } set { m_Text.TextColorOverride = value; } }
@@ -274,7 +274,7 @@ namespace Gwen.Control
 				return;
 			}
 
-			TextColor = Skin.Colors.Button.Normal;
+            TextColor = Skin.Colors.Button.Normal;
 		}
     }
 }
