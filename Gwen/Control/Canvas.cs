@@ -125,7 +125,7 @@ namespace Gwen.Control
             if (ShouldDrawBackground)
             {
                 render.DrawColor = m_BackgroundColor;
-                render.DrawFilledRect(RenderBounds);
+                render.DrawFilledRect(Bounds);
             }
 
             DoRender(Skin);
