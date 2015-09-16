@@ -12,22 +12,22 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class NumericUpDown : TextBoxNumeric
     {
-        private int m_Max;
-        private int m_Min;
+        private int max;
+        private int min;
 
-        private readonly Splitter m_Splitter;
-        private readonly UpDownButton_Up m_Up;
-        private readonly UpDownButton_Down m_Down;
+        private readonly Splitter splitter;
+        private readonly UpDownButton_Up up;
+        private readonly UpDownButton_Down down;
 
         /// <summary>
         /// Minimum value.
         /// </summary>
-        public int Min { get { return m_Min; } set { m_Min = value; } }
+        public int Min { get { return min; } set { min = value; } }
 
         /// <summary>
         /// Maximum value.
         /// </summary>
-        public int Max { get { return m_Max; } set { m_Max = value; } }
+        public int Max { get { return max; } set { max = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
@@ -38,24 +38,24 @@ namespace Gwen.Control
         {
             SetSize(100, 20);
 
-            m_Splitter = new Splitter(this);
-            m_Splitter.Dock = Pos.Right;
-            m_Splitter.SetSize(13, 13);
+            splitter = new Splitter(this);
+            splitter.Dock = Pos.Right;
+            splitter.SetSize(13, 13);
 
-            m_Up = new UpDownButton_Up(m_Splitter);
-            m_Up.Clicked += OnButtonUp;
-            m_Up.IsTabable = false;
-            m_Splitter.SetPanel(0, m_Up, false);
+            up = new UpDownButton_Up(splitter);
+            up.Clicked += onButtonUp;
+            up.IsTabable = false;
+            splitter.SetPanel(0, up, false);
 
-            m_Down = new UpDownButton_Down(m_Splitter);
-            m_Down.Clicked += OnButtonDown;
-            m_Down.IsTabable = false;
-            m_Down.Padding = new Padding(0, 1, 1, 0);
-            m_Splitter.SetPanel(1, m_Down, false);
+            down = new UpDownButton_Down(splitter);
+            down.Clicked += onButtonDown;
+            down.IsTabable = false;
+            down.Padding = new Padding(0, 1, 1, 0);
+            splitter.SetPanel(1, down, false);
 
-            m_Max = 100;
-            m_Min = 0;
-            m_Value = 0f;
+            max = 100;
+            min = 0;
+            value = 0f;
             Text = "0";
         }
 
@@ -71,9 +71,9 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyUp(bool down)
+        protected override bool onKeyUp(bool down)
         {
-            if (down) OnButtonUp(null, EventArgs.Empty);
+            if (down) onButtonUp(null, EventArgs.Empty);
             return true;
         }
 
@@ -84,9 +84,9 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyDown(bool down)
+        protected override bool onKeyDown(bool down)
         {
-            if (down) OnButtonDown(null, new ClickedEventArgs(0, 0, true));
+            if (down) onButtonDown(null, new ClickedEventArgs(0, 0, true));
             return true;
         }
 
@@ -94,18 +94,18 @@ namespace Gwen.Control
         /// Handler for the button up event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnButtonUp(ControlBase control, EventArgs args)
+		protected virtual void onButtonUp(ControlBase control, EventArgs args)
         {
-            Value = m_Value + 1;
+            Value = value + 1;
         }
 
         /// <summary>
         /// Handler for the button down event.
         /// </summary>
         /// <param name="control">Event source.</param>
-        protected virtual void OnButtonDown(ControlBase control, ClickedEventArgs args)
+        protected virtual void onButtonDown(ControlBase control, ClickedEventArgs args)
         {
-            Value = m_Value - 1;
+            Value = value - 1;
         }
 
         /// <summary>
@@ -113,13 +113,13 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="str">Text to evaluate.</param>
         /// <returns>True if the text is allowed.</returns>
-        protected override bool IsTextAllowed(string str)
+        protected override bool isTextAllowed(string str)
         {
             float d;
             if (!float.TryParse(str, out d))
                 return false;
-            if (d < m_Min) return false;
-            if (d > m_Max) return false;
+            if (d < min) return false;
+            if (d > max) return false;
             return true;
         }
 
@@ -134,9 +134,9 @@ namespace Gwen.Control
             }
             set
             {
-                if (value < m_Min) value = m_Min;
-                if (value > m_Max) value = m_Max;
-                if (value == m_Value) return;
+                if (value < min) this.value = min;
+                if (value > max) this.value = max;
+                if (this.value == value) return;
 
                 base.Value = value;
             }
@@ -145,9 +145,9 @@ namespace Gwen.Control
         /// <summary>
         /// Handler for the text changed event.
         /// </summary>
-        protected override void OnTextChanged()
+        protected override void onTextChanged()
         {
-            base.OnTextChanged();
+            base.onTextChanged();
             if (ValueChanged != null)
                 ValueChanged.Invoke(this, EventArgs.Empty);
         }

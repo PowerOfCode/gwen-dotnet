@@ -11,27 +11,27 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class RadioButtonGroup : GroupBox
     {
-        private LabeledRadioButton m_Selected;
+        private LabeledRadioButton selected;
 
         /// <summary>
         /// Selected radio button.
         /// </summary>
-        public LabeledRadioButton Selected { get { return m_Selected; } }
+        public LabeledRadioButton Selected { get { return selected; } }
 
         /// <summary>
         /// Internal name of the selected radio button.
         /// </summary>
-        public string SelectedName { get { return m_Selected.Name; } }
+        public string SelectedName { get { return selected.Name; } }
 
         /// <summary>
         /// Text of the selected radio button.
         /// </summary>
-        public string SelectedLabel { get { return m_Selected.Text; } }
+        public string SelectedLabel { get { return selected.Text; } }
 
         /// <summary>
         /// Index of the selected radio button.
         /// </summary>
-        public int SelectedIndex { get { return Children.IndexOf(m_Selected); } }
+        public int SelectedIndex { get { return Children.IndexOf(selected); } }
 
         /// <summary>
         /// Invoked when the selected option has changed.
@@ -72,7 +72,7 @@ namespace Gwen.Control
             LabeledRadioButton lrb = new LabeledRadioButton(this);
             lrb.Name = optionName;
             lrb.Text = text;
-            lrb.RadioButton.Checked += OnRadioClicked;
+            lrb.RadioButton.Checked += onRadioClicked;
             lrb.Dock = Pos.Top;
             lrb.Margin = new Margin(0, 0, 0, 1); // 1 bottom
             lrb.KeyboardInputEnabled = false; // todo: true?
@@ -86,18 +86,18 @@ namespace Gwen.Control
         /// Handler for the option change.
         /// </summary>
         /// <param name="fromPanel">Event source.</param>
-        protected virtual void OnRadioClicked(ControlBase fromPanel, EventArgs args)
+        protected virtual void onRadioClicked(ControlBase fromPanel, EventArgs args)
         {
             RadioButton @checked = fromPanel as RadioButton;
             foreach (LabeledRadioButton rb in Children.OfType<LabeledRadioButton>()) // todo: optimize
             {
                 if (rb.RadioButton == @checked)
-                    m_Selected = rb;
+                    selected = rb;
                 else
                     rb.RadioButton.IsChecked = false;
             }
 
-            OnChanged(m_Selected);
+            onChanged(selected);
         }
         /*
         /// <summary>
@@ -105,7 +105,7 @@ namespace Gwen.Control
         /// </summary>
         public override void SizeToContents()
         {
-            RecurseLayout(Skin); // options are docked so positions are not updated until layout runs
+            recurseLayout(Skin); // options are docked so positions are not updated until layout runs
             //base.SizeToContents();
             int width = 0;
             int height = 0;
@@ -118,7 +118,7 @@ namespace Gwen.Control
             InvalidateParent();
         }
         */
-        protected virtual void OnChanged(ControlBase NewTarget)
+        protected virtual void onChanged(ControlBase NewTarget)
         {
             if (SelectionChanged != null)
                 SelectionChanged.Invoke(this, new ItemSelectedEventArgs(NewTarget));

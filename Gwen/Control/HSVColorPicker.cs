@@ -12,10 +12,10 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class HSVColorPicker : ControlBase, IColorPicker
     {
-        private readonly ColorLerpBox m_LerpBox;
-        private readonly ColorSlider m_ColorSlider;
-        private readonly ColorDisplay m_Before;
-        private readonly ColorDisplay m_After;
+        private readonly ColorLerpBox lerpBox;
+        private readonly ColorSlider colorSlider;
+        private readonly ColorDisplay before;
+        private readonly ColorDisplay after;
 
         /// <summary>
         /// Invoked when the selected color has changed.
@@ -25,12 +25,12 @@ namespace Gwen.Control
         /// <summary>
         /// The "before" color.
         /// </summary>
-        public Color DefaultColor { get { return m_Before.Color; } set { m_Before.Color = value; } }
+        public Color DefaultColor { get { return before.Color; } set { before.Color = value; } }
 
         /// <summary>
         /// Selected color.
         /// </summary>
-        public Color SelectedColor { get { return m_LerpBox.SelectedColor; } }
+        public Color SelectedColor { get { return lerpBox.SelectedColor; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HSVColorPicker"/> class.
@@ -43,25 +43,25 @@ namespace Gwen.Control
             SetSize(256, 128);
             //ShouldCacheToTexture = true;
 
-            m_LerpBox = new ColorLerpBox(this);
-            m_LerpBox.ColorChanged += ColorBoxChanged;
-            m_LerpBox.Dock = Pos.Left;
+            lerpBox = new ColorLerpBox(this);
+            lerpBox.ColorChanged += colorBoxChanged;
+            lerpBox.Dock = Pos.Left;
 
-            m_ColorSlider = new ColorSlider(this);
-            m_ColorSlider.SetPosition(m_LerpBox.Width + 15, 5);
-            m_ColorSlider.ColorChanged += ColorSliderChanged;
-            m_ColorSlider.Dock = Pos.Left;
+            colorSlider = new ColorSlider(this);
+            colorSlider.SetPosition(lerpBox.Width + 15, 5);
+            colorSlider.ColorChanged += colorSliderChanged;
+            colorSlider.Dock = Pos.Left;
 
-            m_After = new ColorDisplay(this);
-            m_After.SetSize(48, 24);
-            m_After.SetPosition(m_ColorSlider.X + m_ColorSlider.Width + 15, 5);
+            after = new ColorDisplay(this);
+            after.SetSize(48, 24);
+            after.SetPosition(colorSlider.X + colorSlider.Width + 15, 5);
 
-            m_Before = new ColorDisplay(this);
-            m_Before.SetSize(48, 24);
-            m_Before.SetPosition(m_After.X, 28);
+            before = new ColorDisplay(this);
+            before.SetSize(48, 24);
+            before.SetPosition(after.X, 28);
 
-            int x = m_Before.X;
-            int y = m_Before.Y + 30;
+            int x = before.X;
+            int y = before.Y + 30;
 
             {
                 Label label = new Label(this);
@@ -74,7 +74,7 @@ namespace Gwen.Control
                 numeric.SetPosition(x + 15, y - 1);
                 numeric.SetSize(26, 16);
                 numeric.SelectAllOnFocus = true;
-                numeric.TextChanged += NumericTyped;
+                numeric.TextChanged += numericTyped;
             }
 
             y += 20;
@@ -90,7 +90,7 @@ namespace Gwen.Control
                 numeric.SetPosition(x + 15, y - 1);
                 numeric.SetSize(26, 16);
                 numeric.SelectAllOnFocus = true;
-                numeric.TextChanged += NumericTyped;
+                numeric.TextChanged += numericTyped;
             }
 
             y += 20;
@@ -106,13 +106,13 @@ namespace Gwen.Control
                 numeric.SetPosition(x + 15, y - 1);
                 numeric.SetSize(26, 16);
                 numeric.SelectAllOnFocus = true;
-                numeric.TextChanged += NumericTyped;
+                numeric.TextChanged += numericTyped;
             }
 
             SetColor(DefaultColor);
         }
 
-		private void NumericTyped(ControlBase control, EventArgs args)
+		private void numericTyped(ControlBase control, EventArgs args)
         {
             TextBoxNumeric box = control as TextBoxNumeric;
             if (null == box) return;
@@ -145,7 +145,7 @@ namespace Gwen.Control
             SetColor(newColor);
         }
 
-        private void UpdateControls(Color color)
+        private void updateControls(Color color)
         {
             // [???] TODO: Make this code safer.
 			// [halfofastaple] This code SHOULD (in theory) never crash/not work as intended, but referencing children by their name is unsafe.
@@ -163,7 +163,7 @@ namespace Gwen.Control
             if (blueBox != null)
                 blueBox.SetText(color.B.ToString(), false);
 
-            m_After.Color = color;
+            after.Color = color;
 
             if (ColorChanged != null)
 				ColorChanged.Invoke(this, EventArgs.Empty);
@@ -177,26 +177,26 @@ namespace Gwen.Control
         /// <param name="reset">Determines whether the "before" color should be set as well.</param>
         public void SetColor(Color color, bool onlyHue = false, bool reset = false)
         {
-            UpdateControls(color);
+            updateControls(color);
 
             if (reset)
-                m_Before.Color = color;
+                before.Color = color;
 
-            m_ColorSlider.SelectedColor = color;
-            m_LerpBox.SetColor(color, onlyHue);
-            m_After.Color = color;
+            colorSlider.SelectedColor = color;
+            lerpBox.SetColor(color, onlyHue);
+            after.Color = color;
         }
 
-		private void ColorBoxChanged(ControlBase control, EventArgs args)
+		private void colorBoxChanged(ControlBase control, EventArgs args)
         {
-            UpdateControls(SelectedColor);
+            updateControls(SelectedColor);
             Invalidate();
         }
 
-		private void ColorSliderChanged(ControlBase control, EventArgs args)
+		private void colorSliderChanged(ControlBase control, EventArgs args)
         {
-            if (m_LerpBox != null)
-                m_LerpBox.SetColor(m_ColorSlider.SelectedColor, true);
+            if (lerpBox != null)
+                lerpBox.SetColor(colorSlider.SelectedColor, true);
             Invalidate();
         }
     }

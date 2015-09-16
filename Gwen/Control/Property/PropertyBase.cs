@@ -24,22 +24,22 @@ namespace Gwen.Control.Property
         /// <summary>
         /// Property value (todo: always string, which is ugly. do something about it).
         /// </summary>
-        public virtual string Value { get { return null; } set { SetValue(value, false); } }
+        public virtual string Value { get { return null; } set { setValue(value, false); } }
 
         /// <summary>
         /// Indicates whether the property value is being edited.
         /// </summary>
         public virtual bool IsEditing { get { return false; } }
 
-        protected virtual void DoChanged()
+        protected virtual void doChanged()
         {
             if (ValueChanged != null)
                 ValueChanged.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnValueChanged(Control.ControlBase control, EventArgs args)
+        protected virtual void onValueChanged(Control.ControlBase control, EventArgs args)
         {
-            DoChanged();
+            doChanged();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Gwen.Control.Property
         /// </summary>
         /// <param name="value">Value to set.</param>
         /// <param name="fireEvents">Determines whether to fire "value changed" event.</param>
-        public virtual void SetValue(string value, bool fireEvents = false)
+        public virtual void setValue(string value, bool fireEvents = false)
         {
             
         }

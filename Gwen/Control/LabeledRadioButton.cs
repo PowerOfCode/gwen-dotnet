@@ -10,13 +10,13 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class LabeledRadioButton : ControlBase
     {
-        private readonly RadioButton m_RadioButton;
-        private readonly Label m_Label;
+        private readonly RadioButton radioButton;
+        private readonly Label label;
 
         /// <summary>
         /// Label text.
         /// </summary>
-        public string Text { get { return m_Label.Text; } set { m_Label.Text = value; } }
+        public string Text { get { return label.Text; } set { label.Text = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LabeledRadioButton"/> class.
@@ -28,37 +28,37 @@ namespace Gwen.Control
 			MouseInputEnabled = true;
             SetSize(100, 20);
 
-            m_RadioButton = new RadioButton(this);
+            radioButton = new RadioButton(this);
             //m_RadioButton.Dock = Pos.Left; // no docking, it causes resizing
             //m_RadioButton.Margin = new Margin(0, 2, 2, 2);
-            m_RadioButton.IsTabable = false;
-            m_RadioButton.KeyboardInputEnabled = false;
+            radioButton.IsTabable = false;
+            radioButton.KeyboardInputEnabled = false;
 
-            m_Label = new Label(this);
-            m_Label.Alignment = Pos.CenterV | Pos.Left;
-            m_Label.Text = "Radio Button";
-			m_Label.Clicked += delegate(ControlBase control, ClickedEventArgs args) { m_RadioButton.Press(control); };
-            m_Label.IsTabable = false;
-            m_Label.KeyboardInputEnabled = false;
+            label = new Label(this);
+            label.Alignment = Pos.CenterV | Pos.Left;
+            label.Text = "Radio Button";
+			label.Clicked += delegate(ControlBase control, ClickedEventArgs args) { radioButton.Press(control); };
+            label.IsTabable = false;
+            label.KeyboardInputEnabled = false;
         }
 
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
             // ugly stuff because we don't have anchoring without docking (docking resizes children)
-            if (m_Label.Height > m_RadioButton.Height) // usually radio is smaller than label so it gets repositioned to avoid clipping with negative Y
+            if (label.Height > radioButton.Height) // usually radio is smaller than label so it gets repositioned to avoid clipping with negative Y
             {
-                m_RadioButton.Y = (m_Label.Height - m_RadioButton.Height)/2;
+                radioButton.Y = (label.Height - radioButton.Height)/2;
             }
-            Align.PlaceRightBottom(m_Label, m_RadioButton);
+            Align.PlaceRightBottom(label, radioButton);
             SizeToChildren();
-            base.Layout(skin);
+            base.layout(skin);
         }
 
         /// <summary>
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.SkinBase skin)
+        protected override void renderFocus(Skin.SkinBase skin)
         {
             if (InputHandler.KeyboardFocus != this) return;
             if (!IsTabable) return;
@@ -67,7 +67,7 @@ namespace Gwen.Control
         }
 
         // todo: would be nice to remove that
-        internal RadioButton RadioButton { get { return m_RadioButton; } }
+        internal RadioButton RadioButton { get { return radioButton; } }
 
         /// <summary>
         /// Handler for Space keyboard event.
@@ -76,10 +76,10 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeySpace(bool down)
+        protected override bool onKeySpace(bool down)
         {
             if (down)
-                m_RadioButton.IsChecked = !m_RadioButton.IsChecked;
+                radioButton.IsChecked = !radioButton.IsChecked;
             return true;
         }
 
@@ -88,7 +88,7 @@ namespace Gwen.Control
         /// </summary>
         public virtual void Select()
         {
-            m_RadioButton.IsChecked = true;
+            radioButton.IsChecked = true;
         }
     }
 }

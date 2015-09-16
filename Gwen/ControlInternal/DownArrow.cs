@@ -10,7 +10,7 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class DownArrow : ControlBase
     {
-        private readonly ComboBox m_ComboBox;
+        private readonly ComboBox comboBox;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DownArrow"/> class.
@@ -22,16 +22,16 @@ namespace Gwen.ControlInternal
             MouseInputEnabled = false;
             SetSize(15, 15);
 
-            m_ComboBox = parent;
+            comboBox = parent;
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawComboBoxArrow(this, m_ComboBox.IsHovered, m_ComboBox.IsDepressed, m_ComboBox.IsOpen, m_ComboBox.IsDisabled);
+            skin.DrawComboBoxArrow(this, comboBox.IsHovered, comboBox.IsDepressed, comboBox.IsOpen, comboBox.IsDisabled);
         }
     }
 }

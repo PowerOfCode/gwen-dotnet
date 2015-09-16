@@ -12,12 +12,12 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Properties : ControlBase
     {
-        private readonly SplitterBar m_SplitterBar;
+        private readonly SplitterBar splitterBar;
 
         /// <summary>
         /// Returns the width of the first column (property names).
         /// </summary>
-        public int SplitWidth { get { return m_SplitterBar.X; } } // todo: rename?
+        public int SplitWidth { get { return splitterBar.X; } } // todo: rename?
 
         /// <summary>
         /// Invoked when a property value has been changed.
@@ -31,36 +31,36 @@ namespace Gwen.Control
         public Properties(ControlBase parent)
             : base(parent)
         {
-            m_SplitterBar = new SplitterBar(this);
-            m_SplitterBar.SetPosition(80, 0);
-            m_SplitterBar.Cursor = Cursors.SizeWE;
-            m_SplitterBar.Dragged += OnSplitterMoved;
-            m_SplitterBar.ShouldDrawBackground = false;
+            splitterBar = new SplitterBar(this);
+            splitterBar.SetPosition(80, 0);
+            splitterBar.Cursor = Cursors.SizeWE;
+            splitterBar.Dragged += onSplitterMoved;
+            splitterBar.ShouldDrawBackground = false;
         }
 
         /// <summary>
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout(Skin.SkinBase skin)
+        protected override void postLayout(Skin.SkinBase skin)
         {
-            m_SplitterBar.Height = 0;
+            splitterBar.Height = 0;
 
             if (SizeToChildren(false, true))
             {
                 InvalidateParent();
             }
 
-            m_SplitterBar.SetSize(3, Height);
+            splitterBar.SetSize(3, Height);
         }
 
         /// <summary>
         /// Handles the splitter moved event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnSplitterMoved(ControlBase control, EventArgs args)
+		protected virtual void onSplitterMoved(ControlBase control, EventArgs args)
         {
-            InvalidateChildren();
+            invalidateChildren();
         }
 
         /// <summary>
@@ -86,15 +86,15 @@ namespace Gwen.Control
             PropertyRow row = new PropertyRow(this, prop);
             row.Dock = Pos.Top;
             row.Label = label;
-            row.ValueChanged += OnRowValueChanged;
+            row.ValueChanged += onRowValueChanged;
 
-            prop.SetValue(value, true);
+            prop.setValue(value, true);
 
-            m_SplitterBar.BringToFront();
+            splitterBar.BringToFront();
             return row;
         }
 
-		private void OnRowValueChanged(ControlBase control, EventArgs args)
+		private void onRowValueChanged(ControlBase control, EventArgs args)
         {
             if (ValueChanged != null)
 				ValueChanged.Invoke(control, EventArgs.Empty);
@@ -105,7 +105,7 @@ namespace Gwen.Control
         /// </summary>
         public void DeleteAll()
         {
-            m_InnerPanel.DeleteAllChildren();
+            innerPanel.DeleteAllChildren();
         }
     }
 }

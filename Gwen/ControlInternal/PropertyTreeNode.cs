@@ -17,16 +17,16 @@ namespace Gwen.ControlInternal
         public PropertyTreeNode(ControlBase parent)
             : base(parent)
         {
-            m_Title.TextColorOverride = Skin.Colors.Properties.Title;
+            title.TextColorOverride = Skin.Colors.Properties.Title;
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawPropertyTreeNode(this, m_InnerPanel.X, m_InnerPanel.Y);
+            skin.DrawPropertyTreeNode(this, innerPanel.X, innerPanel.Y);
         }
     }
 }

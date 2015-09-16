@@ -12,9 +12,9 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorSlider : ControlBase
     {
-        private int m_SelectedDist;
-        private bool m_Depressed;
-        private Texture m_Texture;
+        private int selectedDist;
+        private bool depressed;
+        private Texture texture;
 
         /// <summary>
         /// Invoked when the selected color has been changed.
@@ -30,7 +30,7 @@ namespace Gwen.Control
         {
             SetSize(32, 128);
             MouseInputEnabled = true;
-            m_Depressed = false;
+            depressed = false;
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace Gwen.Control
         /// </summary>
         public override void Dispose()
         {
-            if (m_Texture != null)
-                m_Texture.Dispose();
+            if (texture != null)
+                texture.Dispose();
             base.Dispose();
         }
 
@@ -47,17 +47,17 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             //Is there any way to move this into skin? Not for now, no idea how we'll "actually" render these
 
-            if (m_Texture == null)
+            if (texture == null)
             {
                 byte[] pixelData = new byte[Width * Height * 4];
 
                 for (int y = 0; y < Height; y++)
                 {
-                    Color c = GetColorAtHeight(y);
+                    Color c = getColorAtHeight(y);
                     for (int x = 0; x < Width; x++)
                     {
                         pixelData[4 * (x + y * Width)] = c.R;
@@ -67,16 +67,16 @@ namespace Gwen.Control
                     }
                 }
 
-                m_Texture = new Texture(skin.Renderer);
-                m_Texture.Width = Width;
-                m_Texture.Height = Height;
-                m_Texture.LoadRaw(Width, Height, pixelData);
+                texture = new Texture(skin.Renderer);
+                texture.Width = Width;
+                texture.Height = Height;
+                texture.LoadRaw(Width, Height, pixelData);
             }
 
             skin.Renderer.DrawColor = Color.White;
-            skin.Renderer.DrawTexturedRect(m_Texture, new Rectangle(5, 0, Width-10, Height));
+            skin.Renderer.DrawTexturedRect(texture, new Rectangle(5, 0, Width-10, Height));
 
-            int drawHeight = m_SelectedDist - 3;
+            int drawHeight = selectedDist - 3;
 
             //Draw our selectors
             skin.Renderer.DrawColor = Color.Black;
@@ -87,7 +87,7 @@ namespace Gwen.Control
             skin.Renderer.DrawFilledRect(new Rectangle(1, drawHeight + 1, 3, 3));
             skin.Renderer.DrawFilledRect(new Rectangle(Width - 4, drawHeight + 1, 3, 3));
 
-            base.Render(skin);
+            base.render(skin);
         }
 
         /// <summary>
@@ -96,16 +96,16 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
-			base.OnMouseClickedLeft(x, y, down);
-            m_Depressed = down;
+			base.onMouseClickedLeft(x, y, down);
+            depressed = down;
             if (down)
                 InputHandler.MouseFocus = this;
             else
                 InputHandler.MouseFocus = null;
 
-            OnMouseMoved(x, y, 0, 0);
+            onMouseMoved(x, y, 0, 0);
         }
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace Gwen.Control
         /// <param name="y">Y coordinate.</param>
         /// <param name="dx">X change.</param>
         /// <param name="dy">Y change.</param>
-        protected override void OnMouseMoved(int x, int y, int dx, int dy)
+        protected override void onMouseMoved(int x, int y, int dx, int dy)
         {
-            if (m_Depressed)
+            if (depressed)
             {
                 Point cursorPos = CanvasPosToLocal(new Point(x, y));
 
@@ -126,23 +126,23 @@ namespace Gwen.Control
                 if (cursorPos.Y > Height)
                     cursorPos.Y = Height;
 
-                m_SelectedDist = cursorPos.Y;
+                selectedDist = cursorPos.Y;
                 if (ColorChanged != null)
                     ColorChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
-        private Color GetColorAtHeight(int y)
+        private Color getColorAtHeight(int y)
         {
             float yPercent = y / (float)Height;
             return Util.HSVToColor(yPercent * 360, 1, 1);
         }
 
-        private void SetColor(Color color)
+        private void setColor(Color color)
         {
             HSV hsv = color.ToHSV();
 
-            m_SelectedDist = (int)(hsv.h / 360 * Height);
+            selectedDist = (int)(hsv.h / 360 * Height);
 
             if (ColorChanged != null)
                 ColorChanged.Invoke(this, EventArgs.Empty);
@@ -151,6 +151,6 @@ namespace Gwen.Control
         /// <summary>
         /// Selected color.
         /// </summary>
-        public Color SelectedColor { get { return GetColorAtHeight(m_SelectedDist); } set { SetColor(value); } }
+        public Color SelectedColor { get { return getColorAtHeight(selectedDist); } set { setColor(value); } }
     }
 }

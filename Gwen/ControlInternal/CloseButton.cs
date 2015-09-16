@@ -10,7 +10,7 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CloseButton : Button
     {
-        private readonly WindowControl m_Window;
+        private readonly WindowControl window;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CloseButton"/> class.
@@ -20,16 +20,16 @@ namespace Gwen.ControlInternal
         public CloseButton(ControlBase parent, WindowControl owner)
             : base(parent)
         {
-            m_Window = owner;
+            window = owner;
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawWindowCloseButton(this, IsDepressed && IsHovered, IsHovered && ShouldDrawHover, !m_Window.IsOnTop);
+            skin.DrawWindowCloseButton(this, IsDepressed && IsHovered, IsHovered && shouldDrawHover, !window.IsOnTop);
         }
     }
 }

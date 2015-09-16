@@ -17,8 +17,8 @@ namespace Gwen.Control
         /// </summary>
         public override int BarSize
         {
-            get { return m_Bar.Width; }
-            set { m_Bar.Width = value; }
+            get { return bar.Width; }
+            set { bar.Width = value; }
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Gwen.Control
         /// </summary>
         public override int BarPos
         {
-            get { return m_Bar.X - Height; }
+            get { return bar.X - Height; }
         }
 
         /// <summary>
@@ -52,44 +52,44 @@ namespace Gwen.Control
         public HorizontalScrollBar(ControlBase parent)
             : base(parent)
         {
-            m_Bar.IsHorizontal = true;
+            bar.IsHorizontal = true;
 
-            m_ScrollButton[0].SetDirectionLeft();
-            m_ScrollButton[0].Clicked += NudgeLeft;
+            scrollButton[0].SetDirectionLeft();
+            scrollButton[0].Clicked += NudgeLeft;
 
-            m_ScrollButton[1].SetDirectionRight();
-            m_ScrollButton[1].Clicked += NudgeRight;
+            scrollButton[1].SetDirectionRight();
+            scrollButton[1].Clicked += NudgeRight;
 
-            m_Bar.Dragged += OnBarMoved;
+            bar.Dragged += onBarMoved;
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
+            base.layout(skin);
 
-            m_ScrollButton[0].Width = Height;
-            m_ScrollButton[0].Dock = Pos.Left;
+            scrollButton[0].Width = Height;
+            scrollButton[0].Dock = Pos.Left;
 
-            m_ScrollButton[1].Width = Height;
-            m_ScrollButton[1].Dock = Pos.Right;
+            scrollButton[1].Width = Height;
+            scrollButton[1].Dock = Pos.Right;
 
-            m_Bar.Height = ButtonSize;
-            m_Bar.Padding = new Padding(ButtonSize, 0, ButtonSize, 0);
+            bar.Height = ButtonSize;
+            bar.Padding = new Padding(ButtonSize, 0, ButtonSize, 0);
 
-            float barWidth = (m_ViewableContentSize / m_ContentSize) * (Width - (ButtonSize * 2));
+            float barWidth = (viewableContentSize / contentSize) * (Width - (ButtonSize * 2));
 
             if (barWidth < ButtonSize * 0.5f)
                 barWidth = (int)(ButtonSize * 0.5f);
 
-            m_Bar.Width = (int)(barWidth);
-            m_Bar.IsHidden = Width - (ButtonSize * 2) <= barWidth;
+            bar.Width = (int)(barWidth);
+            bar.IsHidden = Width - (ButtonSize * 2) <= barWidth;
 
             //Based on our last scroll amount, produce a position for the bar
-            if (!m_Bar.IsHeld)
+            if (!bar.IsHeld)
             {
                 SetScrollAmount(ScrollAmount, true);
             }
@@ -121,8 +121,8 @@ namespace Gwen.Control
         {
             get
             {
-                if (m_Depressed)
-                    return m_ViewableContentSize / m_ContentSize;
+                if (depressed)
+                    return viewableContentSize / contentSize;
                 else
                     return base.NudgeAmount;
             }
@@ -138,31 +138,31 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
-			base.OnMouseClickedLeft(x, y, down);
+			base.onMouseClickedLeft(x, y, down);
             if (down)
             {
-                m_Depressed = true;
+                depressed = true;
                 InputHandler.MouseFocus = this;
             }
             else
             {
                 Point clickPos = CanvasPosToLocal(new Point(x, y));
-                if (clickPos.X < m_Bar.X)
+                if (clickPos.X < bar.X)
 					NudgeLeft(this, EventArgs.Empty);
                 else
-                    if (clickPos.X > m_Bar.X + m_Bar.Width)
+                    if (clickPos.X > bar.X + bar.Width)
 						NudgeRight(this, EventArgs.Empty);
 
-                m_Depressed = false;
+                depressed = false;
                 InputHandler.MouseFocus = null;
             }
         }
 
-        protected override float CalculateScrolledAmount()
+        protected override float calculateScrolledAmount()
         {
-            return (float)(m_Bar.X - ButtonSize) / (Width - m_Bar.Width - (ButtonSize * 2));
+            return (float)(bar.X - ButtonSize) / (Width - bar.Width - (ButtonSize * 2));
         }
 
         /// <summary>
@@ -182,8 +182,8 @@ namespace Gwen.Control
 
             if (forceUpdate)
             {
-                int newX = (int)(ButtonSize + (value * ((Width - m_Bar.Width) - (ButtonSize * 2))));
-                m_Bar.MoveTo(newX, m_Bar.Y);
+                int newX = (int)(ButtonSize + (value * ((Width - bar.Width) - (ButtonSize * 2))));
+                bar.MoveTo(newX, bar.Y);
             }
 
             return true;
@@ -193,12 +193,12 @@ namespace Gwen.Control
         /// Handler for the BarMoved event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected override void OnBarMoved(ControlBase control, EventArgs args)
+		protected override void onBarMoved(ControlBase control, EventArgs args)
         {
-            if (m_Bar.IsHeld)
+            if (bar.IsHeld)
             {
-                SetScrollAmount(CalculateScrolledAmount(), false);
-                base.OnBarMoved(control, args);
+                SetScrollAmount(calculateScrolledAmount(), false);
+                base.onBarMoved(control, args);
             }
             else
                 InvalidateParent();

@@ -13,13 +13,13 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TextBoxPassword : TextBox
     {
-        private string m_Mask;
-        private char m_MaskCharacter;
+        private string mask;
+        private char maskCharacter;
 
         /// <summary>
         /// Character used in place of actual characters for display.
         /// </summary>
-        public char MaskCharacter { get { return m_MaskCharacter; } set { m_MaskCharacter = value; } }
+        public char MaskCharacter { get { return maskCharacter; } set { maskCharacter = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxPassword"/> class.
@@ -28,17 +28,17 @@ namespace Gwen.Control
         public TextBoxPassword(ControlBase parent)
             : base(parent)
         {
-            m_MaskCharacter = '*';
+            maskCharacter = '*';
         }
 
         /// <summary>
         /// Handler for text changed event.
         /// </summary>
-        protected override void OnTextChanged()
+        protected override void onTextChanged()
         {
-            m_Mask = new String(MaskCharacter, Text.Length);
-            TextOverride = m_Mask;
-            base.OnTextChanged();
+            mask = new String(MaskCharacter, Text.Length);
+            TextOverride = mask;
+            base.onTextChanged();
         }
     }
 }

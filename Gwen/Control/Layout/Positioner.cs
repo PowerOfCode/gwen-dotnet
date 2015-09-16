@@ -7,12 +7,12 @@ namespace Gwen.Control.Layout
     /// </summary>
     public class Positioner : ControlBase
     {
-        private Pos m_Pos;
+        private Pos pos;
 
         /// <summary>
         /// Children position.
         /// </summary>
-        public Pos Pos { get { return m_Pos; } set { m_Pos = value; } }
+        public Pos Pos { get { return pos; } set { pos = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Positioner"/> class.
@@ -27,11 +27,11 @@ namespace Gwen.Control.Layout
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout(Skin.SkinBase skin)
+        protected override void postLayout(Skin.SkinBase skin)
         {
             foreach (ControlBase child in Children) // ok?
             {
-                child.Position(m_Pos);
+                child.Position(pos);
             }
         }
     }

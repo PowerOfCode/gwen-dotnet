@@ -11,36 +11,36 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TabButton : Button
     {
-        private ControlBase m_Page;
-        private TabControl m_Control;
+        private ControlBase page;
+        private TabControl control;
 
         /// <summary>
         /// Indicates whether the tab is active.
         /// </summary>
-        public bool IsActive { get { return m_Page != null && m_Page.IsVisible; } }
+        public bool IsActive { get { return page != null && page.IsVisible; } }
 
         // todo: remove public access
         public TabControl TabControl
         {
-            get { return m_Control; }
+            get { return control; }
             set
             {
-                if (value == m_Control) return;
-                if (m_Control != null)
-                    m_Control.OnLoseTab(this);
-                m_Control = value;
+                if (value == control) return;
+                if (control != null)
+                    control.OnLoseTab(this);
+                control = value;
             }
         }
 
         /// <summary>
         /// Interior of the tab.
         /// </summary>
-        public ControlBase Page { get { return m_Page; } set { m_Page = value; } }
+        public ControlBase Page { get { return page; } set { page = value; } }
 
         /// <summary>
         /// Determines whether the control should be clipped to its bounds while rendering.
         /// </summary>
-        protected override bool ShouldClip
+        protected override bool shouldClip
         {
             get { return false; }
         }
@@ -72,16 +72,16 @@ namespace Gwen.Control
 
         public override bool DragAndDrop_ShouldStartDrag()
         {
-            return m_Control.AllowReorder;
+            return control.AllowReorder;
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawTabButton(this, IsActive, m_Control.TabStrip.Dock);
+            skin.DrawTabButton(this, IsActive, control.TabStrip.Dock);
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyDown(bool down)
+        protected override bool onKeyDown(bool down)
         {
-            OnKeyRight(down);
+            onKeyRight(down);
             return true;
         }
 
@@ -104,9 +104,9 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyUp(bool down)
+        protected override bool onKeyUp(bool down)
         {
-            OnKeyLeft(down);
+            onKeyLeft(down);
             return true;
         }
 
@@ -117,7 +117,7 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyRight(bool down)
+        protected override bool onKeyRight(bool down)
         {
             if (down)
             {
@@ -141,7 +141,7 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyLeft(bool down)
+        protected override bool onKeyLeft(bool down)
         {
             if (down)
             {

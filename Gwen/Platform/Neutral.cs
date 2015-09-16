@@ -9,7 +9,7 @@ namespace Gwen.Platform
     /// </summary>
     public static class Neutral
     {
-        private static DateTime m_FirstTime = DateTime.Now;
+        private static DateTime firstTime = DateTime.Now;
 
         /// <summary>
         /// Changes the mouse cursor.
@@ -90,7 +90,7 @@ namespace Gwen.Platform
             //  which will grow stale (time difference > 1s) after ~3,168,888 years 
             //  (that's gotta be good enough, right?)
             //P.S. someone fix those numbers if I'm wrong.
-            return (float)((DateTime.Now - m_FirstTime).TotalSeconds);
+            return (float)((DateTime.Now - firstTime).TotalSeconds);
         }
 
         /// <summary>

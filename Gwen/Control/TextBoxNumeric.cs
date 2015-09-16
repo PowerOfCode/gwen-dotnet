@@ -13,7 +13,7 @@ namespace Gwen.Control
         /// <summary>
         /// Current numeric value.
         /// </summary>
-        protected float m_Value;
+        protected float value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxNumeric"/> class.
@@ -25,7 +25,7 @@ namespace Gwen.Control
             SetText("0", false);
         }
 
-        protected virtual bool IsTextAllowed(string str)
+        protected virtual bool isTextAllowed(string str)
         {
             if (str == "" || str == "-")
                 return true; // annoying if single - is not allowed
@@ -39,10 +39,10 @@ namespace Gwen.Control
         /// <param name="text">Text to check.</param>
         /// <param name="position">Cursor position.</param>
         /// <returns>True if allowed.</returns>
-        protected override bool IsTextAllowed(string text, int position)
+        protected override bool isTextAllowed(string text, int position)
         {
             string newText = Text.Insert(position, text);
-            return IsTextAllowed(newText);
+            return isTextAllowed(newText);
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace Gwen.Control
         /// </summary>
         public virtual float Value
         {
-            get { return m_Value; }
+            get { return value; }
             set
             {
-                m_Value = value;
+                this.value = value;
                 Text = value.ToString();
             }
         }
@@ -62,16 +62,16 @@ namespace Gwen.Control
         /// <summary>
         /// Handler for text changed event.
         /// </summary>
-        protected override void OnTextChanged()
+        protected override void onTextChanged()
         {
             if (String.IsNullOrEmpty(Text) || Text == "-")
             {
-                m_Value = 0;
+                value = 0;
                 //SetText("0");
             }
             else
-                m_Value = float.Parse(Text);
-            base.OnTextChanged();
+                value = float.Parse(Text);
+            base.onTextChanged();
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Gwen.Control
         /// <param name="doEvents">Determines whether to invoke "text changed" event.</param>
         public override void SetText(string str, bool doEvents = true)
         {
-            if (IsTextAllowed(str))
+            if (isTextAllowed(str))
                 base.SetText(str, doEvents);
         }
     }

@@ -26,8 +26,8 @@ namespace Gwen.Control
             NewLine
         }
 
-        private bool m_NeedsRebuild;
-        private readonly List<TextBlock> m_TextBlocks;
+        private bool needsRebuild;
+        private readonly List<TextBlock> textBlocks;
         private readonly string[] newline;
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Gwen.Control
             : base(parent)
         {
             newline = new string[] { Environment.NewLine };
-            m_TextBlocks = new List<TextBlock>();
+            textBlocks = new List<TextBlock>();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Gwen.Control
         public void AddLineBreak()
         {
             TextBlock block = new TextBlock { Type = BlockType.NewLine };
-            m_TextBlocks.Add(block);
+            textBlocks.Add(block);
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace Gwen.Control
 
                 TextBlock block = new TextBlock { Type = BlockType.Text, Text = lines[i], Color = color, Font = font };
 
-                m_TextBlocks.Add(block);
-                m_NeedsRebuild = true;
+                textBlocks.Add(block);
+                needsRebuild = true;
                 Invalidate();
             }
         }
@@ -85,11 +85,11 @@ namespace Gwen.Control
         /// </returns>
         public override bool SizeToChildren(bool width = true, bool height = true)
         {
-            Rebuild();
+            rebuild();
             return base.SizeToChildren(width, height);
         }
 
-        protected void SplitLabel(string text, Font font, TextBlock block, ref int x, ref int y, ref int lineHeight)
+        protected void splitLabel(string text, Font font, TextBlock block, ref int x, ref int y, ref int lineHeight)
         {
             var spaced = Util.SplitAndKeep(text, " ");
             if (spaced.Length == 0)
@@ -102,7 +102,7 @@ namespace Gwen.Control
             Point stringSize = Skin.Renderer.MeasureText(font, text);
             if (spaceLeft > stringSize.X)
             {
-                CreateLabel(text, block, ref x, ref y, ref lineHeight, true);
+                createLabel(text, block, ref x, ref y, ref lineHeight, true);
                 return;
             }
 
@@ -110,12 +110,12 @@ namespace Gwen.Control
             Point wordSize = Skin.Renderer.MeasureText(font, spaced[0]);
             if (wordSize.X >= spaceLeft)
             {
-                CreateLabel(spaced[0], block, ref x, ref y, ref lineHeight, true);
+                createLabel(spaced[0], block, ref x, ref y, ref lineHeight, true);
                 if (spaced[0].Length >= text.Length)
                     return;
 
                 leftOver = text.Substring(spaced[0].Length + 1);
-                SplitLabel(leftOver, font, block, ref x, ref y, ref lineHeight);
+                splitLabel(leftOver, font, block, ref x, ref y, ref lineHeight);
                 return;
             }
 
@@ -125,7 +125,7 @@ namespace Gwen.Control
                 wordSize = Skin.Renderer.MeasureText(font, newString + spaced[i]);
                 if (wordSize.X > spaceLeft)
                 {
-                    CreateLabel(newString, block, ref x, ref y, ref lineHeight, true);
+                    createLabel(newString, block, ref x, ref y, ref lineHeight, true);
                     x = 0;
                     y += lineHeight;
                     break;
@@ -138,11 +138,11 @@ namespace Gwen.Control
             if (newstr_len < text.Length)
             {
                 leftOver = text.Substring(newstr_len + 1);
-                SplitLabel(leftOver, font, block, ref x, ref y, ref lineHeight);
+                splitLabel(leftOver, font, block, ref x, ref y, ref lineHeight);
             }
         }
 
-        protected void CreateLabel(string text, TextBlock block, ref int x, ref int y, ref int lineHeight, bool noSplit)
+        protected void createLabel(string text, TextBlock block, ref int x, ref int y, ref int lineHeight, bool noSplit)
         {
             // Use default font or is one set?
             Font font = Skin.DefaultFont;
@@ -161,7 +161,7 @@ namespace Gwen.Control
             {
                 if (x + p.X > Width)
                 {
-                    SplitLabel(text, font, block, ref x, ref y, ref lineHeight);
+                    splitLabel(text, font, block, ref x, ref y, ref lineHeight);
                     return;
                 }
             }
@@ -169,7 +169,7 @@ namespace Gwen.Control
             // Wrap
             if (x + p.X >= Width)
             {
-                CreateNewline(ref x, ref y, lineHeight);
+                createNewline(ref x, ref y, lineHeight);
             }
 
             Label label = new Label(this);
@@ -185,17 +185,17 @@ namespace Gwen.Control
 
             if (x >= Width)
             {
-                CreateNewline(ref x, ref y, lineHeight);
+                createNewline(ref x, ref y, lineHeight);
             }
         }
 
-        protected void CreateNewline(ref int x, ref int y, int lineHeight)
+        protected void createNewline(ref int x, ref int y, int lineHeight)
         {
             x = 0;
             y += lineHeight;
         }
 
-        protected void Rebuild()
+        protected void rebuild()
         {
             DeleteAllChildren();
 
@@ -204,43 +204,43 @@ namespace Gwen.Control
             int lineHeight = -1;
 
 
-            foreach (var block in m_TextBlocks)
+            foreach (var block in textBlocks)
             {
                 if (block.Type == BlockType.NewLine)
                 {
-                    CreateNewline(ref x, ref y, lineHeight);
+                    createNewline(ref x, ref y, lineHeight);
                     continue;
                 }
 
                 if (block.Type == BlockType.Text)
                 {
-                    CreateLabel(block.Text, block, ref x, ref y, ref lineHeight, false);
+                    createLabel(block.Text, block, ref x, ref y, ref lineHeight, false);
                     continue;
                 }
             }
 
-            m_NeedsRebuild = false;
+            needsRebuild = false;
         }
 
         /// <summary>
         /// Handler invoked when control's bounds change.
         /// </summary>
         /// <param name="oldBounds">Old bounds.</param>
-        protected override void OnBoundsChanged(Rectangle oldBounds)
+        protected override void onBoundsChanged(Rectangle oldBounds)
         {
-            base.OnBoundsChanged(oldBounds);
-            Rebuild();
+            base.onBoundsChanged(oldBounds);
+            rebuild();
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
-            if (m_NeedsRebuild)
-                Rebuild();
+            base.layout(skin);
+            if (needsRebuild)
+                rebuild();
 
             // align bottoms. this is still not ideal, need to take font metrics into account.
             ControlBase prev = null;

@@ -12,13 +12,13 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ResizableControl : ControlBase
     {
-        private bool m_ClampMovement;
-        private readonly Resizer[] m_Resizer;
+        private bool clampMovement;
+        private readonly Resizer[] resizer;
 
         /// <summary>
         /// Determines whether control's position should be restricted to its parent bounds.
         /// </summary>
-        public bool ClampMovement { get { return m_ClampMovement; } set { m_ClampMovement = value; } }
+        public bool ClampMovement { get { return clampMovement; } set { clampMovement = value; } }
 
         /// <summary>
         /// Invoked when the control has been resized.
@@ -32,72 +32,72 @@ namespace Gwen.Control
         public ResizableControl(ControlBase parent)
             : base(parent)
         {
-            m_Resizer = new Resizer[10];
+            resizer = new Resizer[10];
             MinimumSize = new Point(5, 5);
-            m_ClampMovement = false;
+            clampMovement = false;
 
-            m_Resizer[2] = new Resizer(this);
-            m_Resizer[2].Dock = Pos.Bottom;
-            m_Resizer[2].ResizeDir = Pos.Bottom;
-            m_Resizer[2].Resized += OnResized;
-            m_Resizer[2].Target = this;
+            resizer[2] = new Resizer(this);
+            resizer[2].Dock = Pos.Bottom;
+            resizer[2].ResizeDir = Pos.Bottom;
+            resizer[2].Resized += onResized;
+            resizer[2].Target = this;
 
-            m_Resizer[1] = new Resizer(m_Resizer[2]);
-            m_Resizer[1].Dock = Pos.Left;
-            m_Resizer[1].ResizeDir = Pos.Bottom | Pos.Left;
-            m_Resizer[1].Resized += OnResized;
-            m_Resizer[1].Target = this;
+            resizer[1] = new Resizer(resizer[2]);
+            resizer[1].Dock = Pos.Left;
+            resizer[1].ResizeDir = Pos.Bottom | Pos.Left;
+            resizer[1].Resized += onResized;
+            resizer[1].Target = this;
 
-            m_Resizer[3] = new Resizer(m_Resizer[2]);
-            m_Resizer[3].Dock = Pos.Right;
-            m_Resizer[3].ResizeDir = Pos.Bottom | Pos.Right;
-            m_Resizer[3].Resized += OnResized;
-            m_Resizer[3].Target = this;
+            resizer[3] = new Resizer(resizer[2]);
+            resizer[3].Dock = Pos.Right;
+            resizer[3].ResizeDir = Pos.Bottom | Pos.Right;
+            resizer[3].Resized += onResized;
+            resizer[3].Target = this;
 
-            m_Resizer[8] = new Resizer(this);
-            m_Resizer[8].Dock = Pos.Top;
-            m_Resizer[8].ResizeDir = Pos.Top;
-            m_Resizer[8].Resized += OnResized;
-            m_Resizer[8].Target = this;
+            resizer[8] = new Resizer(this);
+            resizer[8].Dock = Pos.Top;
+            resizer[8].ResizeDir = Pos.Top;
+            resizer[8].Resized += onResized;
+            resizer[8].Target = this;
 
-            m_Resizer[7] = new Resizer(m_Resizer[8]);
-            m_Resizer[7].Dock = Pos.Left;
-            m_Resizer[7].ResizeDir = Pos.Left | Pos.Top;
-            m_Resizer[7].Resized += OnResized;
-            m_Resizer[7].Target = this;
+            resizer[7] = new Resizer(resizer[8]);
+            resizer[7].Dock = Pos.Left;
+            resizer[7].ResizeDir = Pos.Left | Pos.Top;
+            resizer[7].Resized += onResized;
+            resizer[7].Target = this;
 
-            m_Resizer[9] = new Resizer(m_Resizer[8]);
-            m_Resizer[9].Dock = Pos.Right;
-            m_Resizer[9].ResizeDir = Pos.Right | Pos.Top;
-            m_Resizer[9].Resized += OnResized;
-            m_Resizer[9].Target = this;
+            resizer[9] = new Resizer(resizer[8]);
+            resizer[9].Dock = Pos.Right;
+            resizer[9].ResizeDir = Pos.Right | Pos.Top;
+            resizer[9].Resized += onResized;
+            resizer[9].Target = this;
 
-            m_Resizer[4] = new Resizer(this);
-            m_Resizer[4].Dock = Pos.Left;
-            m_Resizer[4].ResizeDir = Pos.Left;
-            m_Resizer[4].Resized += OnResized;
-            m_Resizer[4].Target = this;
+            resizer[4] = new Resizer(this);
+            resizer[4].Dock = Pos.Left;
+            resizer[4].ResizeDir = Pos.Left;
+            resizer[4].Resized += onResized;
+            resizer[4].Target = this;
 
-            m_Resizer[6] = new Resizer(this);
-            m_Resizer[6].Dock = Pos.Right;
-            m_Resizer[6].ResizeDir = Pos.Right;
-            m_Resizer[6].Resized += OnResized;
-            m_Resizer[6].Target = this;
+            resizer[6] = new Resizer(this);
+            resizer[6].Dock = Pos.Right;
+            resizer[6].ResizeDir = Pos.Right;
+            resizer[6].Resized += onResized;
+            resizer[6].Target = this;
         }
 
         /// <summary>
         /// Handler for the resized event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnResized(ControlBase control, EventArgs args)
+		protected virtual void onResized(ControlBase control, EventArgs args)
         {
             if (Resized != null)
 				Resized.Invoke(this, EventArgs.Empty);
         }
 
-        protected Resizer GetResizer(int i)
+        protected Resizer getResizer(int i)
         {
-            return m_Resizer[i];
+            return resizer[i];
         }
 
         /// <summary>
@@ -107,11 +107,11 @@ namespace Gwen.Control
         {
             for (int i = 0; i < 10; i++)
             {
-                if (m_Resizer[i] == null)
+                if (resizer[i] == null)
                     continue;
-                m_Resizer[i].MouseInputEnabled = false;
-                m_Resizer[i].IsHidden = true;
-                Padding = new Padding(m_Resizer[i].Width, m_Resizer[i].Width, m_Resizer[i].Width, m_Resizer[i].Width);
+                resizer[i].MouseInputEnabled = false;
+                resizer[i].IsHidden = true;
+                Padding = new Padding(resizer[i].Width, resizer[i].Width, resizer[i].Width, resizer[i].Width);
             }
         }
 
@@ -122,10 +122,10 @@ namespace Gwen.Control
         {
             for (int i = 0; i < 10; i++)
             {
-                if (m_Resizer[i] == null)
+                if (resizer[i] == null)
                     continue;
-                m_Resizer[i].MouseInputEnabled = true;
-                m_Resizer[i].IsHidden = false;
+                resizer[i].MouseInputEnabled = true;
+                resizer[i].IsHidden = false;
                 Padding = new Padding(0, 0, 0, 0); // todo: check if ok
             }
         }
@@ -149,7 +149,7 @@ namespace Gwen.Control
 
             // Clamp to parent's window
             ControlBase parent = Parent;
-            if (parent != null && m_ClampMovement)
+            if (parent != null && clampMovement)
             {
                 if (x + width > parent.Width) x = parent.Width - width;
                 if (x < 0) x = 0;
@@ -169,7 +169,7 @@ namespace Gwen.Control
         public override bool SetSize(int width, int height) {
             bool Changed = base.SetSize(width, height);
             if (Changed) {
-				OnResized(this, EventArgs.Empty);
+				onResized(this, EventArgs.Empty);
             }
             return Changed;
         }

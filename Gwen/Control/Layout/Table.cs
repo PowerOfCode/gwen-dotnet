@@ -174,9 +174,9 @@ namespace Gwen.Control.Layout
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
+            base.layout(skin);
 
             bool even = false;
             foreach (TableRow row in Children)
@@ -190,9 +190,9 @@ namespace Gwen.Control.Layout
             }
         }
 
-        protected override void PostLayout(Skin.SkinBase skin)
+        protected override void postLayout(Skin.SkinBase skin)
         {
-            base.PostLayout(skin);
+            base.postLayout(skin);
             if (m_SizeToContents)
             {
                 DoSizeToContents();

@@ -12,9 +12,9 @@ namespace Gwen.Input
     /// </summary>
     public static class InputHandler
     {
-        private static readonly KeyData m_KeyData = new KeyData();
-        private static readonly float[] m_LastClickTime = new float[MaxMouseButtons];
-        private static Point m_LastClickPos;
+        private static readonly KeyData keyData = new KeyData();
+        private static readonly float[] lastClickTime = new float[MaxMouseButtons];
+        private static Point lastClickPos;
 
         /// <summary>
         /// Control currently hovered by mouse.
@@ -54,12 +54,12 @@ namespace Gwen.Input
         /// <summary>
         /// Indicates whether the left mouse button is down.
         /// </summary>
-        public static bool IsLeftMouseDown { get { return m_KeyData.LeftMouseDown; } }
+        public static bool IsLeftMouseDown { get { return keyData.LeftMouseDown; } }
 
         /// <summary>
         /// Indicates whether the right mouse button is down.
         /// </summary>
-        public static bool IsRightMouseDown { get { return m_KeyData.RightMouseDown; } }
+        public static bool IsRightMouseDown { get { return keyData.RightMouseDown; } }
 
         /// <summary>
         /// Current mouse position.
@@ -83,7 +83,7 @@ namespace Gwen.Input
         /// <returns>True if the key is down.</returns>
         public static bool IsKeyDown(Key key)
         {
-            return m_KeyData.KeyState[(int)key];
+            return keyData.KeyState[(int)key];
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Gwen.Input
             MousePosition.X = x;
             MousePosition.Y = y;
 
-            UpdateHoveredControl(canvas);
+            updateHoveredControl(canvas);
         }
 
         /// <summary>
@@ -198,15 +198,15 @@ namespace Gwen.Input
             //
             for (int i = 0; i < (int)Key.Count; i++)
             {
-                if (m_KeyData.KeyState[i] && m_KeyData.Target != KeyboardFocus)
+                if (keyData.KeyState[i] && keyData.Target != KeyboardFocus)
                 {
-                    m_KeyData.KeyState[i] = false;
+                    keyData.KeyState[i] = false;
                     continue;
                 }
 
-                if (m_KeyData.KeyState[i] && time > m_KeyData.NextRepeat[i])
+                if (keyData.KeyState[i] && time > keyData.NextRepeat[i])
                 {
-                    m_KeyData.NextRepeat[i] = Platform.Neutral.GetTimeInSeconds() + KeyRepeatRate;
+                    keyData.NextRepeat[i] = Platform.Neutral.GetTimeInSeconds() + KeyRepeatRate;
 
                     if (KeyboardFocus != null)
                     {
@@ -241,31 +241,31 @@ namespace Gwen.Input
                 return false;
 
             if (mouseButton == 0)
-                m_KeyData.LeftMouseDown = down;
+                keyData.LeftMouseDown = down;
             else if (mouseButton == 1)
-                m_KeyData.RightMouseDown = down;
+                keyData.RightMouseDown = down;
 
             // Double click.
             // Todo: Shouldn't double click if mouse has moved significantly
             bool isDoubleClick = false;
 
             if (down &&
-                m_LastClickPos.X == MousePosition.X &&
-                m_LastClickPos.Y == MousePosition.Y &&
-                (Platform.Neutral.GetTimeInSeconds() - m_LastClickTime[mouseButton]) < DoubleClickSpeed)
+                lastClickPos.X == MousePosition.X &&
+                lastClickPos.Y == MousePosition.Y &&
+                (Platform.Neutral.GetTimeInSeconds() - lastClickTime[mouseButton]) < DoubleClickSpeed)
             {
                 isDoubleClick = true;
             }
 
             if (down && !isDoubleClick)
             {
-                m_LastClickTime[mouseButton] = Platform.Neutral.GetTimeInSeconds();
-                m_LastClickPos = MousePosition;
+                lastClickTime[mouseButton] = Platform.Neutral.GetTimeInSeconds();
+                lastClickPos = MousePosition;
             }
 
             if (down)
             {
-                FindKeyboardFocus(HoveredControl);
+                findKeyboardFocus(HoveredControl);
             }
 
             HoveredControl.UpdateCursor();
@@ -329,20 +329,20 @@ namespace Gwen.Input
             int iKey = (int)key;
             if (down)
             {
-                if (!m_KeyData.KeyState[iKey])
+                if (!keyData.KeyState[iKey])
                 {
-                    m_KeyData.KeyState[iKey] = true;
-                    m_KeyData.NextRepeat[iKey] = Platform.Neutral.GetTimeInSeconds() + KeyRepeatDelay;
-                    m_KeyData.Target = KeyboardFocus;
+                    keyData.KeyState[iKey] = true;
+                    keyData.NextRepeat[iKey] = Platform.Neutral.GetTimeInSeconds() + KeyRepeatDelay;
+                    keyData.Target = KeyboardFocus;
 
                     return KeyboardFocus.InputKeyPressed(key);
                 }
             }
             else
             {
-                if (m_KeyData.KeyState[iKey])
+                if (keyData.KeyState[iKey])
                 {
-                    m_KeyData.KeyState[iKey] = false;
+                    keyData.KeyState[iKey] = false;
 
                     // BUG BUG. This causes shift left arrow in textboxes
                     // to not work. What is disabling it here breaking?
@@ -355,7 +355,7 @@ namespace Gwen.Input
             return false;
         }
 
-        private static void UpdateHoveredControl(ControlBase inCanvas)
+        private static void updateHoveredControl(ControlBase inCanvas)
         {
             ControlBase hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
 
@@ -388,7 +388,7 @@ namespace Gwen.Input
             }
         }
 
-        private static void FindKeyboardFocus(ControlBase control)
+        private static void findKeyboardFocus(ControlBase control)
         {
             if (null == control) return;
             if (control.KeyboardInputEnabled)
@@ -403,7 +403,7 @@ namespace Gwen.Input
                 return;
             }
 
-            FindKeyboardFocus(control.Parent);
+            findKeyboardFocus(control.Parent);
             return;
         }
     }

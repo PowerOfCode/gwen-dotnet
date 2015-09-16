@@ -12,40 +12,40 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class MenuItem : Button
     {
-        private bool m_OnStrip;
-        private bool m_Checkable;
-        private bool m_Checked;
-        private Menu m_Menu;
-        private ControlBase m_SubmenuArrow;
-        private Label m_Accelerator;
+        private bool onStrip;
+        private bool checkable;
+        private bool isChecked;
+        private Menu menu;
+        private ControlBase submenuArrow;
+        private Label accelerator;
 
         /// <summary>
         /// Indicates whether the item is on a menu strip.
         /// </summary>
-        public bool IsOnStrip { get { return m_OnStrip; } set { m_OnStrip = value; } }
+        public bool IsOnStrip { get { return onStrip; } set { onStrip = value; } }
 
         /// <summary>
         /// Determines if the menu item is checkable.
         /// </summary>
-        public bool IsCheckable { get { return m_Checkable; } set { m_Checkable = value; } }
+        public bool IsCheckable { get { return checkable; } set { checkable = value; } }
 
         /// <summary>
         /// Indicates if the parent menu is open.
         /// </summary>
-        public bool IsMenuOpen { get { if (m_Menu == null) return false; return !m_Menu.IsHidden; } }
+        public bool IsMenuOpen { get { if (menu == null) return false; return !menu.IsHidden; } }
 
         /// <summary>
         /// Gets or sets the check value.
         /// </summary>
         public bool IsChecked
         {
-            get { return m_Checked; }
+            get { return isChecked; }
             set
             {
-                if (value == m_Checked)
+                if (value == isChecked)
                     return;
 
-                m_Checked = value;
+                isChecked = value;
 
                 if (CheckChanged != null)
                     CheckChanged.Invoke(this, EventArgs.Empty);
@@ -70,23 +70,23 @@ namespace Gwen.Control
         {
             get
             {
-                if (null == m_Menu)
+                if (null == menu)
                 {
-                    m_Menu = new Menu(GetCanvas());
-                    m_Menu.IsHidden = true;
+                    menu = new Menu(GetCanvas());
+                    menu.IsHidden = true;
 
-                    if (!m_OnStrip)
+                    if (!onStrip)
                     {
-                        if (m_SubmenuArrow != null)
-                            m_SubmenuArrow.Dispose();
-                        m_SubmenuArrow = new RightArrow(this);
-                        m_SubmenuArrow.SetSize(15, 15);
+                        if (submenuArrow != null)
+                            submenuArrow.Dispose();
+                        submenuArrow = new RightArrow(this);
+                        submenuArrow.SetSize(15, 15);
                     }
 
                     Invalidate();
                 }
 
-                return m_Menu;
+                return menu;
             }
         }
 
@@ -118,53 +118,53 @@ namespace Gwen.Control
             : base(parent)
         {
 			AutoSizeToContents = true;
-			m_OnStrip = false;
+			onStrip = false;
             IsTabable = false;
             IsCheckable = false;
             IsChecked = false;
 
-            m_Accelerator = new Label(this);
+            accelerator = new Label(this);
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawMenuItem(this, IsMenuOpen, m_Checkable ? m_Checked : false);
+            skin.DrawMenuItem(this, IsMenuOpen, checkable ? isChecked : false);
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            if (m_SubmenuArrow != null)
+            if (submenuArrow != null)
             {
-                m_SubmenuArrow.Position(Pos.Right | Pos.CenterV, 4, 0);
+                submenuArrow.Position(Pos.Right | Pos.CenterV, 4, 0);
             }
-            base.Layout(skin);
+            base.layout(skin);
         }
 
         /// <summary>
         /// Internal OnPressed implementation.
         /// </summary>
-        protected override void OnClicked(int x, int y)
+        protected override void onClicked(int x, int y)
         {
-            if (m_Menu != null)
+            if (menu != null)
             {
                 ToggleMenu();
             }
-            else if (!m_OnStrip)
+            else if (!onStrip)
             {
                 IsChecked = !IsChecked;
                 if (Selected != null)
 					Selected.Invoke(this, new ItemSelectedEventArgs(this));
                 GetCanvas().CloseMenus();
             }
-            base.OnClicked(x, y);
+            base.onClicked(x, y);
         }
 
         /// <summary>
@@ -183,22 +183,22 @@ namespace Gwen.Control
         /// </summary>
         public void OpenMenu()
         {
-            if (null == m_Menu) return;
+            if (null == menu) return;
 
-            m_Menu.IsHidden = false;
-            m_Menu.BringToFront();
+            menu.IsHidden = false;
+            menu.BringToFront();
 
             Point p = LocalPosToCanvas(Point.Empty);
 
             // Strip menus open downwards
-            if (m_OnStrip)
+            if (onStrip)
             {
-                m_Menu.SetPosition(p.X, p.Y + Height + 1);
+                menu.SetPosition(p.X, p.Y + Height + 1);
             }
             // Submenus open sidewards
             else
             {
-                m_Menu.SetPosition(p.X + Width, p.Y);
+                menu.SetPosition(p.X + Width, p.Y);
             }
 
             // TODO: Option this.
@@ -211,26 +211,26 @@ namespace Gwen.Control
         /// </summary>
         public void CloseMenu()
         {
-            if (null == m_Menu) return;
-            m_Menu.Close();
-            m_Menu.CloseAll();
+            if (null == menu) return;
+            menu.Close();
+            menu.CloseAll();
         }
 
         public override void SizeToContents()
         {
             base.SizeToContents();
-            if (m_Accelerator != null)
+            if (accelerator != null)
             {
-                m_Accelerator.SizeToContents();
-                Width = Width + m_Accelerator.Width;
+                accelerator.SizeToContents();
+                Width = Width + accelerator.Width;
             }
         }
 
         public MenuItem SetAction(GwenEventHandler<EventArgs> handler)
         {
-            if (m_Accelerator != null)
+            if (accelerator != null)
             {
-                AddAccelerator(m_Accelerator.Text, handler);
+                AddAccelerator(accelerator.Text, handler);
             }
 
             Selected += handler;
@@ -239,20 +239,20 @@ namespace Gwen.Control
 
         public void SetAccelerator(string acc)
         {
-            if (m_Accelerator != null)
+            if (accelerator != null)
             {
                 //m_Accelerator.DelayedDelete(); // to prevent double disposing
-                m_Accelerator = null;
+                accelerator = null;
             }
 
             if (acc == String.Empty)
                 return;
 
-            m_Accelerator = new Label(this);
-            m_Accelerator.Dock = Pos.Right;
-            m_Accelerator.Alignment = Pos.Right | Pos.CenterV;
-            m_Accelerator.Text = acc;
-            m_Accelerator.Margin = new Margin(0, 0, 16, 0);
+            accelerator = new Label(this);
+            accelerator.Dock = Pos.Right;
+            accelerator.Alignment = Pos.Right | Pos.CenterV;
+            accelerator.Text = acc;
+            accelerator.Margin = new Margin(0, 0, 16, 0);
             // todo
         }
     }

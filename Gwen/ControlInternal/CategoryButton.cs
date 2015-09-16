@@ -10,7 +10,7 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CategoryButton : Button
     {
-        internal bool m_Alt; // for alternate coloring
+        internal bool alt; // for alternate coloring
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryButton"/> class.
@@ -19,7 +19,7 @@ namespace Gwen.ControlInternal
         public CategoryButton(ControlBase parent) : base(parent)
         {
             Alignment = Pos.Left | Pos.CenterV;
-            m_Alt = false;
+            alt = false;
             IsToggle = true;
             TextPadding = new Padding(3, 0, 3, 0);
         }
@@ -28,9 +28,9 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            if (m_Alt)
+            if (alt)
             {
                 if (IsDepressed || ToggleState)
                     Skin.Renderer.DrawColor = skin.Colors.Category.LineAlt.Button_Selected;
@@ -57,7 +57,7 @@ namespace Gwen.ControlInternal
         /// </summary>
         public override void UpdateColors()
         {
-            if (m_Alt)
+            if (alt)
             {
                 if (IsDepressed || ToggleState)
                 {

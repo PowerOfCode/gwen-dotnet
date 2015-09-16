@@ -9,12 +9,12 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class DockedTabControl : TabControl
     {
-        private readonly TabTitleBar m_TitleBar;
+        private readonly TabTitleBar titleBar;
 
         /// <summary>
         /// Determines whether the title bar is visible.
         /// </summary>
-        public bool TitleBarVisible { get { return !m_TitleBar.IsHidden; } set { m_TitleBar.IsHidden = !value; } }
+        public bool TitleBarVisible { get { return !titleBar.IsHidden; } set { titleBar.IsHidden = !value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DockedTabControl"/> class.
@@ -25,28 +25,28 @@ namespace Gwen.Control
         {
             Dock = Pos.Fill;
 
-            m_TitleBar = new TabTitleBar(this);
-            m_TitleBar.Dock = Pos.Top;
-            m_TitleBar.IsHidden = true;
+            titleBar = new TabTitleBar(this);
+            titleBar.Dock = Pos.Top;
+            titleBar.IsHidden = true;
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
             TabStrip.IsHidden = (TabCount <= 1);
-            UpdateTitleBar();
-            base.Layout(skin);
+            updateTitleBar();
+            base.layout(skin);
         }
 
-        private void UpdateTitleBar()
+        private void updateTitleBar()
         {
             if (CurrentButton == null)
                 return;
 
-            m_TitleBar.UpdateFromTab(CurrentButton);
+            titleBar.UpdateFromTab(CurrentButton);
         }
 
         public override void DragAndDrop_StartDragging(DragDrop.Package package, int x, int y)

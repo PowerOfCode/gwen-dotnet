@@ -13,18 +13,18 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TabStrip : ControlBase
     {
-        private ControlBase m_TabDragControl;
-        private bool m_AllowReorder;
+        private ControlBase tabDragControl;
+        private bool allowReorder;
 
         /// <summary>
         /// Determines whether it is possible to reorder tabs by mouse dragging.
         /// </summary>
-        public bool AllowReorder { get { return m_AllowReorder; } set { m_AllowReorder = value; } }
+        public bool AllowReorder { get { return allowReorder; } set { allowReorder = value; } }
 
         /// <summary>
         /// Determines whether the control should be clipped to its bounds while rendering.
         /// </summary>
-        protected override bool ShouldClip
+        protected override bool shouldClip
         {
             get { return false; }
         }
@@ -36,7 +36,7 @@ namespace Gwen.Control
         public TabStrip(ControlBase parent)
             : base(parent)
         {
-            m_AllowReorder = false;
+            allowReorder = false;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Gwen.Control
 
         public override bool DragAndDrop_CanAcceptPackage(Package p)
         {
-            if (!m_AllowReorder)
+            if (!allowReorder)
                 return false;
 
             if (p.Name == "TabButtonMove")
@@ -102,7 +102,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
             Point largestTab = new Point(5, 5);
 
@@ -154,29 +154,29 @@ namespace Gwen.Control
             if (Dock == Pos.Left || Dock == Pos.Right)
                 SetSize(largestTab.X, Height);
 
-            base.Layout(skin);
+            base.layout(skin);
         }
 
         public override void DragAndDrop_HoverEnter(Package p, int x, int y)
         {
-            if (m_TabDragControl != null)
+            if (tabDragControl != null)
             {
                 throw new InvalidOperationException("ERROR! TabStrip::DragAndDrop_HoverEnter");
             }
 
-            m_TabDragControl = new Highlight(this);
-            m_TabDragControl.MouseInputEnabled = false;
-            m_TabDragControl.SetSize(3, Height);
+            tabDragControl = new Highlight(this);
+            tabDragControl.MouseInputEnabled = false;
+            tabDragControl.SetSize(3, Height);
         }
 
         public override void DragAndDrop_HoverLeave(Package p)
         {
-            if (m_TabDragControl != null)
+            if (tabDragControl != null)
             {
-                RemoveChild(m_TabDragControl, false); // [omeg] need to do that explicitely
-                m_TabDragControl.Dispose();
+                RemoveChild(tabDragControl, false); // [omeg] need to do that explicitely
+                tabDragControl.Dispose();
             }
-            m_TabDragControl = null;
+            tabDragControl = null;
         }
 
         public override void DragAndDrop_Hover(Package p, int x, int y)
@@ -187,20 +187,20 @@ namespace Gwen.Control
             if (droppedOn != null && droppedOn != this)
             {
                 Point dropPos = droppedOn.CanvasPosToLocal(new Point(x, y));
-                m_TabDragControl.SetBounds(new Rectangle(0, 0, 3, Height));
-                m_TabDragControl.BringToFront();
-                m_TabDragControl.SetPosition(droppedOn.X - 1, 0);
+                tabDragControl.SetBounds(new Rectangle(0, 0, 3, Height));
+                tabDragControl.BringToFront();
+                tabDragControl.SetPosition(droppedOn.X - 1, 0);
 
                 if (dropPos.X > droppedOn.Width/2)
                 {
-                    m_TabDragControl.MoveBy(droppedOn.Width - 1, 0);
+                    tabDragControl.MoveBy(droppedOn.Width - 1, 0);
                 }
-                m_TabDragControl.Dock = Pos.None;
+                tabDragControl.Dock = Pos.None;
             }
             else
             {
-                m_TabDragControl.Dock = Pos.Left;
-                m_TabDragControl.BringToFront();
+                tabDragControl.Dock = Pos.Left;
+                tabDragControl.BringToFront();
             }
         }
     }

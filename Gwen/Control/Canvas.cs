@@ -15,16 +15,16 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Canvas : ControlBase
     {
-        private bool m_NeedsRedraw;
-        private float m_Scale;
+        private bool needsRedraw;
+        private float scale;
 
-        private Color m_BackgroundColor;
+        private Color backgroundColor;
 
         // [omeg] these are not created by us, so no disposing
         internal ControlBase FirstTab;
         internal ControlBase NextTab;
 
-        private readonly List<IDisposable> m_DisposeQueue; // dictionary for faster access?
+        private readonly List<IDisposable> disposeQueue; // dictionary for faster access?
 
         /// <summary>
         /// Scale for rendering.
@@ -32,18 +32,18 @@ namespace Gwen.Control
         [JsonProperty]
         public float Scale
         {
-            get { return m_Scale; }
+            get { return scale; }
             set
             {
-                if (m_Scale == value)
+                if (scale == value)
                     return;
 
-                m_Scale = value;
+                scale = value;
 
                 if (Skin != null && Skin.Renderer != null)
-                    Skin.Renderer.Scale = m_Scale;
+                    Skin.Renderer.Scale = scale;
 
-                OnScaleChanged();
+                onScaleChanged();
                 Redraw();
             }
         }
@@ -51,14 +51,14 @@ namespace Gwen.Control
         /// <summary>
         /// Background color.
         /// </summary>
-        public Color BackgroundColor { get { return m_BackgroundColor; } set { m_BackgroundColor = value; } }
+        public Color BackgroundColor { get { return backgroundColor; } set { backgroundColor = value; } }
 
         /// <summary>
         /// In most situations you will be rendering the canvas every frame.
         /// But in some situations you will only want to render when there have been changes.
         /// You can do this by checking NeedsRedraw.
         /// </summary>
-        public bool NeedsRedraw { get { return m_NeedsRedraw; } set { m_NeedsRedraw = value; } }
+        public bool NeedsRedraw { get { return needsRedraw; } set { needsRedraw = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Canvas"/> class.
@@ -72,12 +72,12 @@ namespace Gwen.Control
             BackgroundColor = Color.White;
             ShouldDrawBackground = false;
 
-            m_DisposeQueue = new List<IDisposable>();
+            disposeQueue = new List<IDisposable>();
         }
 
         public override void Dispose()
         {
-            ProcessDelayedDeletes();
+            processDelayedDeletes();
             base.Dispose();
         }
 
@@ -100,7 +100,7 @@ namespace Gwen.Control
         /// <summary>
         /// Additional initialization (which is sometimes not appropriate in the constructor)
         /// </summary>
-        protected void Initialize()
+        protected void initialize()
         {
 
         }
@@ -110,13 +110,13 @@ namespace Gwen.Control
         /// </summary>
         public void RenderCanvas()
         {
-            DoThink();
+            doThink();
 
             Renderer.RendererBase render = Skin.Renderer;
 
             render.Begin();
 
-            RecurseLayout(Skin);
+            recurseLayout(Skin);
 
             render.ClipRegion = Bounds;
             render.RenderOffset = Point.Empty;
@@ -124,7 +124,7 @@ namespace Gwen.Control
 
             if (ShouldDrawBackground)
             {
-                render.DrawColor = m_BackgroundColor;
+                render.DrawColor = backgroundColor;
                 render.DrawFilledRect(Bounds);
             }
 
@@ -143,27 +143,27 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             //skin.Renderer.rnd = new Random(1);
-            base.Render(skin);
-            m_NeedsRedraw = false;
+            base.render(skin);
+            needsRedraw = false;
         }
 
         /// <summary>
         /// Handler invoked when control's bounds change.
         /// </summary>
         /// <param name="oldBounds">Old bounds.</param>
-        protected override void OnBoundsChanged(Rectangle oldBounds)
+        protected override void onBoundsChanged(Rectangle oldBounds)
         {
-            base.OnBoundsChanged(oldBounds);
-            InvalidateChildren(true);
+            base.onBoundsChanged(oldBounds);
+            invalidateChildren(true);
         }
 
         /// <summary>
         /// Processes input and layout. Also purges delayed delete queue.
         /// </summary>
-        private void DoThink()
+        private void doThink()
         {
             if (IsHidden)
                 return;
@@ -174,10 +174,10 @@ namespace Gwen.Control
             NextTab = null;
             FirstTab = null;
 
-            ProcessDelayedDeletes();
+            processDelayedDeletes();
 
             // Check has focus etc..
-            RecurseLayout(Skin);
+            recurseLayout(Skin);
 
             // If we didn't have a next tab, cycle to the start.
             if (NextTab == null)
@@ -192,9 +192,9 @@ namespace Gwen.Control
         /// <param name="control">Control to delete.</param>
         public void AddDelayedDelete(ControlBase control)
         {
-            if (!m_DisposeQueue.Contains(control))
+            if (!disposeQueue.Contains(control))
             {
-                m_DisposeQueue.Add(control);
+                disposeQueue.Add(control);
                 RemoveChild(control, false);
             }
 #if DEBUG
@@ -203,15 +203,15 @@ namespace Gwen.Control
 #endif
         }
 
-        private void ProcessDelayedDeletes()
+        private void processDelayedDeletes()
         {
-            //if (m_DisposeQueue.Count > 0)
-            //    System.Diagnostics.Debug.Print("Canvas.ProcessDelayedDeletes: {0} items", m_DisposeQueue.Count);
-            foreach (IDisposable control in m_DisposeQueue)
+            //if (disposeQueue.Count > 0)
+            //    System.Diagnostics.Debug.Print("Canvas.processDelayedDeletes: {0} items", disposeQueue.Count);
+            foreach (IDisposable control in disposeQueue)
             {
                 control.Dispose();
             }
-            m_DisposeQueue.Clear();
+            disposeQueue.Clear();
         }
 
         /// <summary>

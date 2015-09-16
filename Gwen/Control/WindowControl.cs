@@ -13,29 +13,29 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class WindowControl : ResizableControl
     {
-        private readonly Dragger m_TitleBar;
-        private readonly Label m_Title;
-        private readonly CloseButton m_CloseButton;
-        private bool m_DeleteOnClose;
-        private Modal m_Modal;
+        private readonly Dragger titleBar;
+        private readonly Label title;
+        private readonly CloseButton closeButton;
+        private bool deleteOnClose;
+        private Modal modal;
 
         /// <summary>
         /// Window caption.
         /// </summary>
         [JsonProperty]
-        public string Title { get { return m_Title.Text; } set { m_Title.Text = value; } }
+        public string Title { get { return title.Text; } set { title.Text = value; } }
 
         /// <summary>
         /// Determines whether the window has close button.
         /// </summary>
         [JsonProperty]
-        public bool IsClosable { get { return !m_CloseButton.IsHidden; } set { m_CloseButton.IsHidden = !value; } }
+        public bool IsClosable { get { return !closeButton.IsHidden; } set { closeButton.IsHidden = !value; } }
 
         /// <summary>
         /// Determines whether the control should be disposed on close.
         /// </summary>
         [JsonProperty]
-        public bool DeleteOnClose { get { return m_DeleteOnClose; } set { m_DeleteOnClose = value; } }
+        public bool DeleteOnClose { get { return deleteOnClose; } set { deleteOnClose = value; } }
 
         /// <summary>
         /// Indicates whether the control is hidden.
@@ -69,31 +69,31 @@ namespace Gwen.Control
         public WindowControl(ControlBase parent, string title = "", bool modal = false)
             : base(parent)
         {
-            m_TitleBar = new Dragger(this);
-            m_TitleBar.Height = 24;
-            m_TitleBar.Padding = Gwen.Padding.Zero;
-            m_TitleBar.Margin = new Margin(0, 0, 0, 4);
-            m_TitleBar.Target = this;
-            m_TitleBar.Dock = Pos.Top;
+            titleBar = new Dragger(this);
+            titleBar.Height = 24;
+            titleBar.Padding = Gwen.Padding.Zero;
+            titleBar.Margin = new Margin(0, 0, 0, 4);
+            titleBar.Target = this;
+            titleBar.Dock = Pos.Top;
 
-            m_Title = new Label(m_TitleBar);
-			m_Title.Alignment = Pos.Left | Pos.CenterV;
-			m_Title.Text = title;
-			m_Title.Dock = Pos.Fill;
-			m_Title.Padding = new Padding(8, 4, 0, 0);
-			m_Title.TextColor = Skin.Colors.Window.TitleInactive;
+            this.title = new Label(titleBar);
+            this.title.Alignment = Pos.Left | Pos.CenterV;
+            this.title.Text = title;
+            this.title.Dock = Pos.Fill;
+            this.title.Padding = new Padding(8, 4, 0, 0);
+            this.title.TextColor = Skin.Colors.Window.TitleInactive;
 
-            m_CloseButton = new CloseButton(m_TitleBar, this);
-            m_CloseButton.SetSize(24, 24);
-            m_CloseButton.Dock = Pos.Right;
-            m_CloseButton.Clicked += CloseButtonPressed;
-            m_CloseButton.IsTabable = false;
-            m_CloseButton.Name = "closeButton";
+            closeButton = new CloseButton(titleBar, this);
+            closeButton.SetSize(24, 24);
+            closeButton.Dock = Pos.Right;
+            closeButton.Clicked += closeButtonPressed;
+            closeButton.IsTabable = false;
+            closeButton.Name = "closeButton";
 
             //Create a blank content control, dock it to the top - Should this be a ScrollControl?
-            m_InnerPanel = new ControlBase(this);
-            m_InnerPanel.Dock = Pos.Fill;
-            GetResizer(8).Hide();
+            innerPanel = new ControlBase(this);
+            innerPanel.Dock = Pos.Fill;
+            getResizer(8).Hide();
             BringToFront();
             IsTabable = false;
             Focus();
@@ -111,20 +111,20 @@ namespace Gwen.Control
 		}
 
 		public void Close() {
-			CloseButtonPressed(this, EventArgs.Empty);
+			closeButtonPressed(this, EventArgs.Empty);
 		}
 
-		protected virtual void CloseButtonPressed(ControlBase control, EventArgs args)
+		protected virtual void closeButtonPressed(ControlBase control, EventArgs args)
         {
             IsHidden = true;
 
-            if (m_Modal != null)
+            if (modal != null)
             {
-                m_Modal.DelayedDelete();
-                m_Modal = null;
+                modal.DelayedDelete();
+                modal = null;
             }
 
-            if (m_DeleteOnClose)
+            if (deleteOnClose)
             {
                 Parent.RemoveChild(this, true);
             }
@@ -136,16 +136,16 @@ namespace Gwen.Control
         /// <param name="dim">Determines whether all the background should be dimmed.</param>
         public void MakeModal(bool dim = false)
         {
-            if (m_Modal != null)
+            if (modal != null)
                 return;
 
-            m_Modal = new Modal(GetCanvas());
-            Parent = m_Modal;
+            modal = new Modal(GetCanvas());
+            Parent = modal;
 
             if (dim)
-                m_Modal.ShouldDrawBackground = true;
+                modal.ShouldDrawBackground = true;
             else
-                m_Modal.ShouldDrawBackground = false;
+                modal.ShouldDrawBackground = false;
         }
 
         /// <summary>
@@ -160,25 +160,25 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             bool hasFocus = IsOnTop;
 
             if (hasFocus)
-				m_Title.TextColor = Skin.Colors.Window.TitleActive;
+				title.TextColor = Skin.Colors.Window.TitleActive;
             else
-				m_Title.TextColor = Skin.Colors.Window.TitleInactive;
+				title.TextColor = Skin.Colors.Window.TitleInactive;
 
-            skin.DrawWindow(this, m_TitleBar.Bottom, hasFocus);
+            skin.DrawWindow(this, titleBar.Bottom, hasFocus);
         }
 
         /// <summary>
         /// Renders under the actual control (shadows etc).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderUnder(Skin.SkinBase skin)
+        protected override void renderUnder(Skin.SkinBase skin)
         {
-            base.RenderUnder(skin);
+            base.renderUnder(skin);
             skin.DrawShadow(this);
         }
 
@@ -192,7 +192,7 @@ namespace Gwen.Control
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.SkinBase skin)
+        protected override void renderFocus(Skin.SkinBase skin)
         {
 
         }

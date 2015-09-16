@@ -9,12 +9,12 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class HorizontalSplitter : ControlBase
     {
-        private readonly SplitterBar m_VSplitter;
-        private readonly ControlBase[] m_Sections;
+        private readonly SplitterBar vSplitter;
+        private readonly ControlBase[] sections;
 
-        private float m_VVal; // 0-1
-        private int m_BarSize; // pixels
-        private int m_ZoomedSection; // 0-1
+        private float vVal; // 0-1
+        private int barSize; // pixels
+        private int zoomedSection; // 0-1
 
         /// <summary>
         /// Invoked when one of the panels has been zoomed (maximized).
@@ -38,14 +38,14 @@ namespace Gwen.Control
         public HorizontalSplitter(ControlBase parent)
             : base(parent)
         {
-            m_Sections = new ControlBase[2];
+            sections = new ControlBase[2];
 
-            m_VSplitter = new SplitterBar(this);
-            m_VSplitter.SetPosition(0, 128);
-            m_VSplitter.Dragged += OnVerticalMoved;
-            m_VSplitter.Cursor = Cursors.SizeNS;
+            vSplitter = new SplitterBar(this);
+            vSplitter.SetPosition(0, 128);
+            vSplitter.Dragged += onVerticalMoved;
+            vSplitter.Cursor = Cursors.SizeNS;
 
-            m_VVal = 0.5f;
+            vVal = 0.5f;
 
             SetPanel(0, null);
             SetPanel(1, null);
@@ -53,7 +53,7 @@ namespace Gwen.Control
             SplitterSize = 5;
             SplittersVisible = false;
 
-            m_ZoomedSection = -1;
+            zoomedSection = -1;
         }
 
         /// <summary>
@@ -61,70 +61,70 @@ namespace Gwen.Control
         /// </summary>
         public void CenterPanels()
         {
-            m_VVal = 0.5f;
+            vVal = 0.5f;
             Invalidate();
         }
 
         /// <summary>
         /// Indicates whether any of the panels is zoomed.
         /// </summary>
-        public bool IsZoomed { get { return m_ZoomedSection != -1; } }
+        public bool IsZoomed { get { return zoomedSection != -1; } }
 
         /// <summary>
         /// Gets or sets a value indicating whether splitters should be visible.
         /// </summary>
         public bool SplittersVisible
         {
-            get { return m_VSplitter.ShouldDrawBackground; }
+            get { return vSplitter.ShouldDrawBackground; }
             set
             {
-                m_VSplitter.ShouldDrawBackground = value;
+                vSplitter.ShouldDrawBackground = value;
             }
         }
 
         /// <summary>
         /// Gets or sets the size of the splitter.
         /// </summary>
-        public int SplitterSize { get { return m_BarSize; } set { m_BarSize = value; } }
+        public int SplitterSize { get { return barSize; } set { barSize = value; } }
 
-        private void UpdateVSplitter()
+        private void updateVSplitter()
         {
-            m_VSplitter.MoveTo(m_VSplitter.X, (Height - m_VSplitter.Height) * (m_VVal));
+            vSplitter.MoveTo(vSplitter.X, (Height - vSplitter.Height) * (vVal));
         }
 
-        protected void OnVerticalMoved(ControlBase control, EventArgs args)
+        protected void onVerticalMoved(ControlBase control, EventArgs args)
         {
-            m_VVal = CalculateValueVertical();
+            vVal = calculateValueVertical();
             Invalidate();
         }
 
-        private float CalculateValueVertical()
+        private float calculateValueVertical()
         {
-            return m_VSplitter.Y / (float)(Height - m_VSplitter.Height);
+            return vSplitter.Y / (float)(Height - vSplitter.Height);
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            m_VSplitter.SetSize(Width, m_BarSize);
+            vSplitter.SetSize(Width, barSize);
 
-            UpdateVSplitter();
+            updateVSplitter();
 
-            if (m_ZoomedSection == -1)
+            if (zoomedSection == -1)
             {
-                if (m_Sections[0] != null)
-                    m_Sections[0].SetBounds(0, 0, Width, m_VSplitter.Y);
+                if (sections[0] != null)
+                    sections[0].SetBounds(0, 0, Width, vSplitter.Y);
 
-                if (m_Sections[1] != null)
-                    m_Sections[1].SetBounds(0, m_VSplitter.Y + m_BarSize, Width, Height - (m_VSplitter.Y + m_BarSize));
+                if (sections[1] != null)
+                    sections[1].SetBounds(0, vSplitter.Y + barSize, Width, Height - (vSplitter.Y + barSize));
             }
             else
             {
                 //This should probably use Fill docking instead
-                m_Sections[m_ZoomedSection].SetBounds(0, 0, Width, Height);
+                sections[zoomedSection].SetBounds(0, 0, Width, Height);
             }
         }
 
@@ -135,7 +135,7 @@ namespace Gwen.Control
         /// <param name="panel">Control to assign.</param>
         public void SetPanel(int index, ControlBase panel)
         {
-            m_Sections[index] = panel;
+            sections[index] = panel;
 
             if (panel != null)
             {
@@ -153,18 +153,18 @@ namespace Gwen.Control
         /// <returns>Specified section.</returns>
         public ControlBase GetPanel(int index)
         {
-            return m_Sections[index];
+            return sections[index];
         }
 
         /// <summary>
         /// Internal handler for the zoom changed event.
         /// </summary>
-        protected void OnZoomChanged()
+        protected void onZoomChanged()
         {
             if (ZoomChanged != null)
 				ZoomChanged.Invoke(this, EventArgs.Empty);
 
-            if (m_ZoomedSection == -1)
+            if (zoomedSection == -1)
             {
                 if (PanelUnZoomed != null)
 					PanelUnZoomed.Invoke(this, EventArgs.Empty);
@@ -184,18 +184,18 @@ namespace Gwen.Control
         {
             UnZoom();
 
-            if (m_Sections[section] != null)
+            if (sections[section] != null)
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    if (i != section && m_Sections[i] != null)
-                        m_Sections[i].IsHidden = true;
+                    if (i != section && sections[i] != null)
+                        sections[i].IsHidden = true;
                 }
-                m_ZoomedSection = section;
+                zoomedSection = section;
 
                 Invalidate();
             }
-            OnZoomChanged();
+            onZoomChanged();
         }
 
         /// <summary>
@@ -203,16 +203,16 @@ namespace Gwen.Control
         /// </summary>
         public void UnZoom()
         {
-            m_ZoomedSection = -1;
+            zoomedSection = -1;
 
             for (int i = 0; i < 2; i++)
             {
-                if (m_Sections[i] != null)
-                    m_Sections[i].IsHidden = false;
+                if (sections[i] != null)
+                    sections[i].IsHidden = false;
             }
 
             Invalidate();
-            OnZoomChanged();
+            onZoomChanged();
         }
     }
 }

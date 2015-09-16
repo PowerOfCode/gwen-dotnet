@@ -15,34 +15,34 @@ namespace Gwen.Control
     {
         public const int TreeIndentation = 14;
 
-        protected TreeControl m_TreeControl;
-        protected Button m_ToggleButton;
-        protected Button m_Title;
-        private bool m_Root;
-        private bool m_Selected;
-        private bool m_Selectable;
+        protected TreeControl treeControl;
+        protected Button toggleButton;
+        protected Button title;
+        private bool root;
+        private bool selected;
+        private bool selectable;
 
         /// <summary>
         /// Indicates whether this is a root node.
         /// </summary>
-        public bool IsRoot { get { return m_Root; } set { m_Root = value; } }
+        public bool IsRoot { get { return root; } set { root = value; } }
 
         /// <summary>
         /// Parent tree control.
         /// </summary>
-        public TreeControl TreeControl { get { return m_TreeControl; } set { m_TreeControl = value; } }
+        public TreeControl TreeControl { get { return treeControl; } set { treeControl = value; } }
 
         /// <summary>
         /// Determines whether the node is selectable.
         /// </summary>
-        public bool IsSelectable { get { return m_Selectable; } set { m_Selectable = value; } }
+        public bool IsSelectable { get { return selectable; } set { selectable = value; } }
 
         /// <summary>
         /// Indicates whether the node is selected.
         /// </summary>
         public bool IsSelected
         {
-            get { return m_Selected; }
+            get { return selected; }
             set
             {
                 if (!IsSelectable)
@@ -50,33 +50,33 @@ namespace Gwen.Control
                 if (IsSelected == value)
                     return;
 
-                m_Selected = value;
+                selected = value;
 
-                if (m_Title != null)
-                    m_Title.ToggleState = value;
+                if (title != null)
+                    title.ToggleState = value;
 
                 if (SelectionChanged != null)
 					SelectionChanged.Invoke(this, EventArgs.Empty);
 
                 // propagate to root parent (tree)
-                if (m_TreeControl != null && m_TreeControl.SelectionChanged != null)
-					m_TreeControl.SelectionChanged.Invoke(this, EventArgs.Empty);
+                if (treeControl != null && treeControl.SelectionChanged != null)
+					treeControl.SelectionChanged.Invoke(this, EventArgs.Empty);
 
                 if (value)
                 {
                     if (Selected != null)
 						Selected.Invoke(this, EventArgs.Empty);
 
-                    if (m_TreeControl != null && m_TreeControl.Selected != null)
-						m_TreeControl.Selected.Invoke(this, EventArgs.Empty);
+                    if (treeControl != null && treeControl.Selected != null)
+						treeControl.Selected.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
                     if (Unselected != null)
 						Unselected.Invoke(this, EventArgs.Empty);
 
-                    if (m_TreeControl != null && m_TreeControl.Unselected != null)
-						m_TreeControl.Unselected.Invoke(this, EventArgs.Empty);
+                    if (treeControl != null && treeControl.Unselected != null)
+						treeControl.Unselected.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace Gwen.Control
         /// <summary>
         /// Node's label.
         /// </summary>
-        public string Text { get { return m_Title.Text; } set { m_Title.Text = value; } }
+        public string Text { get { return title.Text; } set { title.Text = value; } }
 
         /// <summary>
         /// Invoked when the node label has been pressed.
@@ -123,25 +123,25 @@ namespace Gwen.Control
         public TreeNode(ControlBase parent)
             : base(parent)
         {
-            m_ToggleButton = new TreeToggleButton(this);
-            m_ToggleButton.SetBounds(0, 0, 15, 15);
-            m_ToggleButton.Toggled += OnToggleButtonPress;
+            toggleButton = new TreeToggleButton(this);
+            toggleButton.SetBounds(0, 0, 15, 15);
+            toggleButton.Toggled += onToggleButtonPress;
 
-            m_Title = new TreeNodeLabel(this);
-            m_Title.Dock = Pos.Top;
-            m_Title.Margin = new Margin(16, 0, 0, 0);
-            m_Title.DoubleClicked += OnDoubleClickName;
-            m_Title.Clicked += OnClickName;
+            title = new TreeNodeLabel(this);
+            title.Dock = Pos.Top;
+            title.Margin = new Margin(16, 0, 0, 0);
+            title.DoubleClicked += onDoubleClickName;
+            title.Clicked += onClickName;
 
-            m_InnerPanel = new ControlBase(this);
-            m_InnerPanel.Dock = Pos.Top;
-            m_InnerPanel.Height = 100;
-            m_InnerPanel.Margin = new Margin(TreeIndentation, 1, 0, 0);
-            m_InnerPanel.Hide();
+            innerPanel = new ControlBase(this);
+            innerPanel.Dock = Pos.Top;
+            innerPanel.Height = 100;
+            innerPanel.Margin = new Margin(TreeIndentation, 1, 0, 0);
+            innerPanel.Hide();
 
-			m_Root = parent is TreeControl;
-            m_Selected = false;
-            m_Selectable = true;
+			root = parent is TreeControl;
+            selected = false;
+            selectable = true;
 
 			Dock = Pos.Top;
         }
@@ -150,16 +150,16 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             int bottom = 0;
-            if (m_InnerPanel.Children.Count > 0)
+            if (innerPanel.Children.Count > 0)
             {
-                bottom = m_InnerPanel.Children.Last().Y + m_InnerPanel.Y;
+                bottom = innerPanel.Children.Last().Y + innerPanel.Y;
             }
 
-            skin.DrawTreeNode(this, m_InnerPanel.IsVisible, IsSelected, m_Title.Height, m_Title.TextRight,
-                (int)(m_ToggleButton.Y + m_ToggleButton.Height * 0.5f), bottom, m_TreeControl == Parent); // IsRoot
+            skin.DrawTreeNode(this, innerPanel.IsVisible, IsSelected, title.Height, title.TextRight,
+                (int)(toggleButton.Y + toggleButton.Height * 0.5f), bottom, treeControl == Parent); // IsRoot
 
             //[halfofastaple] HACK - The treenodes are taking two passes until their height is set correctly,
             //  this means that the height is being read incorrectly by the parent, causing
@@ -174,36 +174,36 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            if (m_ToggleButton != null)
+            if (toggleButton != null)
             {
-                if (m_Title != null)
+                if (title != null)
                 {
-                    m_ToggleButton.SetPosition(0, (m_Title.Height - m_ToggleButton.Height)*0.5f);
+                    toggleButton.SetPosition(0, (title.Height - toggleButton.Height)*0.5f);
                 }
 
-                if (m_InnerPanel.Children.Count == 0)
+                if (innerPanel.Children.Count == 0)
                 {
-                    m_ToggleButton.Hide();
-                    m_ToggleButton.ToggleState = false;
-                    m_InnerPanel.Hide();
+                    toggleButton.Hide();
+                    toggleButton.ToggleState = false;
+                    innerPanel.Hide();
                 }
                 else
                 {
-                    m_ToggleButton.Show();
-                    m_InnerPanel.SizeToChildren(false, true);
+                    toggleButton.Show();
+                    innerPanel.SizeToChildren(false, true);
                 }
             }
 
-            base.Layout(skin);
+            base.layout(skin);
         }
 
         /// <summary>
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout(Skin.SkinBase skin)
+        protected override void postLayout(Skin.SkinBase skin)
         {
             if (SizeToChildren(false, true))
             {
@@ -229,14 +229,14 @@ namespace Gwen.Control
         /// </summary>
         public void Open()
         {
-            m_InnerPanel.Show();
-            if (m_ToggleButton != null)
-                m_ToggleButton.ToggleState = true;
+            innerPanel.Show();
+            if (toggleButton != null)
+                toggleButton.ToggleState = true;
 
             if (Expanded != null)
 				Expanded.Invoke(this, EventArgs.Empty);
-            if (m_TreeControl != null && m_TreeControl.Expanded != null)
-				m_TreeControl.Expanded.Invoke(this, EventArgs.Empty);
+            if (treeControl != null && treeControl.Expanded != null)
+				treeControl.Expanded.Invoke(this, EventArgs.Empty);
 
             Invalidate();
         }
@@ -246,14 +246,14 @@ namespace Gwen.Control
         /// </summary>
         public void Close()
         {
-            m_InnerPanel.Hide();
-            if (m_ToggleButton != null)
-                m_ToggleButton.ToggleState = false;
+            innerPanel.Hide();
+            if (toggleButton != null)
+                toggleButton.ToggleState = false;
 
             if (Collapsed != null)
 				Collapsed.Invoke(this, EventArgs.Empty);
-            if (m_TreeControl != null && m_TreeControl.Collapsed != null)
-				m_TreeControl.Collapsed.Invoke(this, EventArgs.Empty);
+            if (treeControl != null && treeControl.Collapsed != null)
+				treeControl.Collapsed.Invoke(this, EventArgs.Empty);
 
             Invalidate();
         }
@@ -279,8 +279,8 @@ namespace Gwen.Control
         public void UnselectAll()
         {
             IsSelected = false;
-            if (m_Title != null)
-                m_Title.ToggleState = false;
+            if (title != null)
+                title.ToggleState = false;
 
             foreach (ControlBase child in Children)
             {
@@ -295,9 +295,9 @@ namespace Gwen.Control
         /// Handler for the toggle button.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnToggleButtonPress(ControlBase control, EventArgs args)
+		protected virtual void onToggleButtonPress(ControlBase control, EventArgs args)
         {
-            if (m_ToggleButton.ToggleState)
+            if (toggleButton.ToggleState)
             {
                 Open();
             }
@@ -311,18 +311,18 @@ namespace Gwen.Control
         /// Handler for label double click.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnDoubleClickName(ControlBase control, EventArgs args)
+		protected virtual void onDoubleClickName(ControlBase control, EventArgs args)
         {
-            if (!m_ToggleButton.IsVisible)
+            if (!toggleButton.IsVisible)
                 return;
-            m_ToggleButton.Toggle();
+            toggleButton.Toggle();
         }
 
         /// <summary>
         /// Handler for label click.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnClickName(ControlBase control, EventArgs args)
+		protected virtual void onClickName(ControlBase control, EventArgs args)
         {
             if (LabelPressed != null)
                 LabelPressed.Invoke(this, EventArgs.Empty);
@@ -331,29 +331,29 @@ namespace Gwen.Control
 
         public void SetImage(string textureName)
         {
-            m_Title.SetImage(textureName);
+            title.SetImage(textureName);
         }
 
-		protected override void OnChildAdded(ControlBase child) {
+		protected override void onChildAdded(ControlBase child) {
 			TreeNode node = child as TreeNode;
 			if (node != null) {
-				node.TreeControl = m_TreeControl;
+				node.TreeControl = treeControl;
 
-				if (m_TreeControl != null) {
-					m_TreeControl.OnNodeAdded(node);
+				if (treeControl != null) {
+					treeControl.OnNodeAdded(node);
 				}
 			}
 
-			base.OnChildAdded(child);
+			base.onChildAdded(child);
 		}
 
 		public override event GwenEventHandler<ClickedEventArgs> Clicked
         {
             add {
-                m_Title.Clicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+                title.Clicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
             }
             remove {
-				m_Title.Clicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+				title.Clicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
             }
         }
 
@@ -361,31 +361,31 @@ namespace Gwen.Control
         {
             add {
 				if (value != null) {
-					m_Title.DoubleClicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+					title.DoubleClicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
 				}
             }
             remove {
-				m_Title.DoubleClicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+				title.DoubleClicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
             }
         }
 
 		public override event GwenEventHandler<ClickedEventArgs> RightClicked {
 			add {
-				m_Title.RightClicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+				title.RightClicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
 			}
 			remove {
-				m_Title.RightClicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+				title.RightClicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
 			}
 		}
 
 		public override event GwenEventHandler<ClickedEventArgs> DoubleRightClicked {
 			add {
 				if (value != null) {
-					m_Title.DoubleRightClicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+					title.DoubleRightClicked += delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
 				}
 			}
 			remove {
-				m_Title.DoubleRightClicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
+				title.DoubleRightClicked -= delegate(ControlBase sender, ClickedEventArgs args) { value(this, args); };
 			}
 		}
 

@@ -13,46 +13,46 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Slider : ControlBase
     {
-        protected readonly SliderBar m_SliderBar;
-        protected bool m_SnapToNotches;
-        protected int m_NotchCount;
-        protected float m_Value;
-        protected float m_Min;
-        protected float m_Max;
+        protected readonly SliderBar sliderBar;
+        protected bool snapToNotches;
+        protected int notchCount;
+        protected float value;
+        protected float min;
+        protected float max;
 
         /// <summary>
         /// Number of notches on the slider axis.
         /// </summary>
-        public int NotchCount { get { return m_NotchCount; } set { m_NotchCount = value; } }
+        public int NotchCount { get { return notchCount; } set { notchCount = value; } }
 
         /// <summary>
         /// Determines whether the slider should snap to notches.
         /// </summary>
-        public bool SnapToNotches { get { return m_SnapToNotches; } set { m_SnapToNotches = value; } }
+        public bool SnapToNotches { get { return snapToNotches; } set { snapToNotches = value; } }
 
         /// <summary>
         /// Minimum value.
         /// </summary>
-        public float Min { get { return m_Min; } set { SetRange(value, m_Max); } }
+        public float Min { get { return min; } set { SetRange(value, max); } }
 
         /// <summary>
         /// Maximum value.
         /// </summary>
-        public float Max { get { return m_Max; } set { SetRange(m_Min, value); } }
+        public float Max { get { return max; } set { SetRange(min, value); } }
 
         /// <summary>
         /// Current value.
         /// </summary>
         public float Value
         {
-            get { return m_Min + (m_Value * (m_Max - m_Min)); }
+            get { return min + (this.value * (max - min)); }
             set
             {
-                if (value < m_Min) value = m_Min;
-                if (value > m_Max) value = m_Max;
+                if (value < min) this.value = min;
+                if (value > max) this.value = max;
                 // Normalize Value
-                value = (value - m_Min) / (m_Max - m_Min);
-                SetValueInternal(value);
+                this.value = (value - min) / (max - min);
+                setValueInternal(this.value);
                 Redraw();
             }
         }
@@ -71,15 +71,15 @@ namespace Gwen.Control
         {
             SetBounds(new Rectangle(0, 0, 32, 128));
 
-            m_SliderBar = new SliderBar(this);
-            m_SliderBar.Dragged += OnMoved;
+            sliderBar = new SliderBar(this);
+            sliderBar.Dragged += onMoved;
 
-            m_Min = 0.0f;
-            m_Max = 1.0f;
+            min = 0.0f;
+            max = 1.0f;
 
-            m_SnapToNotches = false;
-            m_NotchCount = 5;
-            m_Value = 0.0f;
+            snapToNotches = false;
+            notchCount = 5;
+            value = 0.0f;
 
             KeyboardInputEnabled = true;
             IsTabable = true;
@@ -92,7 +92,7 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyRight(bool down)
+        protected override bool onKeyRight(bool down)
         {
             if (down)
                 Value = Value + 1;
@@ -106,7 +106,7 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyUp(bool down)
+        protected override bool onKeyUp(bool down)
         {
             if (down)
                 Value = Value + 1;
@@ -120,7 +120,7 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyLeft(bool down)
+        protected override bool onKeyLeft(bool down)
         {
             if (down)
                 Value = Value - 1;
@@ -134,7 +134,7 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyDown(bool down)
+        protected override bool onKeyDown(bool down)
         {
             if (down)
                 Value = Value - 1;
@@ -148,10 +148,10 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyHome(bool down)
+        protected override bool onKeyHome(bool down)
         {
             if (down)
-                Value = m_Min;
+                Value = min;
             return true;
         }
 
@@ -162,10 +162,10 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeyEnd(bool down)
+        protected override bool onKeyEnd(bool down)
         {
             if (down)
-                Value = m_Max;
+                Value = max;
             return true;
         }
 
@@ -175,42 +175,42 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
 
         }
 
-		protected virtual void OnMoved(ControlBase control, EventArgs args)
+		protected virtual void onMoved(ControlBase control, EventArgs args)
         {
-            SetValueInternal(CalculateValue());
+            setValueInternal(calculateValue());
         }
 
-        protected virtual float CalculateValue()
+        protected virtual float calculateValue()
         {
             return 0;
         }
 
-        protected virtual void UpdateBarFromValue()
+        protected virtual void updateBarFromValue()
         {
 
         }
 
-        protected virtual void SetValueInternal(float val)
+        protected virtual void setValueInternal(float val)
         {
-            if (m_SnapToNotches)
+            if (snapToNotches)
             {
-                val = (float)Math.Floor((val * m_NotchCount) + 0.5f);
-                val /= m_NotchCount;
+                val = (float)Math.Floor((val * notchCount) + 0.5f);
+                val /= notchCount;
             }
 
-            if (m_Value != val)
+            if (value != val)
             {
-                m_Value = val;
+                value = val;
                 if (ValueChanged != null)
 					ValueChanged.Invoke(this, EventArgs.Empty);
             }
 
-            UpdateBarFromValue();
+            updateBarFromValue();
         }
 
         /// <summary>
@@ -220,15 +220,15 @@ namespace Gwen.Control
         /// <param name="max">Maximum value.</param>
         public void SetRange(float min, float max)
         {
-            m_Min = min;
-            m_Max = max;
+            this.min = min;
+            this.max = max;
         }
 
         /// <summary>
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.SkinBase skin)
+        protected override void renderFocus(Skin.SkinBase skin)
         {
             if (InputHandler.KeyboardFocus != this) return;
             if (!IsTabable) return;

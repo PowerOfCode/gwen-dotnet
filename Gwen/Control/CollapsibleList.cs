@@ -57,13 +57,13 @@ namespace Gwen.Control
         /// Adds a category to the list.
         /// </summary>
         /// <param name="category">Category control to add.</param>
-        protected virtual void Add(CollapsibleCategory category)
+        protected virtual void add(CollapsibleCategory category)
         {
             category.Parent = this;
             category.Dock = Pos.Top;
             category.Margin = new Margin(1, 0, 1, 1);
-            category.Selected += OnCategorySelected;
-            category.Collapsed += OnCategoryCollapsed;
+            category.Selected += onCategorySelected;
+            category.Collapsed += onCategoryCollapsed;
             // this relies on fact that category.m_List is set to its parent
         }
 
@@ -76,7 +76,7 @@ namespace Gwen.Control
         {
             CollapsibleCategory cat = new CollapsibleCategory(this);
             cat.Text = categoryName;
-            Add(cat);
+            add(cat);
             return cat;
         }
 
@@ -84,10 +84,10 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawCategoryHolder(this);
-            base.Render(skin);
+            base.render(skin);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Gwen.Control
         /// Handler for ItemSelected event.
         /// </summary>
         /// <param name="control">Event source: <see cref="CollapsibleList"/>.</param>
-		protected virtual void OnCategorySelected(ControlBase control, EventArgs args)
+		protected virtual void onCategorySelected(ControlBase control, EventArgs args)
         {
             CollapsibleCategory cat = control as CollapsibleCategory;
             if (cat == null) return;
@@ -122,7 +122,7 @@ namespace Gwen.Control
         /// Handler for category collapsed event.
         /// </summary>
         /// <param name="control">Event source: <see cref="CollapsibleCategory"/>.</param>
-        protected virtual void OnCategoryCollapsed(ControlBase control, EventArgs args)
+        protected virtual void onCategoryCollapsed(ControlBase control, EventArgs args)
         {
             CollapsibleCategory cat = control as CollapsibleCategory;
             if (cat == null) return;

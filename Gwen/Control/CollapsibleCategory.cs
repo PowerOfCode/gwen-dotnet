@@ -11,18 +11,18 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CollapsibleCategory : ControlBase
     {
-        private readonly Button m_HeaderButton;
-        private readonly CollapsibleList m_List;
+        private readonly Button headerButton;
+        private readonly CollapsibleList list;
 
         /// <summary>
         /// Header text.
         /// </summary>
-        public string Text { get { return m_HeaderButton.Text; } set { m_HeaderButton.Text = value; } }
+        public string Text { get { return headerButton.Text; } set { headerButton.Text = value; } }
 
         /// <summary>
         /// Determines whether the category is collapsed (closed).
         /// </summary>
-        public bool IsCollapsed { get { return m_HeaderButton.ToggleState; } set { m_HeaderButton.ToggleState = value; } }
+        public bool IsCollapsed { get { return headerButton.ToggleState; } set { headerButton.ToggleState = value; } }
 
         /// <summary>
         /// Invoked when an entry has been selected.
@@ -41,13 +41,13 @@ namespace Gwen.Control
         [Newtonsoft.Json.JsonConstructor]
         public CollapsibleCategory(CollapsibleList parent) : base(parent)
         {
-            m_HeaderButton = new CategoryHeaderButton(this);
-            m_HeaderButton.Text = "Category Title"; // [omeg] todo: i18n
-            m_HeaderButton.Dock = Pos.Top;
-            m_HeaderButton.Height = 20;
-            m_HeaderButton.Toggled += OnHeaderToggle;
+            headerButton = new CategoryHeaderButton(this);
+            headerButton.Text = "Category Title"; // [omeg] todo: i18n
+            headerButton.Dock = Pos.Top;
+            headerButton.Height = 20;
+            headerButton.Toggled += onHeaderToggle;
 
-            m_List = parent;
+            list = parent;
 
             Padding = new Padding(1, 0, 1, 5);
             SetSize(512, 512);
@@ -75,7 +75,7 @@ namespace Gwen.Control
         /// Handler for header button toggle event.
         /// </summary>
         /// <param name="control">Source control.</param>
-		protected virtual void OnHeaderToggle(ControlBase control, EventArgs args)
+		protected virtual void onHeaderToggle(ControlBase control, EventArgs args)
         {
             if (Collapsed != null)
 				Collapsed.Invoke(this, EventArgs.Empty);
@@ -85,14 +85,14 @@ namespace Gwen.Control
         /// Handler for Selected event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnSelected(ControlBase control, EventArgs args)
+		protected virtual void onSelected(ControlBase control, EventArgs args)
         {
             CategoryButton child = control as CategoryButton;
             if (child == null) return;
 
-            if (m_List != null)
+            if (list != null)
             {
-                m_List.UnselectAll();
+                list.UnselectAll();
             }
             else
             {
@@ -118,7 +118,7 @@ namespace Gwen.Control
             button.SizeToContents();
             button.SetSize(button.Width + 4, button.Height + 4);
             button.Padding = new Padding(5, 2, 2, 2);
-            button.Clicked += OnSelected;
+            button.Clicked += onSelected;
 
             return button;
         }
@@ -127,10 +127,10 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawCategoryInner(this, m_HeaderButton.ToggleState);
-            base.Render(skin);
+            skin.DrawCategoryInner(this, headerButton.ToggleState);
+            base.render(skin);
         }
 
         /// <summary>
@@ -152,11 +152,11 @@ namespace Gwen.Control
         /// Function invoked after layout.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout(Skin.SkinBase skin)
+        protected override void postLayout(Skin.SkinBase skin)
         {
             if (IsCollapsed)
             {
-                Height = m_HeaderButton.Height;
+                Height = headerButton.Height;
             }
             else
             {
@@ -171,7 +171,7 @@ namespace Gwen.Control
                 if (button == null)
                     continue;
 
-                button.m_Alt = b;
+                button.alt = b;
                 button.UpdateColors();
                 b = !b;
             }

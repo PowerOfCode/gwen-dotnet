@@ -4,35 +4,35 @@ namespace Gwen.Anim.Size
 {
     class Height : TimedAnimation
     {
-        private int m_StartSize;
-        private int m_Delta;
-        private bool m_Hide;
+        private int startSize;
+        private int delta;
+        private bool hide;
 
         public Height(int startSize, int endSize, float length, bool hide = false, float delay = 0.0f, float ease = 1.0f)
             : base(length, delay, ease)
         {
-            m_StartSize = startSize;
-            m_Delta = endSize - m_StartSize;
-            m_Hide = hide;
+            this.startSize = startSize;
+            delta = endSize - startSize;
+            this.hide = hide;
         }
 
-        protected override void OnStart()
+        protected override void onStart()
         {
-            base.OnStart();
-            m_Control.Height = m_StartSize;
+            base.onStart();
+            control.Height = startSize;
         }
 
-        protected override void Run(float delta)
+        protected override void run(float delta)
         {
-            base.Run(delta);
-            m_Control.Height = (int)(m_StartSize + (m_Delta * delta));
+            base.run(delta);
+            control.Height = (int)(startSize + (delta * delta));
         }
 
-        protected override void OnFinish()
+        protected override void onFinish()
         {
-            base.OnFinish();
-            m_Control.Height = m_StartSize + m_Delta;
-            m_Control.IsHidden = m_Hide;
+            base.onFinish();
+            control.Height = startSize + delta;
+            control.IsHidden = hide;
         }
     }
 }

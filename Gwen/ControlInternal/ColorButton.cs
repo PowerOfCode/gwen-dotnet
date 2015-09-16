@@ -12,12 +12,12 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorButton : Button
     {
-        private Color m_Color;
+        private Color color;
 
         /// <summary>
         /// Current color value.
         /// </summary>
-        public Color Color { get { return m_Color; } set { m_Color = value; } }
+        public Color Color { get { return color; } set { color = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorButton"/> class.
@@ -25,7 +25,7 @@ namespace Gwen.ControlInternal
         /// <param name="parent">Parent control.</param>
         public ColorButton(ControlBase parent) : base(parent)
         {
-            m_Color = Color.Black;
+            color = Color.Black;
             Text = String.Empty;
         }
 
@@ -33,9 +33,9 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.Renderer.DrawColor = m_Color;
+            skin.Renderer.DrawColor = color;
             skin.Renderer.DrawFilledRect(RenderBounds);
         }
     }

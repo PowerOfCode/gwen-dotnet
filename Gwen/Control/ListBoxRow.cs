@@ -11,7 +11,7 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ListBoxRow : TableRow
     {
-        private bool m_Selected;
+        private bool selected;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxRow"/> class.
@@ -29,10 +29,10 @@ namespace Gwen.Control
         /// </summary>
         public bool IsSelected
         {
-            get { return m_Selected; }
+            get { return selected; }
             set
             {
-                m_Selected = value;
+                selected = value;
                 // TODO: Get these values from the skin.
                 if (value)
                     SetTextColor(Color.White);
@@ -45,7 +45,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawListBoxLine(this, IsSelected, EvenRow);
         }
@@ -56,9 +56,9 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
-			base.OnMouseClickedLeft(x, y, down);
+			base.onMouseClickedLeft(x, y, down);
             if (down)
             {
                 //IsSelected = true; // [omeg] ListBox manages that

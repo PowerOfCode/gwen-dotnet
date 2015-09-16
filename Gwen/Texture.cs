@@ -33,7 +33,7 @@ namespace Gwen
         /// </summary>
         public int Height { get; set; }
 
-        private readonly Renderer.RendererBase m_Renderer;
+        private readonly Renderer.RendererBase renderer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Texture"/> class.
@@ -41,7 +41,7 @@ namespace Gwen
         /// <param name="renderer">Renderer to use.</param>
         public Texture(Renderer.RendererBase renderer)
         {
-            m_Renderer = renderer;
+            this.renderer = renderer;
             Width = 4;
             Height = 4;
             Failed = false;
@@ -54,7 +54,7 @@ namespace Gwen
         public void Load(string name)
         {
             Name = name;
-            m_Renderer.LoadTexture(this);
+            renderer.LoadTexture(this);
         }
 
         /// <summary>
@@ -67,12 +67,12 @@ namespace Gwen
         {
             Width = width;
             Height = height;
-            m_Renderer.LoadTextureRaw(this, pixelData);
+            renderer.LoadTextureRaw(this, pixelData);
         }
 
         public void LoadStream(Stream data)
         {
-            m_Renderer.LoadTextureStream(this, data);
+            renderer.LoadTextureStream(this, data);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Gwen
         /// </summary>
         public void Dispose()
         {
-            m_Renderer.FreeTexture(this);
+            renderer.FreeTexture(this);
             GC.SuppressFinalize(this);
         }
 

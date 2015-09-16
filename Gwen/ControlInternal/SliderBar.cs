@@ -10,12 +10,12 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class SliderBar : Dragger
     {
-        private bool m_bHorizontal;
+        private bool horizontal;
 
         /// <summary>
         /// Indicates whether the bar is horizontal.
         /// </summary>
-        public bool IsHorizontal { get { return m_bHorizontal; } set { m_bHorizontal = value; } }
+        public bool IsHorizontal { get { return horizontal; } set { horizontal = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SliderBar"/> class.
@@ -32,7 +32,7 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawSliderButton(this, IsHeld, IsHorizontal);
         }

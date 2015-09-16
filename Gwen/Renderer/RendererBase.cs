@@ -10,8 +10,8 @@ namespace Gwen.Renderer
     public class RendererBase : IDisposable
     {
         //public Random rnd;
-        private Point m_RenderOffset;
-        private Rectangle m_ClipRegion;
+        private Point renderOffset;
+        private Rectangle clipRegion;
         //protected ICacheToTexture m_RTT;
 
         public float Scale { get; set; }
@@ -22,7 +22,7 @@ namespace Gwen.Renderer
         protected RendererBase()
         {
             //rnd = new Random();
-            m_RenderOffset = Point.Empty;
+            renderOffset = Point.Empty;
             Scale = 1.0f;
             if (CTT != null)
                 CTT.Initialize();
@@ -67,12 +67,12 @@ namespace Gwen.Renderer
         /// <summary>
         /// Rendering offset. No need to touch it usually.
         /// </summary>
-        public Point RenderOffset { get { return m_RenderOffset; } set { m_RenderOffset = value; } }
+        public Point RenderOffset { get { return renderOffset; } set { renderOffset = value; } }
 
         /// <summary>
         /// Clipping rectangle.
         /// </summary>
-        public Rectangle ClipRegion { get { return m_ClipRegion; } set { m_ClipRegion = value; } }
+        public Rectangle ClipRegion { get { return clipRegion; } set { clipRegion = value; } }
 
         /// <summary>
         /// Indicates whether the clip region is visible.
@@ -81,7 +81,7 @@ namespace Gwen.Renderer
         {
             get
             {
-                if (m_ClipRegion.Width <= 0 || m_ClipRegion.Height <= 0)
+                if (clipRegion.Width <= 0 || clipRegion.Height <= 0)
                     return false;
 
                 return true;
@@ -210,7 +210,7 @@ namespace Gwen.Renderer
         /// </summary>
         /// <param name="font">Font to use.</param>
         /// <param name="position">Top-left corner of the text.</param>
-        /// <param name="text">Text to render.</param>
+        /// <param name="text">Text to renderer.</param>
         public virtual void RenderText(Font font, Point position, string text)
         {
             float size = font.Size * Scale;
@@ -346,15 +346,15 @@ namespace Gwen.Renderer
             DrawFilledRect(new Rectangle(rect.X + rect.Width, rect.Y + 2, 1, rect.Height - 3));
         }
 
-        private int TranslateX(int x)
+        private int translateX(int x)
         {
-            int x1 = x + m_RenderOffset.X;
+            int x1 = x + renderOffset.X;
             return Util.Ceil(x1 * Scale);
         }
 
-        private int TranslateY(int y)
+        private int translateY(int y)
         {
-            int y1 = y + m_RenderOffset.Y;
+            int y1 = y + renderOffset.Y;
             return Util.Ceil(y1 * Scale);
         }
 
@@ -365,8 +365,8 @@ namespace Gwen.Renderer
         /// <param name="y"></param>
         public void Translate(ref int x, ref int y)
         {
-            x += m_RenderOffset.X;
-            y += m_RenderOffset.Y;
+            x += renderOffset.X;
+            y += renderOffset.Y;
 
             x = Util.Ceil(x * Scale);
             y = Util.Ceil(y * Scale);
@@ -388,16 +388,16 @@ namespace Gwen.Renderer
         /// </summary>
         public Rectangle Translate(Rectangle rect)
         {
-            return new Rectangle(TranslateX(rect.X), TranslateY(rect.Y), Util.Ceil(rect.Width * Scale), Util.Ceil(rect.Height * Scale));
+            return new Rectangle(translateX(rect.X), translateY(rect.Y), Util.Ceil(rect.Width * Scale), Util.Ceil(rect.Height * Scale));
         }
 
         /// <summary>
-        /// Adds a point to the render offset.
+        /// Adds a point to the renderer offset.
         /// </summary>
         /// <param name="offset">Point to add.</param>
         public void AddRenderOffset(Rectangle offset)
         {
-            m_RenderOffset = new Point(m_RenderOffset.X + offset.X, m_RenderOffset.Y + offset.Y);
+            renderOffset = new Point(renderOffset.X + offset.X, renderOffset.Y + offset.Y);
         }
 
         /// <summary>
@@ -407,33 +407,33 @@ namespace Gwen.Renderer
         public void AddClipRegion(Rectangle rect)
         {
 
-            rect.X = m_RenderOffset.X;
-            rect.Y = m_RenderOffset.Y;
+            rect.X = renderOffset.X;
+            rect.Y = renderOffset.Y;
 
             Rectangle r = rect;
-            if (rect.X < m_ClipRegion.X)
+            if (rect.X < clipRegion.X)
             {
-                r.Width -= (m_ClipRegion.X - r.X);
-                r.X = m_ClipRegion.X;
+                r.Width -= (clipRegion.X - r.X);
+                r.X = clipRegion.X;
             }
 
-            if (rect.Y < m_ClipRegion.Y)
+            if (rect.Y < clipRegion.Y)
             {
-                r.Height -= (m_ClipRegion.Y - r.Y);
-                r.Y = m_ClipRegion.Y;
+                r.Height -= (clipRegion.Y - r.Y);
+                r.Y = clipRegion.Y;
             }
 
-            if (rect.Right > m_ClipRegion.Right)
+            if (rect.Right > clipRegion.Right)
             {
-                r.Width = m_ClipRegion.Right - r.X;
+                r.Width = clipRegion.Right - r.X;
             }
 
-            if (rect.Bottom > m_ClipRegion.Bottom)
+            if (rect.Bottom > clipRegion.Bottom)
             {
-                r.Height = m_ClipRegion.Bottom - r.Y;
+                r.Height = clipRegion.Bottom - r.Y;
             }
 
-            m_ClipRegion = r;
+            clipRegion = r;
         }
     }
 }

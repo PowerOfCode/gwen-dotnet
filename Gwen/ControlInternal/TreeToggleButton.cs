@@ -25,7 +25,7 @@ namespace Gwen.ControlInternal
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.SkinBase skin)
+        protected override void renderFocus(Skin.SkinBase skin)
         {
 
         }
@@ -34,7 +34,7 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawTreeButton(this, ToggleState);
         }

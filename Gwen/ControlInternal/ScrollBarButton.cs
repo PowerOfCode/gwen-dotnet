@@ -10,7 +10,7 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ScrollBarButton : Button
     {
-        private Pos m_Direction;
+        private Pos direction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBarButton"/> class.
@@ -24,31 +24,31 @@ namespace Gwen.ControlInternal
 
         public virtual void SetDirectionUp()
         {
-            m_Direction = Pos.Top;
+            direction = Pos.Top;
         }
 
         public virtual void SetDirectionDown()
         {
-            m_Direction = Pos.Bottom;
+            direction = Pos.Bottom;
         }
 
         public virtual void SetDirectionLeft()
         {
-            m_Direction = Pos.Left;
+            direction = Pos.Left;
         }
 
         public virtual void SetDirectionRight()
         {
-            m_Direction = Pos.Right;
+            direction = Pos.Right;
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawScrollButton(this, m_Direction, IsDepressed, IsHovered, IsDisabled);
+            skin.DrawScrollButton(this, direction, IsDepressed, IsHovered, IsDisabled);
         }
     }
 }

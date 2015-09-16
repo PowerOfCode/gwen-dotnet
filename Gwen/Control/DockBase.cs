@@ -13,42 +13,42 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class DockBase : ControlBase
     {
-        private DockBase m_Left;
-        private DockBase m_Right;
-        private DockBase m_Top;
-        private DockBase m_Bottom;
-        private Resizer m_Sizer;
+        private DockBase left;
+        private DockBase right;
+        private DockBase top;
+        private DockBase bottom;
+        private Resizer sizer;
 
         // Only CHILD dockpanels have a tabcontrol.
-        private DockedTabControl m_DockedTabControl;
+        private DockedTabControl dockedTabControl;
 
-        private bool m_DrawHover;
-        private bool m_DropFar;
-        private Rectangle m_HoverRect;
+        private bool drawHover;
+        private bool dropFar;
+        private Rectangle hoverRect;
 
         // todo: dock events?
 
         /// <summary>
         /// Control docked on the left side.
         /// </summary>
-        public DockBase LeftDock { get { return GetChildDock(Pos.Left); } }
+        public DockBase LeftDock { get { return getChildDock(Pos.Left); } }
 
         /// <summary>
         /// Control docked on the right side.
         /// </summary>
-        public DockBase RightDock { get { return GetChildDock(Pos.Right); } }
+        public DockBase RightDock { get { return getChildDock(Pos.Right); } }
 
         /// <summary>
         /// Control docked on the top side.
         /// </summary>
-        public DockBase TopDock { get { return GetChildDock(Pos.Top); } }
+        public DockBase TopDock { get { return getChildDock(Pos.Top); } }
 
         /// <summary>
         /// Control docked on the bottom side.
         /// </summary>
-        public DockBase BottomDock { get { return GetChildDock(Pos.Bottom); } }
+        public DockBase BottomDock { get { return getChildDock(Pos.Bottom); } }
 
-        public TabControl TabControl { get { return m_DockedTabControl; } }
+        public TabControl TabControl { get { return dockedTabControl; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DockBase"/> class.
@@ -68,7 +68,7 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeySpace(bool down)
+        protected override bool onKeySpace(bool down)
         {
             // No action on space (default button action is to press)
             return false;
@@ -78,14 +78,14 @@ namespace Gwen.Control
         /// Initializes an inner docked control for the specified position.
         /// </summary>
         /// <param name="pos">Dock position.</param>
-        protected virtual void SetupChildDock(Pos pos)
+        protected virtual void setupChildDock(Pos pos)
         {
-            if (m_DockedTabControl == null)
+            if (dockedTabControl == null)
             {
-                m_DockedTabControl = new DockedTabControl(this);
-                m_DockedTabControl.TabRemoved += OnTabRemoved;
-                m_DockedTabControl.TabStripPosition = Pos.Bottom;
-                m_DockedTabControl.TitleBarVisible = true;
+                dockedTabControl = new DockedTabControl(this);
+                dockedTabControl.TabRemoved += onTabRemoved;
+                dockedTabControl.TabStripPosition = Pos.Bottom;
+                dockedTabControl.TitleBarVisible = true;
             }
 
             Dock = pos;
@@ -97,19 +97,19 @@ namespace Gwen.Control
             else if (pos == Pos.Bottom) sizeDir = Pos.Top;
             else throw new ArgumentException("Invalid dock", "pos");
 
-            if (m_Sizer != null)
-                m_Sizer.Dispose();
-            m_Sizer = new Resizer(this);
-            m_Sizer.Dock = sizeDir;
-            m_Sizer.ResizeDir = sizeDir;
-            m_Sizer.SetSize(2, 2);
+            if (sizer != null)
+                sizer.Dispose();
+            sizer = new Resizer(this);
+            sizer.Dock = sizeDir;
+            sizer.ResizeDir = sizeDir;
+            sizer.SetSize(2, 2);
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
 
         }
@@ -119,46 +119,46 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        protected virtual DockBase GetChildDock(Pos pos)
+        protected virtual DockBase getChildDock(Pos pos)
         {
             // todo: verify
             DockBase dock = null;
             switch (pos)
             {
                 case Pos.Left:
-                    if (m_Left == null)
+                    if (left == null)
                     {
-                        m_Left = new DockBase(this);
-                        m_Left.SetupChildDock(pos);
+                        left = new DockBase(this);
+                        left.setupChildDock(pos);
                     }
-                    dock = m_Left;
+                    dock = left;
                     break;
 
                 case Pos.Right:
-                    if (m_Right == null)
+                    if (right == null)
                     {
-                        m_Right = new DockBase(this);
-                        m_Right.SetupChildDock(pos);
+                        right = new DockBase(this);
+                        right.setupChildDock(pos);
                     }
-                    dock = m_Right;
+                    dock = right;
                     break;
 
                 case Pos.Top:
-                    if (m_Top == null)
+                    if (top == null)
                     {
-                        m_Top = new DockBase(this);
-                        m_Top.SetupChildDock(pos);
+                        top = new DockBase(this);
+                        top.setupChildDock(pos);
                     }
-                    dock = m_Top;
+                    dock = top;
                     break;
 
                 case Pos.Bottom:
-                    if (m_Bottom == null)
+                    if (bottom == null)
                     {
-                        m_Bottom = new DockBase(this);
-                        m_Bottom.SetupChildDock(pos);
+                        bottom = new DockBase(this);
+                        bottom.setupChildDock(pos);
                     }
-                    dock = m_Bottom;
+                    dock = bottom;
                     break;
             }
 
@@ -174,7 +174,7 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <returns>Dock direction.</returns>
-        protected virtual Pos GetDroppedTabDirection(int x, int y)
+        protected virtual Pos getDroppedTabDirection(int x, int y)
         {
             int w = Width;
             int h = Height;
@@ -184,18 +184,18 @@ namespace Gwen.Control
             float bottom = (h - y) / (float)h;
             float minimum = Math.Min(Math.Min(Math.Min(top, left), right), bottom);
 
-            m_DropFar = (minimum < 0.2f);
+            dropFar = (minimum < 0.2f);
 
             if (minimum > 0.3f)
                 return Pos.Fill;
 
-            if (top == minimum && (null == m_Top || m_Top.IsHidden))
+            if (top == minimum && (null == this.top || this.top.IsHidden))
                 return Pos.Top;
-            if (left == minimum && (null == m_Left || m_Left.IsHidden))
+            if (left == minimum && (null == this.left || this.left.IsHidden))
                 return Pos.Left;
-            if (right == minimum && (null == m_Right || m_Right.IsHidden))
+            if (right == minimum && (null == this.right || this.right.IsHidden))
                 return Pos.Right;
-            if (bottom == minimum && (null == m_Bottom || m_Bottom.IsHidden))
+            if (bottom == minimum && (null == this.bottom || this.bottom.IsHidden))
                 return Pos.Bottom;
 
             return Pos.Fill;
@@ -217,18 +217,18 @@ namespace Gwen.Control
         public override bool DragAndDrop_HandleDrop(Package p, int x, int y)
         {
             Point pos = CanvasPosToLocal(new Point(x, y));
-            Pos dir = GetDroppedTabDirection(pos.X, pos.Y);
+            Pos dir = getDroppedTabDirection(pos.X, pos.Y);
 
-            DockedTabControl addTo = m_DockedTabControl;
+            DockedTabControl addTo = dockedTabControl;
             if (dir == Pos.Fill && addTo == null)
                 return false;
 
             if (dir != Pos.Fill)
             {
-                DockBase dock = GetChildDock(dir);
-                addTo = dock.m_DockedTabControl;
+                DockBase dock = getChildDock(dir);
+                addTo = dock.dockedTabControl;
 
-                if (!m_DropFar)
+                if (!dropFar)
                     dock.BringToFront();
                 else
                     dock.SendToBack();
@@ -266,153 +266,153 @@ namespace Gwen.Control
         {
             get
             {
-                if (m_DockedTabControl != null && m_DockedTabControl.TabCount > 0) return false;
+                if (dockedTabControl != null && dockedTabControl.TabCount > 0) return false;
 
-                if (m_Left != null && !m_Left.IsEmpty) return false;
-                if (m_Right != null && !m_Right.IsEmpty) return false;
-                if (m_Top != null && !m_Top.IsEmpty) return false;
-                if (m_Bottom != null && !m_Bottom.IsEmpty) return false;
+                if (left != null && !left.IsEmpty) return false;
+                if (right != null && !right.IsEmpty) return false;
+                if (top != null && !top.IsEmpty) return false;
+                if (bottom != null && !bottom.IsEmpty) return false;
 
                 return true;
             }
         }
 
-		protected virtual void OnTabRemoved(ControlBase control, EventArgs args)
+		protected virtual void onTabRemoved(ControlBase control, EventArgs args)
         {
-            DoRedundancyCheck();
-            DoConsolidateCheck();
+            doRedundancyCheck();
+            doConsolidateCheck();
         }
 
-        protected virtual void DoRedundancyCheck()
+        protected virtual void doRedundancyCheck()
         {
             if (!IsEmpty) return;
 
             DockBase pDockParent = Parent as DockBase;
             if (null == pDockParent) return;
 
-            pDockParent.OnRedundantChildDock(this);
+            pDockParent.onRedundantChildDock(this);
         }
 
-        protected virtual void DoConsolidateCheck()
+        protected virtual void doConsolidateCheck()
         {
             if (IsEmpty) return;
-            if (null == m_DockedTabControl) return;
-            if (m_DockedTabControl.TabCount > 0) return;
+            if (null == dockedTabControl) return;
+            if (dockedTabControl.TabCount > 0) return;
 
-            if (m_Bottom != null && !m_Bottom.IsEmpty)
+            if (bottom != null && !bottom.IsEmpty)
             {
-                m_Bottom.m_DockedTabControl.MoveTabsTo(m_DockedTabControl);
+                bottom.dockedTabControl.MoveTabsTo(dockedTabControl);
                 return;
             }
 
-            if (m_Top != null && !m_Top.IsEmpty)
+            if (top != null && !top.IsEmpty)
             {
-                m_Top.m_DockedTabControl.MoveTabsTo(m_DockedTabControl);
+                top.dockedTabControl.MoveTabsTo(dockedTabControl);
                 return;
             }
 
-            if (m_Left != null && !m_Left.IsEmpty)
+            if (left != null && !left.IsEmpty)
             {
-                m_Left.m_DockedTabControl.MoveTabsTo(m_DockedTabControl);
+                left.dockedTabControl.MoveTabsTo(dockedTabControl);
                 return;
             }
 
-            if (m_Right != null && !m_Right.IsEmpty)
+            if (right != null && !right.IsEmpty)
             {
-                m_Right.m_DockedTabControl.MoveTabsTo(m_DockedTabControl);
+                right.dockedTabControl.MoveTabsTo(dockedTabControl);
                 return;
             }
         }
 
-        protected virtual void OnRedundantChildDock(DockBase dock)
+        protected virtual void onRedundantChildDock(DockBase dock)
         {
             dock.IsHidden = true;
-            DoRedundancyCheck();
-            DoConsolidateCheck();
+            doRedundancyCheck();
+            doConsolidateCheck();
         }
 
         public override void DragAndDrop_HoverEnter(Package p, int x, int y)
         {
-            m_DrawHover = true;
+            drawHover = true;
         }
 
         public override void DragAndDrop_HoverLeave(Package p)
         {
-            m_DrawHover = false;
+            drawHover = false;
         }
 
         public override void DragAndDrop_Hover(Package p, int x, int y)
         {
             Point pos = CanvasPosToLocal(new Point(x, y));
-            Pos dir = GetDroppedTabDirection(pos.X, pos.Y);
+            Pos dir = getDroppedTabDirection(pos.X, pos.Y);
 
             if (dir == Pos.Fill)
             {
-                if (null == m_DockedTabControl)
+                if (null == dockedTabControl)
                 {
-                    m_HoverRect = Rectangle.Empty;
+                    hoverRect = Rectangle.Empty;
                     return;
                 }
 
-                m_HoverRect = InnerBounds;
+                hoverRect = InnerBounds;
                 return;
             }
 
-            m_HoverRect = RenderBounds;
+            hoverRect = RenderBounds;
 
             int HelpBarWidth = 0;
 
             if (dir == Pos.Left)
             {
-                HelpBarWidth = (int)(m_HoverRect.Width * 0.25f);
-                m_HoverRect.Width = HelpBarWidth;
+                HelpBarWidth = (int)(hoverRect.Width * 0.25f);
+                hoverRect.Width = HelpBarWidth;
             }
 
             if (dir == Pos.Right)
             {
-                HelpBarWidth = (int)(m_HoverRect.Width * 0.25f);
-                m_HoverRect.X = m_HoverRect.Width - HelpBarWidth;
-                m_HoverRect.Width = HelpBarWidth;
+                HelpBarWidth = (int)(hoverRect.Width * 0.25f);
+                hoverRect.X = hoverRect.Width - HelpBarWidth;
+                hoverRect.Width = HelpBarWidth;
             }
 
             if (dir == Pos.Top)
             {
-                HelpBarWidth = (int)(m_HoverRect.Height * 0.25f);
-                m_HoverRect.Height = HelpBarWidth;
+                HelpBarWidth = (int)(hoverRect.Height * 0.25f);
+                hoverRect.Height = HelpBarWidth;
             }
 
             if (dir == Pos.Bottom)
             {
-                HelpBarWidth = (int)(m_HoverRect.Height * 0.25f);
-                m_HoverRect.Y = m_HoverRect.Height - HelpBarWidth;
-                m_HoverRect.Height = HelpBarWidth;
+                HelpBarWidth = (int)(hoverRect.Height * 0.25f);
+                hoverRect.Y = hoverRect.Height - HelpBarWidth;
+                hoverRect.Height = HelpBarWidth;
             }
 
-            if ((dir == Pos.Top || dir == Pos.Bottom) && !m_DropFar)
+            if ((dir == Pos.Top || dir == Pos.Bottom) && !dropFar)
             {
-                if (m_Left != null && m_Left.IsVisible)
+                if (left != null && left.IsVisible)
                 {
-                    m_HoverRect.X += m_Left.Width;
-                    m_HoverRect.Width -= m_Left.Width;
+                    hoverRect.X += left.Width;
+                    hoverRect.Width -= left.Width;
                 }
 
-                if (m_Right != null && m_Right.IsVisible)
+                if (right != null && right.IsVisible)
                 {
-                    m_HoverRect.Width -= m_Right.Width;
+                    hoverRect.Width -= right.Width;
                 }
             }
 
-            if ((dir == Pos.Left || dir == Pos.Right) && !m_DropFar)
+            if ((dir == Pos.Left || dir == Pos.Right) && !dropFar)
             {
-                if (m_Top != null && m_Top.IsVisible)
+                if (top != null && top.IsVisible)
                 {
-                    m_HoverRect.Y += m_Top.Height;
-                    m_HoverRect.Height -= m_Top.Height;
+                    hoverRect.Y += top.Height;
+                    hoverRect.Height -= top.Height;
                 }
 
-                if (m_Bottom != null && m_Bottom.IsVisible)
+                if (bottom != null && bottom.IsVisible)
                 {
-                    m_HoverRect.Height -= m_Bottom.Height;
+                    hoverRect.Height -= bottom.Height;
                 }
             }
         }
@@ -421,23 +421,23 @@ namespace Gwen.Control
         /// Renders over the actual control (overlays).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderOver(Skin.SkinBase skin)
+        protected override void renderOver(Skin.SkinBase skin)
         {
-            if (!m_DrawHover)
+            if (!drawHover)
                 return;
 
             Renderer.RendererBase render = skin.Renderer;
             render.DrawColor = Color.FromArgb(20, 255, 200, 255);
             render.DrawFilledRect(RenderBounds);
 
-            if (m_HoverRect.Width == 0)
+            if (hoverRect.Width == 0)
                 return;
 
             render.DrawColor = Color.FromArgb(100, 255, 200, 255);
-            render.DrawFilledRect(m_HoverRect);
+            render.DrawFilledRect(hoverRect);
 
             render.DrawColor = Color.FromArgb(200, 255, 200, 255);
-            render.DrawLinedRect(m_HoverRect);
+            render.DrawLinedRect(hoverRect);
         }
     }
 }

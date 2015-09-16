@@ -154,16 +154,16 @@ namespace Gwen.UnitTest
             m_TextOutput.ScrollToBottom();
         }
 
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
+            base.layout(skin);
         }
 
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             m_StatusBar.Text = String.Format("GWEN.Net Unit Test - {0:F0} fps. {1}", Fps, Note);
 
-            base.Render(skin);
+            base.render(skin);
         }
     }
 }

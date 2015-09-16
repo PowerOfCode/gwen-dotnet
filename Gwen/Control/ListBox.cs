@@ -14,23 +14,23 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ListBox : ScrollControl
     {
-        private readonly Table m_Table;
-        private readonly List<ListBoxRow> m_SelectedRows;
+        private readonly Table table;
+        private readonly List<ListBoxRow> selectedRows;
 
-        private bool m_MultiSelect;
-        private bool m_IsToggle;
-        private bool m_SizeToContents;
-        private Pos m_OldDock; // used while autosizing
+        private bool multiSelect;
+        private bool isToggle;
+        private bool sizeToContents;
+        private Pos oldDock; // used while autosizing
 
         /// <summary>
         /// Determines whether multiple rows can be selected at once.
         /// </summary>
         public bool AllowMultiSelect
         {
-            get { return m_MultiSelect; }
+            get { return multiSelect; }
             set
             {
-                m_MultiSelect = value;
+                multiSelect = value;
                 if (value)
                     IsToggle = true;
             }
@@ -39,24 +39,24 @@ namespace Gwen.Control
         /// <summary>
         /// Determines whether rows can be unselected by clicking on them again.
         /// </summary>
-        public bool IsToggle { get { return m_IsToggle; } set { m_IsToggle = value; } }
+        public bool IsToggle { get { return isToggle; } set { isToggle = value; } }
 
         /// <summary>
         /// Number of rows in the list box.
         /// </summary>
-        public int RowCount { get { return m_Table.RowCount; } }
+        public int RowCount { get { return table.RowCount; } }
 
         /// <summary>
         /// Returns specific row of the ListBox.
         /// </summary>
         /// <param name="index">Row index.</param>
         /// <returns>Row at the specified index.</returns>
-        public ListBoxRow this[int index] { get { return m_Table[index] as ListBoxRow; } }
+        public ListBoxRow this[int index] { get { return table[index] as ListBoxRow; } }
 
         /// <summary>
         /// List of selected rows.
         /// </summary>
-        public IEnumerable<TableRow> SelectedRows { get { return m_SelectedRows; } }
+        public IEnumerable<TableRow> SelectedRows { get { return selectedRows; } }
 
         /// <summary>
         /// First selected row (and only if list is not multiselectable).
@@ -65,13 +65,13 @@ namespace Gwen.Control
         {
             get
             {
-                if (m_SelectedRows.Count == 0)
+                if (selectedRows.Count == 0)
                     return null;
-                return m_SelectedRows[0];
+                return selectedRows[0];
             }
             set
             {
-                if (m_Table.Children.Contains(value))
+                if (table.Children.Contains(value))
                 {
                     if (AllowMultiSelect)
                     {
@@ -95,7 +95,7 @@ namespace Gwen.Control
                 var selected = SelectedRow;
                 if (selected == null)
                     return -1;
-                return m_Table.GetRowIndex(selected);
+                return table.GetRowIndex(selected);
             }
             set
             {
@@ -106,7 +106,7 @@ namespace Gwen.Control
         /// <summary>
         /// Column count of table rows.
         /// </summary>
-        public int ColumnCount { get { return m_Table.ColumnCount; } set { m_Table.ColumnCount = value; Invalidate(); } }
+        public int ColumnCount { get { return table.ColumnCount; } set { table.ColumnCount = value; Invalidate(); } }
 
         /// <summary>
         /// Invoked when a row has been selected.
@@ -125,20 +125,20 @@ namespace Gwen.Control
         public ListBox(ControlBase parent)
             : base(parent)
         {
-            m_SelectedRows = new List<ListBoxRow>();
+            selectedRows = new List<ListBoxRow>();
 
 			MouseInputEnabled = true;
             EnableScroll(false, true);
             AutoHideBars = true;
             Margin = Margin.One;
 
-            m_Table = new Table(this);
-            m_Table.Dock = Pos.Fill;
-            m_Table.ColumnCount = 1;
-            m_Table.BoundsChanged += TableResized;
+            table = new Table(this);
+            table.Dock = Pos.Fill;
+            table.ColumnCount = 1;
+            table.BoundsChanged += tableResized;
 
-            m_MultiSelect = false;
-            m_IsToggle = false;
+            multiSelect = false;
+            isToggle = false;
         }
 
         /// <summary>
@@ -148,10 +148,10 @@ namespace Gwen.Control
         /// <param name="clearOthers">Determines whether to deselect previously selected rows.</param>
         public void SelectRow(int index, bool clearOthers = false)
         {
-            if (index < 0 || index >= m_Table.RowCount)
+            if (index < 0 || index >= table.RowCount)
                 return;
 
-            SelectRow(m_Table.Children[index], clearOthers);
+            SelectRow(table.Children[index], clearOthers);
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Gwen.Control
         /// <param name="clearOthers">Determines whether to deselect previously selected rows.</param>
         public void SelectRows(string rowText, bool clearOthers = false)
         {
-            var rows = m_Table.Children.OfType<ListBoxRow>().Where(x => x.Text == rowText);
+            var rows = table.Children.OfType<ListBoxRow>().Where(x => x.Text == rowText);
             foreach (ListBoxRow row in rows)
             {
                 SelectRow(row, clearOthers);
@@ -176,7 +176,7 @@ namespace Gwen.Control
         /// <param name="clearOthers">Determines whether to deselect previously selected rows.</param>
         public void SelectRowsByRegex(string pattern, RegexOptions regexOptions = RegexOptions.None, bool clearOthers = false)
         {
-            var rows = m_Table.Children.OfType<ListBoxRow>().Where(x => Regex.IsMatch(x.Text, pattern));
+            var rows = table.Children.OfType<ListBoxRow>().Where(x => Regex.IsMatch(x.Text, pattern));
             foreach (ListBoxRow row in rows)
             {
                 SelectRow(row, clearOthers);
@@ -199,7 +199,7 @@ namespace Gwen.Control
 
             // TODO: make sure this is one of our rows!
             row.IsSelected = true;
-            m_SelectedRows.Add(row);
+            selectedRows.Add(row);
             if (RowSelected != null)
 				RowSelected.Invoke(this, new ItemSelectedEventArgs(row));
         }
@@ -210,7 +210,7 @@ namespace Gwen.Control
         /// <param name="idx">Row index.</param>
         public void RemoveAllRows()
         {
-            m_Table.DeleteAllChildren();
+            table.DeleteAllChildren();
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Gwen.Control
         /// <param name="idx">Row index.</param>
         public void RemoveRow(int idx)
         {
-            m_Table.RemoveRow(idx); // this calls Dispose()
+            table.RemoveRow(idx); // this calls Dispose()
         }
 
         /// <summary>
@@ -253,15 +253,15 @@ namespace Gwen.Control
         public ListBoxRow AddRow(string label, string name, Object UserData)
         {
             ListBoxRow row = new ListBoxRow(this);
-            m_Table.AddRow(row);
+            table.AddRow(row);
 
             row.SetCellText(0, label);
             row.Name = name;
             row.UserData = UserData;
 
-            row.Selected += OnRowSelected;
+            row.Selected += onRowSelected;
 
-            m_Table.SizeToContents(Width);
+            table.SizeToContents(Width);
 
             return row;
         }
@@ -273,7 +273,7 @@ namespace Gwen.Control
         /// <param name="width">Column width.</param>
         public void SetColumnWidth(int column, int width)
         {
-            m_Table.SetColumnWidth(column, width);
+            table.SetColumnWidth(column, width);
             Invalidate();
         }
 
@@ -281,7 +281,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawListBox(this);
         }
@@ -291,13 +291,13 @@ namespace Gwen.Control
         /// </summary>
         public virtual void UnselectAll()
         {
-            foreach (ListBoxRow row in m_SelectedRows)
+            foreach (ListBoxRow row in selectedRows)
             {
                 row.IsSelected = false;
                 if (RowUnselected != null)
 					RowUnselected.Invoke(this, new ItemSelectedEventArgs(row));
             }
-            m_SelectedRows.Clear();
+            selectedRows.Clear();
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Gwen.Control
         public void UnselectRow(ListBoxRow row)
         {
             row.IsSelected = false;
-            m_SelectedRows.Remove(row);
+            selectedRows.Remove(row);
 
             if (RowUnselected != null)
                 RowUnselected.Invoke(this, new ItemSelectedEventArgs(row));
@@ -317,7 +317,7 @@ namespace Gwen.Control
         /// Handler for the row selection event.
         /// </summary>
         /// <param name="control">Event source.</param>
-        protected virtual void OnRowSelected(ControlBase control, ItemSelectedEventArgs args)
+        protected virtual void onRowSelected(ControlBase control, ItemSelectedEventArgs args)
         {
             // [omeg] changed default behavior
             bool clear = false;// !InputHandler.InputHandler.IsShiftDown;
@@ -342,25 +342,25 @@ namespace Gwen.Control
         public virtual void Clear()
         {
             UnselectAll();
-            m_Table.RemoveAll();
+            table.RemoveAll();
         }
 
         public void SizeToContents()
         {
-            m_SizeToContents = true;
+            sizeToContents = true;
             // docking interferes with autosizing so we disable it until sizing is done
-            m_OldDock = m_Table.Dock;
-            m_Table.Dock = Pos.None;
-            m_Table.SizeToContents(0); // autosize without constraints
+            oldDock = table.Dock;
+            table.Dock = Pos.None;
+            table.SizeToContents(0); // autosize without constraints
         }
 
-        private void TableResized(ControlBase control, EventArgs args)
+        private void tableResized(ControlBase control, EventArgs args)
         {
-            if (m_SizeToContents)
+            if (sizeToContents)
             {
-                SetSize(m_Table.Width, m_Table.Height);
-                m_SizeToContents = false;
-                m_Table.Dock = m_OldDock;
+                SetSize(table.Width, table.Height);
+                sizeToContents = false;
+                table.Dock = oldDock;
                 Invalidate();
             }
         }
@@ -372,7 +372,7 @@ namespace Gwen.Control
         /// <param name="label">The label to look for, this is what is shown to the user.</param>
         public void SelectByText(string text)
         {
-            foreach (ListBoxRow item in m_Table.Children)
+            foreach (ListBoxRow item in table.Children)
             {
                 if (item.Text == text)
                 {
@@ -389,7 +389,7 @@ namespace Gwen.Control
         /// <param name="name">The internal name to look for. To select by what is displayed to the user, use "SelectByText".</param>
         public void SelectByName(string name)
         {
-            foreach (ListBoxRow item in m_Table.Children)
+            foreach (ListBoxRow item in table.Children)
             {
                 if (item.Name == name)
                 {
@@ -407,7 +407,7 @@ namespace Gwen.Control
         /// If null is passed in, it will look for null/unset UserData.</param>
         public void SelectByUserData(object userdata)
         {
-            foreach (ListBoxRow item in m_Table.Children)
+            foreach (ListBoxRow item in table.Children)
             {
                 if (userdata == null)
                 {

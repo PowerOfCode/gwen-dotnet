@@ -13,16 +13,16 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Dragger : ControlBase
     {
-        protected bool m_Held;
-        protected Point m_HoldPos;
-        protected ControlBase m_Target;
+        protected bool held;
+        protected Point holdPos;
+        protected ControlBase target;
 
-        internal ControlBase Target { get { return m_Target; } set { m_Target = value; } }
+        internal ControlBase Target { get { return target; } set { target = value; } }
 
         /// <summary>
         /// Indicates if the control is being dragged.
         /// </summary>
-        public bool IsHeld { get { return m_Held; } }
+        public bool IsHeld { get { return held; } }
 
         /// <summary>
         /// Event invoked when the control position has been changed.
@@ -36,7 +36,7 @@ namespace Gwen.ControlInternal
         public Dragger(ControlBase parent) : base(parent)
         {
             MouseInputEnabled = true;
-            m_Held = false;
+            held = false;
         }
 
         /// <summary>
@@ -45,19 +45,19 @@ namespace Gwen.ControlInternal
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
-            if (null == m_Target) return;
+            if (null == target) return;
 
             if (down)
             {
-                m_Held = true;
-                m_HoldPos = m_Target.CanvasPosToLocal(new Point(x, y));
+                held = true;
+                holdPos = target.CanvasPosToLocal(new Point(x, y));
                 InputHandler.MouseFocus = this;
             }
             else
             {
-                m_Held = false;
+                held = false;
 
                 InputHandler.MouseFocus = null;
             }
@@ -70,19 +70,19 @@ namespace Gwen.ControlInternal
         /// <param name="y">Y coordinate.</param>
         /// <param name="dx">X change.</param>
         /// <param name="dy">Y change.</param>
-        protected override void OnMouseMoved(int x, int y, int dx, int dy)
+        protected override void onMouseMoved(int x, int y, int dx, int dy)
         {
-            if (null == m_Target) return;
-            if (!m_Held) return;
+            if (null == target) return;
+            if (!held) return;
 
-            Point p = new Point(x - m_HoldPos.X, y - m_HoldPos.Y);
+            Point p = new Point(x - holdPos.X, y - holdPos.Y);
 
             // Translate to parent
-            if (m_Target.Parent != null)
-                p = m_Target.Parent.CanvasPosToLocal(p);
+            if (target.Parent != null)
+                p = target.Parent.CanvasPosToLocal(p);
 
             //m_Target->SetPosition( p.x, p.y );
-            m_Target.MoveTo(p.X, p.Y);
+            target.MoveTo(p.X, p.Y);
             if (Dragged != null)
 				Dragged.Invoke(this, EventArgs.Empty);
         }
@@ -91,7 +91,7 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
 
         }

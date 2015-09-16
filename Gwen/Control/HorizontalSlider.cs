@@ -18,17 +18,17 @@ namespace Gwen.Control
         public HorizontalSlider(ControlBase parent)
             : base(parent)
         {
-            m_SliderBar.IsHorizontal = true;
+            sliderBar.IsHorizontal = true;
         }
 
-        protected override float CalculateValue()
+        protected override float calculateValue()
         {
-            return (float)m_SliderBar.X / (Width - m_SliderBar.Width);
+            return (float)sliderBar.X / (Width - sliderBar.Width);
         }
 
-        protected override void UpdateBarFromValue()
+        protected override void updateBarFromValue()
         {
-            m_SliderBar.MoveTo((int)((Width - m_SliderBar.Width) * (m_Value)), m_SliderBar.Y);
+            sliderBar.MoveTo((int)((Width - sliderBar.Width) * (value)), sliderBar.Y);
         }
 
         /// <summary>
@@ -37,31 +37,31 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
-			base.OnMouseClickedLeft(x, y, down);
-            m_SliderBar.MoveTo((int)(CanvasPosToLocal(new Point(x, y)).X - m_SliderBar.Width*0.5), m_SliderBar.Y);
-            m_SliderBar.InputMouseClickedLeft(x, y, down);
-            OnMoved(m_SliderBar, EventArgs.Empty);
+			base.onMouseClickedLeft(x, y, down);
+            sliderBar.MoveTo((int)(CanvasPosToLocal(new Point(x, y)).X - sliderBar.Width*0.5), sliderBar.Y);
+            sliderBar.InputMouseClickedLeft(x, y, down);
+            onMoved(sliderBar, EventArgs.Empty);
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            m_SliderBar.SetSize(15, Height);
-            UpdateBarFromValue();
+            sliderBar.SetSize(15, Height);
+            updateBarFromValue();
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawSlider(this, true, m_SnapToNotches ? m_NotchCount : 0, m_SliderBar.Width);
+            skin.DrawSlider(this, true, snapToNotches ? notchCount : 0, sliderBar.Width);
         }
     }
 }

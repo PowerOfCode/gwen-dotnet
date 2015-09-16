@@ -12,9 +12,9 @@ namespace Gwen.Platform
     /// </summary>
     public static class Windows
     {
-        private const string FontRegKey = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts";
+        private const string fontRegKey = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts";
 
-        private static Dictionary<string, string> m_FontPaths;
+        private static Dictionary<string, string> fontPaths;
 
         /// <summary>
         /// Gets a font file path from font name.
@@ -27,30 +27,30 @@ namespace Gwen.Platform
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
                 return null;
 
-            if (m_FontPaths == null)
-                InitFontPaths();
+            if (fontPaths == null)
+                initFontPaths();
 
-            if (!m_FontPaths.ContainsKey(fontName))
+            if (!fontPaths.ContainsKey(fontName))
                 return null;
 
-            return m_FontPaths[fontName];
+            return fontPaths[fontName];
         }
 
-        private static void InitFontPaths()
+        private static void initFontPaths()
         {
             // very hacky but better than nothing
-            m_FontPaths = new Dictionary<string, string>();
+            fontPaths = new Dictionary<string, string>();
             string fontsDir = Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
 
             RegistryKey key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Default);
-            RegistryKey subkey = key.OpenSubKey(FontRegKey);
+            RegistryKey subkey = key.OpenSubKey(fontRegKey);
             foreach (string fontName in subkey.GetValueNames())
             {
                 string fontFile = (string)subkey.GetValue(fontName);
                 if (!fontName.EndsWith(" (TrueType)"))
                     continue;
                 string font = fontName.Replace(" (TrueType)", "");
-                m_FontPaths[font] = Path.Combine(fontsDir, fontFile);
+                fontPaths[font] = Path.Combine(fontsDir, fontFile);
             }
             key.Dispose();
         }

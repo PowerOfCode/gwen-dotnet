@@ -10,19 +10,19 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class CheckBox : Button
     {
-        private bool m_Checked;
+        private bool isChecked;
 
         /// <summary>
         /// Indicates whether the checkbox is checked.
         /// </summary>
         public bool IsChecked
         {
-            get { return m_Checked; }
+            get { return isChecked; }
             set
             {
-                if (m_Checked == value) return;
-                m_Checked = value;
-                OnCheckChanged();
+                if (isChecked == value) return;
+                isChecked = value;
+                onCheckChanged();
             }
         }
 
@@ -64,12 +64,12 @@ namespace Gwen.Control
         /// <summary>
         /// Determines whether unchecking is allowed.
         /// </summary>
-        protected virtual bool AllowUncheck { get { return true; } }
+        protected virtual bool allowUncheck { get { return true; } }
 
         /// <summary>
         /// Handler for CheckChanged event.
         /// </summary>
-        protected virtual void OnCheckChanged()
+        protected virtual void onCheckChanged()
         {
             if (IsChecked)
             {
@@ -90,26 +90,26 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            base.Render(skin);
-            skin.DrawCheckBox(this, m_Checked, IsDepressed);
+            base.render(skin);
+            skin.DrawCheckBox(this, isChecked, IsDepressed);
         }
 
         /// <summary>
         /// Internal OnPressed implementation.
         /// </summary>
-        protected override void OnClicked(int x, int y)
+        protected override void onClicked(int x, int y)
         {
             if (IsDisabled)
                 return;
 
-            if (IsChecked && !AllowUncheck)
+            if (IsChecked && !allowUncheck)
             {
                 return;
             }
 
-			base.OnClicked(x, y);
+			base.onClicked(x, y);
         }
     }
 }

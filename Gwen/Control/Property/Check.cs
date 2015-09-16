@@ -7,7 +7,7 @@ namespace Gwen.Control.Property
     /// </summary>
     public class Check : PropertyBase
     {
-        protected readonly Control.CheckBox m_CheckBox;
+        protected readonly Control.CheckBox checkBox;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Check"/> class.
@@ -16,12 +16,12 @@ namespace Gwen.Control.Property
         public Check(Control.ControlBase parent)
             : base(parent)
         {
-            m_CheckBox = new Control.CheckBox(this);
-            m_CheckBox.ShouldDrawBackground = false;
-            m_CheckBox.CheckChanged += OnValueChanged;
-            m_CheckBox.IsTabable = true;
-            m_CheckBox.KeyboardInputEnabled = true;
-            m_CheckBox.SetPosition(2, 1);
+            checkBox = new Control.CheckBox(this);
+            checkBox.ShouldDrawBackground = false;
+            checkBox.CheckChanged += onValueChanged;
+            checkBox.IsTabable = true;
+            checkBox.KeyboardInputEnabled = true;
+            checkBox.SetPosition(2, 1);
 
             Height = 18;
         }
@@ -31,7 +31,7 @@ namespace Gwen.Control.Property
         /// </summary>
         public override string Value
         {
-            get { return m_CheckBox.IsChecked ? "1" : "0"; }
+            get { return checkBox.IsChecked ? "1" : "0"; }
             set { base.Value = value; }
         }
 
@@ -40,15 +40,15 @@ namespace Gwen.Control.Property
         /// </summary>
         /// <param name="value">Value to set.</param>
         /// <param name="fireEvents">Determines whether to fire "value changed" event.</param>
-        public override void SetValue(string value, bool fireEvents = false)
+        public override void setValue(string value, bool fireEvents = false)
         {
             if (value == "1" || value.ToLower() == "true" || value.ToLower() == "yes")
             {
-                m_CheckBox.IsChecked = true;
+                checkBox.IsChecked = true;
             }
             else
             {
-                m_CheckBox.IsChecked = false;
+                checkBox.IsChecked = false;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Gwen.Control.Property
         /// </summary>
         public override bool IsEditing
         {
-            get { return m_CheckBox.HasFocus; }
+            get { return checkBox.HasFocus; }
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Gwen.Control.Property
         /// </summary>
         public override bool IsHovered
         {
-            get { return base.IsHovered || m_CheckBox.IsHovered; }
+            get { return base.IsHovered || checkBox.IsHovered; }
         }
     }
 }

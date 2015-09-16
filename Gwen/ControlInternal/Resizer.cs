@@ -13,7 +13,7 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Resizer : Dragger
     {
-        private Pos m_ResizeDir;
+        private Pos resizeDir;
 
         /// <summary>
         /// Invoked when the control has been resized.
@@ -27,7 +27,7 @@ namespace Gwen.ControlInternal
         public Resizer(ControlBase parent)
             : base(parent)
         {
-            m_ResizeDir = Pos.Left;
+            resizeDir = Pos.Left;
             MouseInputEnabled = true;
             SetSize(6, 6);
             Target = parent;
@@ -40,23 +40,23 @@ namespace Gwen.ControlInternal
         /// <param name="y">Y coordinate.</param>
         /// <param name="dx">X change.</param>
         /// <param name="dy">Y change.</param>
-        protected override void OnMouseMoved(int x, int y, int dx, int dy)
+        protected override void onMouseMoved(int x, int y, int dx, int dy)
         {
-            if (null == m_Target) return;
-            if (!m_Held) return;
+            if (null == target) return;
+            if (!held) return;
 
-            Rectangle oldBounds = m_Target.Bounds;
-            Rectangle bounds = m_Target.Bounds;
+            Rectangle oldBounds = target.Bounds;
+            Rectangle bounds = target.Bounds;
 
-            Point min = m_Target.MinimumSize;
+            Point min = target.MinimumSize;
 
-            Point pCursorPos = m_Target.CanvasPosToLocal(new Point(x, y));
+            Point pCursorPos = target.CanvasPosToLocal(new Point(x, y));
 
-            Point delta = m_Target.LocalPosToCanvas(m_HoldPos);
+            Point delta = target.LocalPosToCanvas(holdPos);
             delta.X -= x;
             delta.Y -= y;
 
-            if (0 != (m_ResizeDir & Pos.Left))
+            if (0 != (resizeDir & Pos.Left))
             {
                 bounds.X -= delta.X;
                 bounds.Width += delta.X;
@@ -72,7 +72,7 @@ namespace Gwen.ControlInternal
                 }
             }
 
-            if (0 != (m_ResizeDir & Pos.Top))
+            if (0 != (resizeDir & Pos.Top))
             {
                 bounds.Y -= delta.Y;
                 bounds.Height += delta.Y;
@@ -88,7 +88,7 @@ namespace Gwen.ControlInternal
                 }
             }
 
-            if (0 != (m_ResizeDir & Pos.Right))
+            if (0 != (resizeDir & Pos.Right))
             {
                 // This is complicated.
                 // Basically we want to use the HoldPos, so it doesn't snap to the edge of the control
@@ -96,27 +96,27 @@ namespace Gwen.ControlInternal
                 // I actually think this might be a big hack around the way this control works with regards
                 // to the holdpos being on the parent panel.
 
-                int woff = bounds.Width - m_HoldPos.X;
+                int woff = bounds.Width - holdPos.X;
                 int diff = bounds.Width;
                 bounds.Width = pCursorPos.X + woff;
                 if (bounds.Width < min.X) bounds.Width = min.X;
                 diff -= bounds.Width;
 
-                m_HoldPos.X -= diff;
+                holdPos.X -= diff;
             }
 
-            if (0 != (m_ResizeDir & Pos.Bottom))
+            if (0 != (resizeDir & Pos.Bottom))
             {
-                int hoff = bounds.Height - m_HoldPos.Y;
+                int hoff = bounds.Height - holdPos.Y;
                 int diff = bounds.Height;
                 bounds.Height = pCursorPos.Y + hoff;
                 if (bounds.Height < min.Y) bounds.Height = min.Y;
                 diff -= bounds.Height;
 
-                m_HoldPos.Y -= diff;
+                holdPos.Y -= diff;
             }
 
-            m_Target.SetBounds(bounds);
+            target.SetBounds(bounds);
 
             if (Resized != null)
                 Resized.Invoke(this, EventArgs.Empty);
@@ -129,7 +129,7 @@ namespace Gwen.ControlInternal
         {
             set
             {
-                m_ResizeDir = value;
+                resizeDir = value;
 
                 if ((0 != (value & Pos.Left) && 0 != (value & Pos.Top)) || (0 != (value & Pos.Right) && 0 != (value & Pos.Bottom)))
                 {

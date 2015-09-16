@@ -8,7 +8,7 @@ namespace Gwen
     /// </summary>
     public static class ToolTip
     {
-        private static ControlBase g_ToolTip;
+        private static ControlBase toolTip;
 
         /// <summary>
         /// Enables tooltip display for the specified control.
@@ -19,7 +19,7 @@ namespace Gwen
             if (null == control.ToolTip)
                 return;
 
-            g_ToolTip = control;
+            toolTip = control;
         }
 
         /// <summary>
@@ -28,9 +28,9 @@ namespace Gwen
         /// <param name="control">Target control.</param>
         public static void Disable(ControlBase control)
         {
-            if (g_ToolTip == control)
+            if (toolTip == control)
             {
-                g_ToolTip = null;
+                toolTip = null;
             }
         }
 
@@ -49,24 +49,24 @@ namespace Gwen
         /// <param name="skin"></param>
         public static void RenderToolTip(Skin.SkinBase skin)
         {
-            if (null == g_ToolTip) return;
+            if (null == toolTip) return;
 
             Renderer.RendererBase render = skin.Renderer;
 
             Point oldRenderOffset = render.RenderOffset;
             Point mousePos = Input.InputHandler.MousePosition;
-            Rectangle bounds = g_ToolTip.ToolTip.Bounds;
+            Rectangle bounds = toolTip.ToolTip.Bounds;
 
             Rectangle offset = Util.FloatRect(mousePos.X - bounds.Width*0.5f, mousePos.Y - bounds.Height - 10,
                                                  bounds.Width, bounds.Height);
-            offset = Util.ClampRectToRect(offset, g_ToolTip.GetCanvas().Bounds);
+            offset = Util.ClampRectToRect(offset, toolTip.GetCanvas().Bounds);
 
             //Calculate offset on screen bounds
             render.AddRenderOffset(offset);
             render.EndClip();
 
-            skin.DrawToolTip(g_ToolTip.ToolTip);
-            g_ToolTip.ToolTip.DoRender(skin);
+            skin.DrawToolTip(toolTip.ToolTip);
+            toolTip.ToolTip.DoRender(skin);
 
             render.RenderOffset = oldRenderOffset;
         }

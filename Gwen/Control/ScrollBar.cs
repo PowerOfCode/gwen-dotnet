@@ -11,14 +11,14 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ScrollBar : ControlBase
     {
-        protected readonly ScrollBarButton[] m_ScrollButton;
-        protected readonly ScrollBarBar m_Bar;
+        protected readonly ScrollBarButton[] scrollButton;
+        protected readonly ScrollBarBar bar;
 
-        protected bool m_Depressed;
-        protected float m_ScrollAmount;
-        protected float m_ContentSize;
-        protected float m_ViewableContentSize;
-        protected float m_NudgeAmount;
+        protected bool depressed;
+        protected float scrollAmount;
+        protected float contentSize;
+        protected float viewableContentSize;
+        protected float nudgeAmount;
 
         /// <summary>
         /// Invoked when the bar is moved.
@@ -40,10 +40,10 @@ namespace Gwen.Control
         /// </summary>
         public virtual int ButtonSize { get { return 0; } }
 
-        public virtual float NudgeAmount { get { return m_NudgeAmount / m_ContentSize; } set { m_NudgeAmount = value; } }
-        public float ScrollAmount { get { return m_ScrollAmount; } }
-        public float ContentSize { get { return m_ContentSize; } set { if (m_ContentSize != value) Invalidate(); m_ContentSize = value; } }
-        public float ViewableContentSize { get { return m_ViewableContentSize; } set { if (m_ViewableContentSize != value) Invalidate(); m_ViewableContentSize = value; } }
+        public virtual float NudgeAmount { get { return nudgeAmount / contentSize; } set { nudgeAmount = value; } }
+        public float ScrollAmount { get { return scrollAmount; } }
+        public float ContentSize { get { return contentSize; } set { if (contentSize != value) Invalidate(); contentSize = value; } }
+        public float ViewableContentSize { get { return viewableContentSize; } set { if (viewableContentSize != value) Invalidate(); viewableContentSize = value; } }
 
         /// <summary>
         /// Indicates whether the bar is horizontal.
@@ -56,18 +56,18 @@ namespace Gwen.Control
         /// <param name="parent">Parent control.</param>
         protected ScrollBar(ControlBase parent) : base(parent)
         {
-            m_ScrollButton = new ScrollBarButton[2];
-            m_ScrollButton[0] = new ScrollBarButton(this);
-            m_ScrollButton[1] = new ScrollBarButton(this);
+            scrollButton = new ScrollBarButton[2];
+            scrollButton[0] = new ScrollBarButton(this);
+            scrollButton[1] = new ScrollBarButton(this);
 
-            m_Bar = new ScrollBarBar(this);
+            bar = new ScrollBarBar(this);
 
             SetBounds(0, 0, 15, 15);
-            m_Depressed = false;
+            depressed = false;
 
-            m_ScrollAmount = 0;
-            m_ContentSize = 0;
-            m_ViewableContentSize = 0;
+            scrollAmount = 0;
+            contentSize = 0;
+            viewableContentSize = 0;
 
             NudgeAmount = 20;
         }
@@ -80,11 +80,11 @@ namespace Gwen.Control
         /// <returns>True if control state changed.</returns>
         public virtual bool SetScrollAmount(float value, bool forceUpdate = false)
         {
-            if (m_ScrollAmount == value && !forceUpdate)
+            if (scrollAmount == value && !forceUpdate)
                 return false;
-            m_ScrollAmount = value;
+            scrollAmount = value;
             Invalidate();
-            OnBarMoved(this, EventArgs.Empty);
+            onBarMoved(this, EventArgs.Empty);
             return true;
         }
 
@@ -94,7 +94,7 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
 
         }
@@ -103,27 +103,27 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawScrollBar(this, IsHorizontal, m_Depressed);
+            skin.DrawScrollBar(this, IsHorizontal, depressed);
         }
 
         /// <summary>
         /// Handler for the BarMoved event.
         /// </summary>
         /// <param name="control">The control.</param>
-		protected virtual void OnBarMoved(ControlBase control, EventArgs args)
+		protected virtual void onBarMoved(ControlBase control, EventArgs args)
         {
             if (BarMoved != null)
 				BarMoved.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual float CalculateScrolledAmount()
+        protected virtual float calculateScrolledAmount()
         {
             return 0;
         }
 
-        protected virtual int CalculateBarSize()
+        protected virtual int calculateBarSize()
         {
             return 0;
         }

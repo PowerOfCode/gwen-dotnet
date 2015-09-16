@@ -10,13 +10,13 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class TreeControl : TreeNode
     {
-        private readonly ScrollControl m_ScrollControl;
-        private bool m_MultiSelect;
+        private readonly ScrollControl scrollControl;
+        private bool multiSelect;
 
         /// <summary>
         /// Determines if multiple nodes can be selected at the same time.
         /// </summary>
-        public bool AllowMultiSelect { get { return m_MultiSelect; } set { m_MultiSelect = value; } }
+        public bool AllowMultiSelect { get { return multiSelect; } set { multiSelect = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeControl"/> class.
@@ -25,26 +25,26 @@ namespace Gwen.Control
         public TreeControl(ControlBase parent)
             : base(parent)
         {
-            m_TreeControl = this;
+            treeControl = this;
 
-            RemoveChild(m_ToggleButton, true);
-            m_ToggleButton = null;
-            RemoveChild(m_Title, true);
-            m_Title = null;
-            RemoveChild(m_InnerPanel, true);
-            m_InnerPanel = null;
+            RemoveChild(toggleButton, true);
+            toggleButton = null;
+            RemoveChild(title, true);
+            title = null;
+            RemoveChild(innerPanel, true);
+            innerPanel = null;
 
-            m_MultiSelect = false;
+            multiSelect = false;
 
-            m_ScrollControl = new ScrollControl(this);
-            m_ScrollControl.Dock = Pos.Fill;
-            m_ScrollControl.EnableScroll(false, true);
-            m_ScrollControl.AutoHideBars = true;
-            m_ScrollControl.Margin = Margin.One;
+            scrollControl = new ScrollControl(this);
+            scrollControl.Dock = Pos.Fill;
+            scrollControl.EnableScroll(false, true);
+            scrollControl.AutoHideBars = true;
+            scrollControl.Margin = Margin.One;
 
-            m_InnerPanel = m_ScrollControl;
+            innerPanel = scrollControl;
 
-            m_ScrollControl.SetInnerSize(1000, 1000); // todo: why such arbitrary numbers?
+            scrollControl.SetInnerSize(1000, 1000); // todo: why such arbitrary numbers?
 
 			Dock = Pos.None;
         }
@@ -53,7 +53,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             if (ShouldDrawBackground)
                 skin.DrawTreeControl(this);
@@ -64,10 +64,10 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="oldChildBounds"></param>
         /// <param name="child"></param>
-        protected override void OnChildBoundsChanged(System.Drawing.Rectangle oldChildBounds, ControlBase child)
+        protected override void onChildBoundsChanged(System.Drawing.Rectangle oldChildBounds, ControlBase child)
         {
-            if (m_ScrollControl != null)
-                m_ScrollControl.UpdateScrollBars();
+            if (scrollControl != null)
+                scrollControl.UpdateScrollBars();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Gwen.Control
         /// </summary>
         public virtual void RemoveAll()
         {
-            m_ScrollControl.DeleteAll();
+            scrollControl.DeleteAll();
         }
 
         /// <summary>
@@ -84,16 +84,16 @@ namespace Gwen.Control
         /// <param name="node">Node added.</param>
         public virtual void OnNodeAdded(TreeNode node)
         {
-            node.LabelPressed += OnNodeSelected;
+            node.LabelPressed += onNodeSelected;
         }
 
         /// <summary>
         /// Handler for node selected event.
         /// </summary>
         /// <param name="Control">Node selected.</param>
-		protected virtual void OnNodeSelected(ControlBase Control, EventArgs args)
+		protected virtual void onNodeSelected(ControlBase Control, EventArgs args)
         {
-            if (!m_MultiSelect /*|| InputHandler.InputHandler.IsKeyDown(Key.Control)*/)
+            if (!multiSelect /*|| InputHandler.InputHandler.IsKeyDown(Key.Control)*/)
                 UnselectAll();
         }
     }

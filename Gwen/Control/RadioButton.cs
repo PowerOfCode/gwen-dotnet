@@ -12,7 +12,7 @@ namespace Gwen.Control
         /// <summary>
         /// Determines whether unchecking is allowed.
         /// </summary>
-        protected override bool AllowUncheck
+        protected override bool allowUncheck
         {
             get { return false; }
         }
@@ -34,7 +34,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawRadioButton(this, IsChecked, IsDepressed);
         }

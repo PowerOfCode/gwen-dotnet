@@ -13,22 +13,22 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Menu : ScrollControl
     {
-        private bool m_DisableIconMargin;
-        private bool m_DeleteOnClose;
+        private bool disableIconMargin;
+        private bool deleteOnClose;
 
         internal override bool IsMenuComponent { get { return true; } }
 
-        public bool IconMarginDisabled { get { return m_DisableIconMargin; } set { m_DisableIconMargin = value; } }
+        public bool IconMarginDisabled { get { return disableIconMargin; } set { disableIconMargin = value; } }
 
         /// <summary>
         /// Determines whether the menu should be disposed on close.
         /// </summary>
-        public bool DeleteOnClose { get { return m_DeleteOnClose; } set { m_DeleteOnClose = value; } }
+        public bool DeleteOnClose { get { return deleteOnClose; } set { deleteOnClose = value; } }
 
         /// <summary>
         /// Determines whether the menu should open on mouse hover.
         /// </summary>
-        protected virtual bool ShouldHoverOpenMenu { get { return true; } }
+        protected virtual bool shouldHoverOpenMenu { get { return true; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> class.
@@ -50,7 +50,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawMenu(this, IconMarginDisabled);
         }
@@ -59,9 +59,9 @@ namespace Gwen.Control
         /// Renders under the actual control (shadows etc).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderUnder(Skin.SkinBase skin)
+        protected override void renderUnder(Skin.SkinBase skin)
         {
-            base.RenderUnder(skin);
+            base.renderUnder(skin);
             skin.DrawShadow(this);
         }
 
@@ -81,7 +81,7 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
             int childrenHeight = Children.Sum(child => child != null ? child.Height : 0);
 
@@ -90,7 +90,7 @@ namespace Gwen.Control
 
             SetSize(Width, childrenHeight);
 
-            base.Layout(skin);
+            base.layout(skin);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Gwen.Control
             item.SetImage(iconName);
             item.SetAccelerator(accelerator);
 
-            OnAddItem(item);
+            onAddItem(item);
 
             return item;
         }
@@ -127,13 +127,13 @@ namespace Gwen.Control
         /// Add item handler.
         /// </summary>
         /// <param name="item">Item added.</param>
-        protected virtual void OnAddItem(MenuItem item)
+        protected virtual void onAddItem(MenuItem item)
         {
             item.TextPadding = new Padding(IconMarginDisabled ? 0 : 24, 0, 16, 0);
             item.Dock = Pos.Top;
             item.SizeToContents();
             item.Alignment = Pos.CenterV | Pos.Left;
-            item.HoverEnter += OnHoverItem;
+            item.HoverEnter += onHoverItem;
 
             // Do this here - after Top Docking these values mean nothing in layout
             int w = item.Width + 10 + 32;
@@ -163,9 +163,9 @@ namespace Gwen.Control
         /// Mouse hover handler.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnHoverItem(ControlBase control, EventArgs args)
+		protected virtual void onHoverItem(ControlBase control, EventArgs args)
         {
-            if (!ShouldHoverOpenMenu) return;
+            if (!shouldHoverOpenMenu) return;
 
             MenuItem item = control as MenuItem;
             if (null == item) return;

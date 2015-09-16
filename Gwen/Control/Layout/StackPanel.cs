@@ -26,7 +26,7 @@ namespace Gwen.Control.Layout
             IsVertical = true;
         }
 
-        protected override void Layout(Gwen.Skin.SkinBase skin)
+        protected override void layout(Gwen.Skin.SkinBase skin)
         {
             int cachedSizeX = 0, cachedSizeY = 0;
 
@@ -71,7 +71,7 @@ namespace Gwen.Control.Layout
             if ((cachedSizeX != Width) || (cachedSizeY != Height))
                 SetSize(cachedSizeX, cachedSizeY);
 
-            base.Layout(skin);
+            base.layout(skin);
         }
     }
 }

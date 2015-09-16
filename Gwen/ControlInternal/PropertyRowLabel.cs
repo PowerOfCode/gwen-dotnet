@@ -10,7 +10,7 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class PropertyRowLabel : Label
     {
-        private readonly PropertyRow m_PropertyRow;
+        private readonly PropertyRow propertyRow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyRowLabel"/> class.
@@ -20,7 +20,7 @@ namespace Gwen.ControlInternal
         {
 			AutoSizeToContents = false;
             Alignment = Pos.Left | Pos.CenterV;
-            m_PropertyRow = parent;
+            propertyRow = parent;
         }
 
         /// <summary>
@@ -34,13 +34,13 @@ namespace Gwen.ControlInternal
                 return;
             }
 
-            if (m_PropertyRow != null && m_PropertyRow.IsEditing)
+            if (propertyRow != null && propertyRow.IsEditing)
             {
                 TextColor = Skin.Colors.Properties.Label_Selected;
                 return;
             }
 
-            if (m_PropertyRow != null && m_PropertyRow.IsHovered)
+            if (propertyRow != null && propertyRow.IsHovered)
             {
                 TextColor = Skin.Colors.Properties.Label_Hover;
                 return;

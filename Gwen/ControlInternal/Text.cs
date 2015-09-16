@@ -14,8 +14,8 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Text : ControlBase
     {
-        private string m_String;
-        private Font m_Font;
+        private string text;
+        private Font font;
 
         /// <summary>
         /// Font used to display the text.
@@ -25,10 +25,10 @@ namespace Gwen.ControlInternal
         /// </remarks>
         public Font Font
         {
-            get { return m_Font; }
+            get { return font; }
             set
             {
-                m_Font = value;
+                font = value;
                 SizeToContents();
             }
         }
@@ -39,10 +39,10 @@ namespace Gwen.ControlInternal
         //[JsonProperty]
         public string String
         {
-            get { return m_String; }
+            get { return text; }
             set
             {
-                m_String = value;
+                text = value;
                 SizeToContents();
             }
         }
@@ -79,8 +79,8 @@ namespace Gwen.ControlInternal
         public Text(ControlBase parent)
             : base(parent)
         {
-            m_Font = Skin.DefaultFont;
-            m_String = String.Empty;
+            font = Skin.DefaultFont;
+            text = String.Empty;
             TextColor = Skin.Colors.Label.Default;
             MouseInputEnabled = false;
             TextColorOverride = Color.FromArgb(0, 255, 255, 255); // A==0, override disabled
@@ -90,7 +90,7 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             if (Length == 0 || Font == null) return;
 
@@ -126,16 +126,16 @@ namespace Gwen.ControlInternal
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
             SizeToContents();
-            base.Layout(skin);
+            base.layout(skin);
         }
 
         /// <summary>
         /// Handler invoked when control's scale changes.
         /// </summary>
-        protected override void OnScaleChanged()
+        protected override void onScaleChanged()
         {
             Invalidate();
         }

@@ -12,32 +12,32 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorPicker : ControlBase, IColorPicker
     {
-        private Color m_Color;
+        private Color color;
 
         /// <summary>
         /// Selected color.
         /// </summary>
-        public Color SelectedColor { get { return m_Color; } set { m_Color = value; UpdateControls(); } }
+        public Color SelectedColor { get { return color; } set { color = value; updateControls(); } }
 
         /// <summary>
         /// Red value of the selected color.
         /// </summary>
-        public int R { get { return m_Color.R; } set { m_Color = Color.FromArgb(m_Color.A, value, m_Color.G, m_Color.B); } }
+        public int R { get { return color.R; } set { color = Color.FromArgb(color.A, value, color.G, color.B); } }
 
         /// <summary>
         /// Green value of the selected color.
         /// </summary>
-        public int G { get { return m_Color.G; } set { m_Color = Color.FromArgb(m_Color.A, m_Color.R, value, m_Color.B); } }
+        public int G { get { return color.G; } set { color = Color.FromArgb(color.A, color.R, value, color.B); } }
 
         /// <summary>
         /// Blue value of the selected color.
         /// </summary>
-        public int B { get { return m_Color.B; } set { m_Color = Color.FromArgb(m_Color.A, m_Color.R, m_Color.G, value); } }
+        public int B { get { return color.B; } set { color = Color.FromArgb(color.A, color.R, color.G, value); } }
 
         /// <summary>
         /// Alpha value of the selected color.
         /// </summary>
-        public int A { get { return m_Color.A; } set { m_Color = Color.FromArgb(value, m_Color.R, m_Color.G, m_Color.B); } }
+        public int A { get { return color.A; } set { color = Color.FromArgb(value, color.R, color.G, color.B); } }
 
         /// <summary>
         /// Invoked when the selected color has been changed.
@@ -54,11 +54,11 @@ namespace Gwen.Control
             MouseInputEnabled = true;
 
             SetSize(256, 150);
-            CreateControls();
+            createControls();
             SelectedColor = Color.FromArgb(255, 50, 60, 70);
         }
 
-        private void CreateColorControl(string name, int y)
+        private void createColorControl(string name, int y)
         {
             const int colorSize = 12;
 
@@ -77,17 +77,17 @@ namespace Gwen.Control
             numeric.SetPosition(105, 7);
             numeric.SetSize(26, 16);
             numeric.SelectAllOnFocus = true;
-            numeric.TextChanged += NumericTyped;
+            numeric.TextChanged += numericTyped;
 
             HorizontalSlider slider = new HorizontalSlider(colorGroup);
             slider.SetPosition(colorSize + 5, 10);
             slider.SetRange(0, 255);
             slider.SetSize(80, colorSize);
             slider.Name = name + "Slider";
-            slider.ValueChanged += SlidersMoved;
+            slider.ValueChanged += slidersMoved;
         }
 
-		private void NumericTyped(ControlBase control, EventArgs args)
+		private void numericTyped(ControlBase control, EventArgs args)
         {
             TextBoxNumeric box = control as TextBoxNumeric;
             if (null == box)
@@ -112,18 +112,18 @@ namespace Gwen.Control
             if (box.Name.Contains("Alpha"))
                 A = textValue;
 
-            UpdateControls();
+            updateControls();
         }
 
-        private void CreateControls()
+        private void createControls()
         {
             const int startY = 5;
             const int height = 35;
 
-            CreateColorControl("Red", startY);
-            CreateColorControl("Green", startY + height);
-            CreateColorControl("Blue", startY + height * 2);
-            CreateColorControl("Alpha", startY + height * 3);
+            createColorControl("Red", startY);
+            createColorControl("Green", startY + height);
+            createColorControl("Blue", startY + height * 2);
+            createColorControl("Alpha", startY + height * 3);
 
             GroupBox finalGroup = new GroupBox(this);
             finalGroup.SetPosition(180, 40);
@@ -139,7 +139,7 @@ namespace Gwen.Control
             //UpdateControls();
         }
 
-        private void UpdateColorControls(string name, Color col, int sliderVal)
+        private void updateColorControls(string name, Color col, int sliderVal)
         {
             ColorDisplay disp = FindChildByName(name, true) as ColorDisplay;
             disp.Color = col;
@@ -151,12 +151,12 @@ namespace Gwen.Control
             box.Value = sliderVal;
         }
 
-        private void UpdateControls()
+        private void updateControls()
         {	//This is a little weird, but whatever for now
-            UpdateColorControls("Red", Color.FromArgb(255, SelectedColor.R, 0, 0), SelectedColor.R);
-            UpdateColorControls("Green", Color.FromArgb(255, 0, SelectedColor.G, 0), SelectedColor.G);
-            UpdateColorControls("Blue", Color.FromArgb(255, 0, 0, SelectedColor.B), SelectedColor.B);
-            UpdateColorControls("Alpha", Color.FromArgb(SelectedColor.A, 255, 255, 255), SelectedColor.A);
+            updateColorControls("Red", Color.FromArgb(255, SelectedColor.R, 0, 0), SelectedColor.R);
+            updateColorControls("Green", Color.FromArgb(255, 0, SelectedColor.G, 0), SelectedColor.G);
+            updateColorControls("Blue", Color.FromArgb(255, 0, 0, SelectedColor.B), SelectedColor.B);
+            updateColorControls("Alpha", Color.FromArgb(SelectedColor.A, 255, 255, 255), SelectedColor.A);
 
             ColorDisplay disp = FindChildByName("Result", true) as ColorDisplay;
             disp.Color = SelectedColor;
@@ -165,7 +165,7 @@ namespace Gwen.Control
                 ColorChanged.Invoke(this, EventArgs.Empty);
         }
 
-        private void SlidersMoved(ControlBase control, EventArgs args)
+        private void slidersMoved(ControlBase control, EventArgs args)
         {
             /*
             HorizontalSlider* redSlider		= gwen_cast<HorizontalSlider>(	FindChildByName( "RedSlider",   true ) );
@@ -176,9 +176,9 @@ namespace Gwen.Control
 
             HorizontalSlider slider = control as HorizontalSlider;
             if (slider != null)
-                SetColorByName(GetColorFromName(slider.Name), (int)slider.Value);
+                setColorByName(getColorFromName(slider.Name), (int)slider.Value);
 
-            UpdateControls();
+            updateControls();
             //SetColor( Gwen::Color( redSlider->GetValue(), greenSlider->GetValue(), blueSlider->GetValue(), alphaSlider->GetValue() ) );
         }
 
@@ -186,9 +186,9 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
+            base.layout(skin);
 
             SizeToChildren(false, true);
             SetSize(Width, Height + 5);
@@ -200,7 +200,7 @@ namespace Gwen.Control
             //UpdateControls(); // this spams events continuously every tick
         }
 
-        private int GetColorByName(string colorName)
+        private int getColorByName(string colorName)
         {
             if (colorName == "Red")
                 return SelectedColor.R;
@@ -213,7 +213,7 @@ namespace Gwen.Control
             return 0;
         }
 
-        private static string GetColorFromName(string name)
+        private static string getColorFromName(string name)
         {
             if (name.Contains("Red"))
                 return "Red";
@@ -226,7 +226,7 @@ namespace Gwen.Control
             return String.Empty;
         }
 
-        private void SetColorByName(string colorName, int colorValue)
+        private void setColorByName(string colorName, int colorValue)
         {
             if (colorName == "Red")
                 R = colorValue;

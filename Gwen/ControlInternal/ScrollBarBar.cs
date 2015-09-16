@@ -10,17 +10,17 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ScrollBarBar : Dragger
     {
-        private bool m_Horizontal;
+        private bool horizontal;
 
         /// <summary>
         /// Indicates whether the bar is horizontal.
         /// </summary>
-        public bool IsHorizontal { get { return m_Horizontal; } set { m_Horizontal = value; } }
+        public bool IsHorizontal { get { return horizontal; } set { horizontal = value; } }
 
         /// <summary>
         /// Indicates whether the bar is vertical.
         /// </summary>
-        public bool IsVertical { get { return !m_Horizontal; } set { m_Horizontal = !value; } }
+        public bool IsVertical { get { return !horizontal; } set { horizontal = !value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBarBar"/> class.
@@ -37,10 +37,10 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawScrollBarBar(this, m_Held, IsHovered, m_Horizontal);
-            base.Render(skin);
+            skin.DrawScrollBarBar(this, held, IsHovered, horizontal);
+            base.render(skin);
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace Gwen.ControlInternal
         /// <param name="y">Y coordinate.</param>
         /// <param name="dx">X change.</param>
         /// <param name="dy">Y change.</param>
-        protected override void OnMouseMoved(int x, int y, int dx, int dy)
+        protected override void onMouseMoved(int x, int y, int dx, int dy)
         {
-            base.OnMouseMoved(x, y, dx, dy);
-            if (!m_Held)
+            base.onMouseMoved(x, y, dx, dy);
+            if (!held)
                 return;
 
             InvalidateParent();
@@ -65,9 +65,9 @@ namespace Gwen.ControlInternal
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
-            base.OnMouseClickedLeft(x, y, down);
+            base.onMouseClickedLeft(x, y, down);
             InvalidateParent();
         }
 
@@ -75,7 +75,7 @@ namespace Gwen.ControlInternal
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
             if (null == Parent)
                 return;

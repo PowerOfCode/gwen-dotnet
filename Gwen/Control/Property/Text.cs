@@ -7,7 +7,7 @@ namespace Gwen.Control.Property
     /// </summary>
     public class Text : PropertyBase
     {
-        protected readonly TextBox m_TextBox;
+        protected readonly TextBox textBox;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Text"/> class.
@@ -15,10 +15,10 @@ namespace Gwen.Control.Property
         /// <param name="parent">Parent control.</param>
         public Text(Control.ControlBase parent) : base(parent)
         {
-            m_TextBox = new TextBox(this);
-            m_TextBox.Dock = Pos.Fill;
-            m_TextBox.ShouldDrawBackground = false;
-            m_TextBox.TextChanged += OnValueChanged;
+            textBox = new TextBox(this);
+            textBox.Dock = Pos.Fill;
+            textBox.ShouldDrawBackground = false;
+            textBox.TextChanged += onValueChanged;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Gwen.Control.Property
         /// </summary>
         public override string Value
         {
-            get { return m_TextBox.Text; }
+            get { return textBox.Text; }
             set { base.Value = value; }
         }
 
@@ -35,9 +35,9 @@ namespace Gwen.Control.Property
         /// </summary>
         /// <param name="value">Value to set.</param>
         /// <param name="fireEvents">Determines whether to fire "value changed" event.</param>
-        public override void SetValue(string value, bool fireEvents = false)
+        public override void setValue(string value, bool fireEvents = false)
         {
-            m_TextBox.SetText(value, fireEvents);
+            textBox.SetText(value, fireEvents);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Gwen.Control.Property
         /// </summary>
         public override bool IsEditing
         {
-            get { return m_TextBox.HasFocus; }
+            get { return textBox.HasFocus; }
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Gwen.Control.Property
         /// </summary>
         public override bool IsHovered
         {
-            get { return base.IsHovered | m_TextBox.IsHovered; }
+            get { return base.IsHovered | textBox.IsHovered; }
         }
     }
 }

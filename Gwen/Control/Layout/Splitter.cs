@@ -7,8 +7,8 @@ namespace Gwen.Control.Layout
     /// </summary>
     public class Splitter : ControlBase
     {
-        private readonly ControlBase[] m_Panel;
-        private readonly bool[] m_Scale;
+        private readonly ControlBase[] panel;
+        private readonly bool[] scale;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Splitter"/> class.
@@ -16,10 +16,10 @@ namespace Gwen.Control.Layout
         /// <param name="parent">Parent control.</param>
         public Splitter(ControlBase parent) : base(parent)
         {
-            m_Panel = new ControlBase[2];
-            m_Scale = new bool[2];
-            m_Scale[0] = true;
-            m_Scale[1] = true;
+            panel = new ControlBase[2];
+            scale = new bool[2];
+            scale[0] = true;
+            scale[1] = true;
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace Gwen.Control.Layout
             if (panelIndex < 0 || panelIndex > 1)
                 throw new ArgumentException("Invalid panel index", "panelIndex");
 
-            m_Panel[panelIndex] = panel;
-            m_Scale[panelIndex] = !noScale;
+            this.panel[panelIndex] = panel;
+            scale[panelIndex] = !noScale;
 
-            if (null != m_Panel[panelIndex])
+            if (null != this.panel[panelIndex])
             {
-                m_Panel[panelIndex].Parent = this;
+                this.panel[panelIndex].Parent = this;
             }
         }
 
@@ -51,43 +51,43 @@ namespace Gwen.Control.Layout
         {
             if (panelIndex < 0 || panelIndex > 1)
                 throw new ArgumentException("Invalid panel index", "panelIndex");
-            return m_Panel[panelIndex];
+            return panel[panelIndex];
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            LayoutVertical(skin);
+            layoutVertical(skin);
         }
 
-        protected virtual void LayoutVertical(Skin.SkinBase skin)
+        protected virtual void layoutVertical(Skin.SkinBase skin)
         {
             int w = Width;
             int h = Height;
 
-            if (m_Panel[0] != null)
+            if (panel[0] != null)
             {
-                Margin m = m_Panel[0].Margin;
-                if (m_Scale[0])
-                    m_Panel[0].SetBounds(m.Left, m.Top, w - m.Left - m.Right, (h*0.5f) - m.Top - m.Bottom);
+                Margin m = panel[0].Margin;
+                if (scale[0])
+                    panel[0].SetBounds(m.Left, m.Top, w - m.Left - m.Right, (h*0.5f) - m.Top - m.Bottom);
                 else
-                    m_Panel[0].Position(Pos.Center, 0, (int) (h*-0.25f));
+                    panel[0].Position(Pos.Center, 0, (int) (h*-0.25f));
             }
 
-            if (m_Panel[1] != null)
+            if (panel[1] != null)
             {
-                Margin m = m_Panel[1].Margin;
-                if (m_Scale[1])
-                    m_Panel[1].SetBounds(m.Left, m.Top + (h*0.5f), w - m.Left - m.Right, (h*0.5f) - m.Top - m.Bottom);
+                Margin m = panel[1].Margin;
+                if (scale[1])
+                    panel[1].SetBounds(m.Left, m.Top + (h*0.5f), w - m.Left - m.Right, (h*0.5f) - m.Top - m.Bottom);
                 else
-                    m_Panel[1].Position(Pos.Center, 0, (int) (h*0.25f));
+                    panel[1].Position(Pos.Center, 0, (int) (h*0.25f));
             }
         }
 
-        protected virtual void LayoutHorizontal(Skin.SkinBase skin)
+        protected virtual void layoutHorizontal(Skin.SkinBase skin)
         {
             throw new NotImplementedException();
         }

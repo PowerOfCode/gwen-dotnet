@@ -10,8 +10,8 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class MessageBox : WindowControl
     {
-        private readonly Button m_Button;
-        private readonly Label m_Label; // should be rich label with maxwidth = parent
+        private readonly Button button;
+        private readonly Label label; // should be rich label with maxwidth = parent
 
         /// <summary>
         /// Invoked when the message box has been dismissed.
@@ -29,25 +29,25 @@ namespace Gwen.Control
         {
             DeleteOnClose = true;
 
-            m_Label = new Label(m_InnerPanel);
-            m_Label.Text = text;
-            m_Label.Margin = Margin.Five;
-            m_Label.Dock = Pos.Top;
-            m_Label.Alignment = Pos.Center;
+            label = new Label(innerPanel);
+            label.Text = text;
+            label.Margin = Margin.Five;
+            label.Dock = Pos.Top;
+            label.Alignment = Pos.Center;
 
-            m_Button = new Button(m_InnerPanel);
-            m_Button.Text = "OK"; // todo: parametrize buttons
-            m_Button.Clicked += CloseButtonPressed;
-            m_Button.Clicked += DismissedHandler;
-            m_Button.Margin = Margin.Five;
-            m_Button.SetSize(50, 20);
+            button = new Button(innerPanel);
+            button.Text = "OK"; // todo: parametrize buttons
+            button.Clicked += closeButtonPressed;
+            button.Clicked += dismissedHandler;
+            button.Margin = Margin.Five;
+            button.SetSize(50, 20);
 
             base.DisableResizing();
 
             Align.Center(this);
         }
 
-		private void DismissedHandler(ControlBase control, EventArgs args)
+		private void dismissedHandler(ControlBase control, EventArgs args)
         {
             if (Dismissed != null)
                 Dismissed.Invoke(this, EventArgs.Empty);
@@ -57,14 +57,14 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
+            base.layout(skin);
 
-            Align.PlaceDownLeft(m_Button, m_Label, 10);
-            Align.CenterHorizontally(m_Button);
-            m_InnerPanel.SizeToChildren();
-            m_InnerPanel.Height += 10;
+            Align.PlaceDownLeft(button, label, 10);
+            Align.CenterHorizontally(button);
+            innerPanel.SizeToChildren();
+            innerPanel.Height += 10;
             SizeToChildren();
         }
     }

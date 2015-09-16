@@ -28,9 +28,9 @@ namespace Gwen.Control
             Alignment = Pos.Top | Pos.Left;
             Invalidate();
 
-            m_InnerPanel = new ControlBase(this);
-            m_InnerPanel.Dock = Pos.Fill;
-            m_InnerPanel.Margin = new Margin(5, TextHeight+5, 5, 5);
+            innerPanel = new ControlBase(this);
+            innerPanel.Dock = Pos.Fill;
+            innerPanel.Margin = new Margin(5, TextHeight+5, 5, 5);
             //Margin = new Margin(5, 5, 5, 5);
         }
 
@@ -38,9 +38,9 @@ namespace Gwen.Control
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
+            base.layout(skin);
             if (AutoSizeToContents)
             {
                 DoSizeToContents();
@@ -51,7 +51,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
             skin.DrawGroupBox(this, TextX, TextHeight, TextWidth);
         }
@@ -67,7 +67,7 @@ namespace Gwen.Control
 
         protected virtual void DoSizeToContents()
         {
-            m_InnerPanel.SizeToChildren();
+            innerPanel.SizeToChildren();
             SizeToChildren();
             if (Width < TextWidth + TextPadding.Right + TextPadding.Left)
                 Width = TextWidth + TextPadding.Right + TextPadding.Left;

@@ -9,7 +9,7 @@ namespace Gwen.Control.Property
     /// </summary>
     public class Color : Text
     {
-        protected readonly ColorButton m_Button;
+        protected readonly ColorButton button;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> class.
@@ -17,18 +17,18 @@ namespace Gwen.Control.Property
         /// <param name="parent">Parent control.</param>
         public Color(Control.ControlBase parent) : base(parent)
         {
-            m_Button = new ColorButton(m_TextBox);
-            m_Button.Dock = Pos.Right;
-            m_Button.Width = 20;
-            m_Button.Margin = new Margin(1, 1, 1, 2);
-            m_Button.Clicked += OnButtonPressed;
+            button = new ColorButton(textBox);
+            button.Dock = Pos.Right;
+            button.Width = 20;
+            button.Margin = new Margin(1, 1, 1, 2);
+            button.Clicked += onButtonPressed;
         }
 
         /// <summary>
         /// Color-select button press handler.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnButtonPressed(Control.ControlBase control, EventArgs args)
+		protected virtual void onButtonPressed(Control.ControlBase control, EventArgs args)
         {
             Menu menu = new Menu(GetCanvas());
             menu.SetSize(256, 180);
@@ -39,10 +39,10 @@ namespace Gwen.Control.Property
             picker.Dock = Pos.Fill;
             picker.SetSize(256, 128);
 
-            string[] split = m_TextBox.Text.Split(' ');
+            string[] split = textBox.Text.Split(' ');
 
-            picker.SetColor(GetColorFromText(), false, true);
-            picker.ColorChanged += OnColorChanged;
+            picker.SetColor(getColorFromText(), false, true);
+            picker.ColorChanged += onColorChanged;
 
             menu.Open(Pos.Right | Pos.Top);
         }
@@ -51,11 +51,11 @@ namespace Gwen.Control.Property
         /// Color changed handler.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnColorChanged(Control.ControlBase control, EventArgs args)
+		protected virtual void onColorChanged(Control.ControlBase control, EventArgs args)
         {
             HSVColorPicker picker = control as HSVColorPicker;
-            SetTextFromColor(picker.SelectedColor);
-            DoChanged();
+            setTextFromColor(picker.SelectedColor);
+            doChanged();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Gwen.Control.Property
         /// </summary>
         public override string Value
         {
-            get { return m_TextBox.Text; }
+            get { return textBox.Text; }
             set { base.Value = value; }
         }
 
@@ -72,9 +72,9 @@ namespace Gwen.Control.Property
         /// </summary>
         /// <param name="value">Value to set.</param>
         /// <param name="fireEvents">Determines whether to fire "value changed" event.</param>
-        public override void SetValue(string value, bool fireEvents = false)
+        public override void setValue(string value, bool fireEvents = false)
         {
-            m_TextBox.SetText(value, fireEvents);
+            textBox.SetText(value, fireEvents);
         }
 
         /// <summary>
@@ -82,17 +82,17 @@ namespace Gwen.Control.Property
         /// </summary>
         public override bool IsEditing
         {
-            get { return m_TextBox == InputHandler.KeyboardFocus; }
+            get { return textBox == InputHandler.KeyboardFocus; }
         }
 
-        private void SetTextFromColor(System.Drawing.Color color)
+        private void setTextFromColor(System.Drawing.Color color)
         {
-            m_TextBox.Text = String.Format("{0} {1} {2}", color.R, color.G, color.B);
+            textBox.Text = String.Format("{0} {1} {2}", color.R, color.G, color.B);
         }
 
-        private System.Drawing.Color GetColorFromText()
+        private System.Drawing.Color getColorFromText()
         {
-            string[] split = m_TextBox.Text.Split(' ');
+            string[] split = textBox.Text.Split(' ');
 
             byte red = 0;
             byte green = 0;
@@ -117,10 +117,10 @@ namespace Gwen.Control.Property
             return System.Drawing.Color.FromArgb(alpha, red, green, blue);
         }
 
-        protected override void DoChanged()
+        protected override void doChanged()
         {
-            base.DoChanged();
-            m_Button.Color = GetColorFromText();
+            base.doChanged();
+            button.Color = getColorFromText();
         }
     }
 }

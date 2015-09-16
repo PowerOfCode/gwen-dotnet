@@ -15,11 +15,11 @@ namespace Gwen.DragDrop
         public static ControlBase HoveredControl;
         public static ControlBase SourceControl;
 
-        private static ControlBase m_LastPressedControl;
-        private static ControlBase m_NewHoveredControl;
-        private static Point m_LastPressedPos;
-        private static int m_MouseX;
-        private static int m_MouseY;
+        private static ControlBase lastPressedControl;
+        private static ControlBase newHoveredControl;
+        private static Point lastPressedPos;
+        private static int mouseX;
+        private static int mouseY;
 
         private static bool onDrop(int x, int y)
         {
@@ -40,33 +40,33 @@ namespace Gwen.DragDrop
             return true;
         }
 
-        private static bool ShouldStartDraggingControl( int x, int y )
+        private static bool shouldStartDraggingControl( int x, int y )
         {
             // We're not holding a control down..
-            if (m_LastPressedControl == null) 
+            if (lastPressedControl == null) 
                 return false;
 
             // Not been dragged far enough
-            int length = Math.Abs(x - m_LastPressedPos.X) + Math.Abs(y - m_LastPressedPos.Y);
+            int length = Math.Abs(x - lastPressedPos.X) + Math.Abs(y - lastPressedPos.Y);
             if (length < 5) 
                 return false;
 
             // Create the dragging package
 
-            CurrentPackage = m_LastPressedControl.DragAndDrop_GetPackage(m_LastPressedPos.X, m_LastPressedPos.Y);
+            CurrentPackage = lastPressedControl.DragAndDrop_GetPackage(lastPressedPos.X, lastPressedPos.Y);
 
             // We didn't create a package!
             if (CurrentPackage == null)
             {
-                m_LastPressedControl = null;
+                lastPressedControl = null;
                 SourceControl = null;
                 return false;
             }
 
             // Now we're dragging something!
-            SourceControl = m_LastPressedControl;
+            SourceControl = lastPressedControl;
             InputHandler.MouseFocus = null;
-            m_LastPressedControl = null;
+            lastPressedControl = null;
             CurrentPackage.DrawControl = null;
 
             // Some controls will want to decide whether they should be dragged at that moment.
@@ -78,12 +78,12 @@ namespace Gwen.DragDrop
                 return false;
             }
 
-            SourceControl.DragAndDrop_StartDragging(CurrentPackage, m_LastPressedPos.X, m_LastPressedPos.Y);
+            SourceControl.DragAndDrop_StartDragging(CurrentPackage, lastPressedPos.X, lastPressedPos.Y);
 
             return true;
         }
 
-        private static void UpdateHoveredControl(ControlBase control, int x, int y)
+        private static void updateHoveredControl(ControlBase control, int x, int y)
         {
             //
             // We use this global variable to represent our hovered control
@@ -91,40 +91,40 @@ namespace Gwen.DragDrop
             // Hover callbacks, we won't be left with a hanging pointer.
             // This isn't ideal - but it's minimal.
             //
-            m_NewHoveredControl = control;
+            newHoveredControl = control;
 
             // Nothing to change..
-            if (HoveredControl == m_NewHoveredControl)
+            if (HoveredControl == newHoveredControl)
                 return;
 
             // We changed - tell the old hovered control that it's no longer hovered.
-            if (HoveredControl != null && HoveredControl != m_NewHoveredControl)
+            if (HoveredControl != null && HoveredControl != newHoveredControl)
                 HoveredControl.DragAndDrop_HoverLeave(CurrentPackage);
 
             // If we're hovering where the control came from, just forget it.
             // By changing it to null here we're not going to show any error cursors
             // it will just do nothing if you drop it.
-            if (m_NewHoveredControl == SourceControl)
-                m_NewHoveredControl = null;
+            if (newHoveredControl == SourceControl)
+                newHoveredControl = null;
 
             // Check to see if the new potential control can accept this type of package.
             // If not, ignore it and show an error cursor.
-            while (m_NewHoveredControl != null && !m_NewHoveredControl.DragAndDrop_CanAcceptPackage(CurrentPackage))
+            while (newHoveredControl != null && !newHoveredControl.DragAndDrop_CanAcceptPackage(CurrentPackage))
             {
                 // We can't drop on this control, so lets try to drop
                 // onto its parent..
-                m_NewHoveredControl = m_NewHoveredControl.Parent;
+                newHoveredControl = newHoveredControl.Parent;
 
                 // Its parents are dead. We can't drop it here.
                 // Show the NO WAY cursor.
-                if (m_NewHoveredControl == null)
+                if (newHoveredControl == null)
                 {
                     Platform.Neutral.SetCursor(Cursors.No);
                 }
             }
 
             // Become out new hovered control
-            HoveredControl = m_NewHoveredControl;
+            HoveredControl = newHoveredControl;
 
             // If we exist, tell us that we've started hovering.
             if (HoveredControl != null)
@@ -132,7 +132,7 @@ namespace Gwen.DragDrop
                 HoveredControl.DragAndDrop_HoverEnter(CurrentPackage, x, y);
             }
 
-            m_NewHoveredControl = null;
+            newHoveredControl = null;
         }
 
         public static bool Start(ControlBase control, Package package)
@@ -151,7 +151,7 @@ namespace Gwen.DragDrop
         {
             if (!down)
             {
-                m_LastPressedControl = null;
+                lastPressedControl = null;
 
                 // Not carrying anything, allow normal actions
                 if (CurrentPackage == null)
@@ -168,10 +168,10 @@ namespace Gwen.DragDrop
                 return false;
 
             // Store the last clicked on control. Don't do anything yet, 
-            // we'll check it in OnMouseMoved, and if it moves further than
+            // we'll check it in onMouseMoved, and if it moves further than
             // x pixels with the mouse down, we'll start to drag.
-            m_LastPressedPos = new Point(x, y);
-            m_LastPressedControl = hoveredControl;
+            lastPressedPos = new Point(x, y);
+            lastPressedControl = hoveredControl;
 
             return false;
         }
@@ -179,16 +179,16 @@ namespace Gwen.DragDrop
         public static void OnMouseMoved(ControlBase hoveredControl, int x, int y)
         {
             // Always keep these up to date, they're used to draw the dragged control.
-            m_MouseX = x;
-            m_MouseY = y;
+            mouseX = x;
+            mouseY = y;
 
             // If we're not carrying anything, then check to see if we should
             // pick up from a control that we're holding down. If not, then forget it.
-            if (CurrentPackage == null && !ShouldStartDraggingControl(x, y))
+            if (CurrentPackage == null && !shouldStartDraggingControl(x, y))
                 return;
 
             // Swap to this new hovered control and notify them of the change.
-            UpdateHoveredControl(hoveredControl, x, y);
+            updateHoveredControl(hoveredControl, x, y);
 
             if (HoveredControl == null)
                 return;
@@ -214,8 +214,8 @@ namespace Gwen.DragDrop
             Point old = skin.Renderer.RenderOffset;
 
             skin.Renderer.AddRenderOffset(new Rectangle(
-                m_MouseX - SourceControl.X - CurrentPackage.HoldOffset.X,
-                m_MouseY - SourceControl.Y - CurrentPackage.HoldOffset.Y, 0, 0));
+                mouseX - SourceControl.X - CurrentPackage.HoldOffset.X,
+                mouseY - SourceControl.Y - CurrentPackage.HoldOffset.Y, 0, 0));
             CurrentPackage.DrawControl.DoRender(skin);
 
             skin.Renderer.RenderOffset = old;
@@ -228,17 +228,17 @@ namespace Gwen.DragDrop
                 SourceControl = null;
                 CurrentPackage = null;
                 HoveredControl = null;
-                m_LastPressedControl = null;
+                lastPressedControl = null;
             }
 
-            if (m_LastPressedControl == control)
-                m_LastPressedControl = null;
+            if (lastPressedControl == control)
+                lastPressedControl = null;
 
             if (HoveredControl == control)
                 HoveredControl = null;
 
-            if (m_NewHoveredControl == control)
-                m_NewHoveredControl = null;
+            if (newHoveredControl == control)
+                newHoveredControl = null;
         }
     }
 }

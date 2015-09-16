@@ -11,11 +11,11 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Button : Label
     {
-        private bool m_Depressed;
-        private bool m_Toggle;
-        private bool m_ToggleStatus;
-        private bool m_CenterImage;
-        private ImagePanel m_Image;
+        private bool depressed;
+        private bool toggle;
+        private bool toggleStatus;
+        private bool centerImage;
+        private ImagePanel image;
 
         /// <summary>
         /// Invoked when the button is pressed.
@@ -47,12 +47,12 @@ namespace Gwen.Control
         /// </summary>
         public bool IsDepressed
         {
-            get { return m_Depressed; }
+            get { return depressed; }
             set
             {
-                if (m_Depressed == value)
+                if (depressed == value)
                     return;
-                m_Depressed = value;
+                depressed = value;
                 Redraw();
             }
         }
@@ -61,7 +61,7 @@ namespace Gwen.Control
         /// Indicates whether the button is toggleable.
         /// </summary>
         [JsonProperty]
-        public bool IsToggle { get { return m_Toggle; } set { m_Toggle = value; } }
+        public bool IsToggle { get { return toggle; } set { toggle = value; } }
 
         /// <summary>
         /// Determines the button's toggle state.
@@ -69,18 +69,18 @@ namespace Gwen.Control
         [JsonProperty]
         public bool ToggleState
         {
-            get { return m_ToggleStatus; }
+            get { return toggleStatus; }
             set
             {
-                if (!m_Toggle) return;
-                if (m_ToggleStatus == value) return;
+                if (!toggle) return;
+                if (toggleStatus == value) return;
 
-                m_ToggleStatus = value;
+                toggleStatus = value;
 
                 if (Toggled != null)
 					Toggled.Invoke(this, EventArgs.Empty);
 
-                if (m_ToggleStatus)
+                if (toggleStatus)
                 {
                     if (ToggledOn != null)
 						ToggledOn.Invoke(this, EventArgs.Empty);
@@ -122,16 +122,16 @@ namespace Gwen.Control
         /// </summary>
         public virtual void Press(ControlBase control = null)
         {
-            OnClicked(0, 0);
+            onClicked(0, 0);
         }
 
         /// <summary>
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            base.Render(skin);
+            base.render(skin);
 
             if (ShouldDrawBackground)
             {
@@ -139,7 +139,7 @@ namespace Gwen.Control
                 if (IsToggle)
                     drawDepressed = drawDepressed || ToggleState;
 
-                bool bDrawHovered = IsHovered && ShouldDrawHover;
+                bool bDrawHovered = IsHovered && shouldDrawHover;
 
                 skin.DrawButton(this, drawDepressed, bDrawHovered, IsDisabled);
             }
@@ -151,9 +151,9 @@ namespace Gwen.Control
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
+        protected override void onMouseClickedLeft(int x, int y, bool down)
         {
-            //base.OnMouseClickedLeft(x, y, down);
+            //base.onMouseClickedLeft(x, y, down);
             if (down)
             {
                 IsDepressed = true;
@@ -163,9 +163,9 @@ namespace Gwen.Control
             }
             else
             {
-                if (IsHovered && m_Depressed)
+                if (IsHovered && depressed)
                 {
-                    OnClicked(x, y);
+                    onClicked(x, y);
                 }
 
                 IsDepressed = false;
@@ -180,14 +180,14 @@ namespace Gwen.Control
         /// <summary>
         /// Internal OnPressed implementation.
         /// </summary>
-        protected virtual void OnClicked(int x, int y)
+        protected virtual void onClicked(int x, int y)
         {
             if (IsToggle)
             {
                 Toggle();
             }
 
-			base.OnMouseClickedLeft(x, y, true);
+			base.onMouseClickedLeft(x, y, true);
         }
 
         /// <summary>
@@ -199,25 +199,25 @@ namespace Gwen.Control
         {
             if (String.IsNullOrEmpty(textureName))
             {
-                if (m_Image != null)
-                    m_Image.Dispose();
-                m_Image = null;
+                if (image != null)
+                    image.Dispose();
+                image = null;
                 return;
             }
 
-            if (m_Image == null)
+            if (image == null)
             {
-                m_Image = new ImagePanel(this);
+                image = new ImagePanel(this);
             }
 
-            m_Image.ImageName = textureName;
-            m_Image.SizeToContents( );
-            m_Image.SetPosition(Math.Max(Padding.Left, 2), 2);
-            m_Image.KeyboardInputEnabled = false;
-            m_Image.MouseInputEnabled = false;
-            m_CenterImage = center;
+            image.ImageName = textureName;
+            image.SizeToContents( );
+            image.SetPosition(Math.Max(Padding.Left, 2), 2);
+            image.KeyboardInputEnabled = false;
+            image.MouseInputEnabled = false;
+            centerImage = center;
 
-            TextPadding = new Padding(m_Image.Right + 2, TextPadding.Top, TextPadding.Right, TextPadding.Bottom);
+            TextPadding = new Padding(image.Right + 2, TextPadding.Top, TextPadding.Right, TextPadding.Bottom);
         }
 
         /// <summary>
@@ -226,9 +226,9 @@ namespace Gwen.Control
         public override void SizeToContents()
         {
             base.SizeToContents();
-            if (m_Image != null)
+            if (image != null)
             {
-                int height = m_Image.Height + 4;
+                int height = image.Height + 4;
                 if (Height < height)
                 {
                     Height = height;
@@ -243,35 +243,35 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeySpace(bool down)
+        protected override bool onKeySpace(bool down)
         {
-			return base.OnKeySpace(down);
+			return base.onKeySpace(down);
 			//if (down)
-			//    OnClicked(0, 0);
+			//    onClicked(0, 0);
 			//return true;
         }
 
         /// <summary>
         /// Default accelerator handler.
         /// </summary>
-        protected override void OnAccelerator()
+        protected override void onAccelerator()
         {
-            OnClicked(0, 0);
+            onClicked(0, 0);
         }
 
         /// <summary>
         /// Lays out the control's interior according to alignment, padding, dock etc.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Layout(Skin.SkinBase skin)
+        protected override void layout(Skin.SkinBase skin)
         {
-            base.Layout(skin);
-            if (m_Image != null)
+            base.layout(skin);
+            if (image != null)
             {
-                Align.CenterVertically(m_Image);
+                Align.CenterVertically(image);
 
-                if (m_CenterImage)
-                    Align.CenterHorizontally(m_Image);
+                if (centerImage)
+                    Align.CenterHorizontally(image);
             }
         }
 
@@ -306,10 +306,10 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
-        protected override void OnMouseDoubleClickedLeft(int x, int y)
+        protected override void onMouseDoubleClickedLeft(int x, int y)
         {
-			base.OnMouseDoubleClickedLeft(x, y);
-            OnMouseClickedLeft(x, y, true);
+			base.onMouseDoubleClickedLeft(x, y);
+            onMouseClickedLeft(x, y, true);
         }
     }
 }

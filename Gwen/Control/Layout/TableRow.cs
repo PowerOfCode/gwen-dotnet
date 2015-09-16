@@ -213,7 +213,7 @@ namespace Gwen.Control.Layout
         /// Handler for Copy event.
         /// </summary>
         /// <param name="from">Source control.</param>
-        protected override void OnCopy(ControlBase from, EventArgs args)
+        protected override void onCopy(ControlBase from, EventArgs args)
         {
             Platform.Neutral.SetClipboardText(Text);
         }

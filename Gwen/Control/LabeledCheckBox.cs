@@ -10,8 +10,8 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class LabeledCheckBox : ControlBase
     {
-        private readonly CheckBox m_CheckBox;
-        private readonly Label m_Label;
+        private readonly CheckBox checkBox;
+        private readonly Label label;
 
         /// <summary>
         /// Invoked when the control has been checked.
@@ -31,12 +31,12 @@ namespace Gwen.Control
         /// <summary>
         /// Indicates whether the control is checked.
         /// </summary>
-        public bool IsChecked { get { return m_CheckBox.IsChecked; } set { m_CheckBox.IsChecked = value; } }
+        public bool IsChecked { get { return checkBox.IsChecked; } set { checkBox.IsChecked = value; } }
 
         /// <summary>
         /// Label text.
         /// </summary>
-        public string Text { get { return m_Label.Text; } set { m_Label.Text = value; } }
+        public string Text { get { return label.Text; } set { label.Text = value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LabeledCheckBox"/> class.
@@ -46,16 +46,16 @@ namespace Gwen.Control
             : base(parent)
         {
             SetSize(200, 19);
-            m_CheckBox = new CheckBox(this);
-            m_CheckBox.Dock = Pos.Left;
-            m_CheckBox.Margin = new Margin(0, 2, 2, 2);
-            m_CheckBox.IsTabable = false;
-            m_CheckBox.CheckChanged += OnCheckChanged;
+            checkBox = new CheckBox(this);
+            checkBox.Dock = Pos.Left;
+            checkBox.Margin = new Margin(0, 2, 2, 2);
+            checkBox.IsTabable = false;
+            checkBox.CheckChanged += onCheckChanged;
 
-            m_Label = new Label(this);
-            m_Label.Dock = Pos.Fill;
-			m_Label.Clicked += delegate(ControlBase Control, ClickedEventArgs args) { m_CheckBox.Press(Control); };
-            m_Label.IsTabable = false;
+            label = new Label(this);
+            label.Dock = Pos.Fill;
+			label.Clicked += delegate(ControlBase Control, ClickedEventArgs args) { checkBox.Press(Control); };
+            label.IsTabable = false;
 
             IsTabable = false;
         }
@@ -63,9 +63,9 @@ namespace Gwen.Control
         /// <summary>
         /// Handler for CheckChanged event.
         /// </summary>
-        protected virtual void OnCheckChanged(ControlBase control, EventArgs Args)
+        protected virtual void onCheckChanged(ControlBase control, EventArgs Args)
         {
-            if (m_CheckBox.IsChecked)
+            if (checkBox.IsChecked)
             {
                 if (Checked != null)
 					Checked.Invoke(this, EventArgs.Empty);
@@ -87,11 +87,11 @@ namespace Gwen.Control
         /// <returns>
         /// True if handled.
         /// </returns>
-        protected override bool OnKeySpace(bool down)
+        protected override bool onKeySpace(bool down)
         {
-            base.OnKeySpace(down);
+            base.onKeySpace(down);
             if (!down)
-                m_CheckBox.IsChecked = !m_CheckBox.IsChecked;
+                checkBox.IsChecked = !checkBox.IsChecked;
             return true;
         }
     }

@@ -11,7 +11,7 @@ namespace Gwen.ControlInternal
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class ColorDisplay : ControlBase
     {
-        private Color m_Color;
+        private Color color;
         //private bool m_DrawCheckers;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Gwen.ControlInternal
         public ColorDisplay(ControlBase parent) : base(parent)
         {
             SetSize(32, 32);
-            m_Color = Color.FromArgb(255, 255, 0, 0);
+            color = Color.FromArgb(255, 255, 0, 0);
             //m_DrawCheckers = true;
         }
 
@@ -29,19 +29,19 @@ namespace Gwen.ControlInternal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+        protected override void render(Skin.SkinBase skin)
         {
-            skin.DrawColorDisplay(this, m_Color);
+            skin.DrawColorDisplay(this, color);
         }
 
         /// <summary>
         /// Current color.
         /// </summary>
-        public Color Color { get { return m_Color; } set { m_Color = value; } }
+        public Color Color { get { return color; } set { color = value; } }
         //public bool DrawCheckers { get { return m_DrawCheckers; } set { m_DrawCheckers = value; } }
-        public int R { get { return m_Color.R; } set { m_Color = Color.FromArgb(m_Color.A, value, m_Color.G, m_Color.B); } }
-        public int G { get { return m_Color.G; } set { m_Color = Color.FromArgb(m_Color.A, m_Color.R, value, m_Color.B); } }
-        public int B { get { return m_Color.B; } set { m_Color = Color.FromArgb(m_Color.A, m_Color.R, m_Color.G, value); } }
-        public int A { get { return m_Color.A; } set { m_Color = Color.FromArgb(value, m_Color.R, m_Color.G, m_Color.B); } }
+        public int R { get { return color.R; } set { color = Color.FromArgb(color.A, value, color.G, color.B); } }
+        public int G { get { return color.G; } set { color = Color.FromArgb(color.A, color.R, value, color.B); } }
+        public int B { get { return color.B; } set { color = Color.FromArgb(color.A, color.R, color.G, value); } }
+        public int A { get { return color.A; } set { color = Color.FromArgb(value, color.R, color.G, color.B); } }
     }
 }
