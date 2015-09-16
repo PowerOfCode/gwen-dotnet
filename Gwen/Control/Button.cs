@@ -213,6 +213,8 @@ namespace Gwen.Control
             m_Image.ImageName = textureName;
             m_Image.SizeToContents( );
             m_Image.SetPosition(Math.Max(Padding.Left, 2), 2);
+            m_Image.KeyboardInputEnabled = false;
+            m_Image.MouseInputEnabled = false;
             m_CenterImage = center;
 
             TextPadding = new Padding(m_Image.Right + 2, TextPadding.Top, TextPadding.Right, TextPadding.Bottom);
