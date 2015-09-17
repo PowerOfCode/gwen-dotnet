@@ -27,6 +27,7 @@ namespace Gwen.Renderer
         private readonly int m_VertexSize;
 
         private readonly Dictionary<Tuple<String, Font>, TextRenderer> m_StringCache;
+        private List<TextRenderer> notCachingRenderers = new List<TextRenderer>();
         private readonly Graphics m_Graphics; // only used for text measurement
         private int m_DrawCallCount;
         private bool m_ClipEnabled;
@@ -117,6 +118,10 @@ namespace Gwen.Renderer
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.DisableClientState(ArrayCap.ColorArray);
             GL.DisableClientState(ArrayCap.TextureCoordArray);
+
+            foreach (var t in notCachingRenderers)
+                t.Dispose();
+            notCachingRenderers.Clear();
         }
 
         /// <summary>
@@ -407,7 +412,7 @@ namespace Gwen.Renderer
             return new Point((int)Math.Round(size.Width), (int)Math.Round(size.Height));
         }
 
-        public override void RenderText(Font font, Point position, string text)
+        public override void RenderText(Font font, Point position, string text, bool shouldCache)
         {
             //Debug.Print(String.Format("RenderText {0}", font.FaceName));
 
@@ -422,6 +427,18 @@ namespace Gwen.Renderer
                 FreeFont(font);
                 LoadFont(font);
                 sysFont = font.RendererData as System.Drawing.Font;
+            }
+
+            if(!shouldCache)
+            {
+                Point size = MeasureText(font, text);
+                TextRenderer tr = new TextRenderer(size.X, size.Y, this);
+                tr.DrawString(text, sysFont, Brushes.White, Point.Empty, m_StringFormat); // renders string on the texture
+
+                DrawTexturedRect(tr.Texture, new Rectangle(position.X, position.Y, tr.Texture.Width, tr.Texture.Height));
+
+                notCachingRenderers.Add(tr);
+                return;
             }
 
             var key = new Tuple<String, Font>(text, font);

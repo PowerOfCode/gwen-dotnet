@@ -73,6 +73,11 @@ namespace Gwen.ControlInternal
         public string TextOverride { get; set; }
 
         /// <summary>
+        /// Specifies wheter the renderer should cache this text or not. Set this to false for dynamic or frequently changing texts.
+        /// </summary>
+        public bool ShouldCacheText { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Text"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
@@ -83,6 +88,7 @@ namespace Gwen.ControlInternal
             text = String.Empty;
             TextColor = Skin.Colors.Label.Default;
             MouseInputEnabled = false;
+            ShouldCacheText = true;
             TextColorOverride = Color.FromArgb(0, 255, 255, 255); // A==0, override disabled
         }
 
@@ -99,7 +105,7 @@ namespace Gwen.ControlInternal
             else
                 skin.Renderer.DrawColor = TextColorOverride;
 
-            skin.Renderer.RenderText(Font, Point.Empty, TextOverride ?? String);
+            skin.Renderer.RenderText(Font, Point.Empty, TextOverride ?? String, ShouldCacheText);
 
 #if DEBUG_TEXT_MEASURE
             {

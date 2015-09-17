@@ -84,6 +84,11 @@ namespace Gwen.Control
         public virtual void MakeColorHighlight() { TextColor = Skin.Colors.Label.Highlight; }
 
         /// <summary>
+        /// Specifies wheter the renderer should cache this text or not. Set this to false for dynamic or frequently changing texts.
+        /// </summary>
+        public bool ShouldCacheText { get { return text.ShouldCacheText; } set { text.ShouldCacheText = value; } }
+
+        /// <summary>
         /// Determines if the control should autosize to its text.
         /// </summary>
         [JsonProperty]

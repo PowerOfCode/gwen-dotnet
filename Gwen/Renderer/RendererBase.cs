@@ -211,7 +211,7 @@ namespace Gwen.Renderer
         /// <param name="font">Font to use.</param>
         /// <param name="position">Top-left corner of the text.</param>
         /// <param name="text">Text to renderer.</param>
-        public virtual void RenderText(Font font, Point position, string text)
+        public virtual void RenderText(Font font, Point position, string text, bool shouldCache)
         {
             float size = font.Size * Scale;
 

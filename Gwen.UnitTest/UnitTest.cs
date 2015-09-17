@@ -116,6 +116,7 @@ namespace Gwen.UnitTest
             }
 
             m_StatusBar.SendToBack();
+            m_StatusBar.ShouldCacheText = false;
             PrintText("Unit Test started!");
         }
 
