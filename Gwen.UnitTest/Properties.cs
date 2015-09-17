@@ -16,7 +16,7 @@ namespace Gwen.UnitTest
 
                 {
                     {
-                        Control.PropertyRow pRow = props.Add("First Name");
+                        props.Add("First Name");
                     }
 
                     props.Add("Middle Name");

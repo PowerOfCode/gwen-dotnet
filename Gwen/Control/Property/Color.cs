@@ -39,8 +39,6 @@ namespace Gwen.Control.Property
             picker.Dock = Pos.Fill;
             picker.SetSize(256, 128);
 
-            string[] split = textBox.Text.Split(' ');
-
             picker.SetColor(getColorFromText(), false, true);
             picker.ColorChanged += onColorChanged;
 

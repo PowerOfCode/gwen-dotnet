@@ -342,7 +342,7 @@ namespace Gwen.Control
 			makeCaretVisible();
 
 			Point pA = getCharacterPosition(CursorPosition);
-			Point pB = getCharacterPosition(cursorEnd);
+			//Point pB = getCharacterPosition(cursorEnd);
 
 			//m_SelectionBounds.X = Math.Min(pA.X, pB.X);
 			//m_SelectionBounds.Y = TextY - 1;

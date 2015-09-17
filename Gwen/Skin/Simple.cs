@@ -481,7 +481,6 @@ namespace Gwen.Skin
         public override void DrawSlider(Control.ControlBase control, bool horizontal, int numNotches, int barSize)
         {
             Rectangle rect = control.RenderBounds;
-            Rectangle notchRect = rect;
 
             if (horizontal)
             {

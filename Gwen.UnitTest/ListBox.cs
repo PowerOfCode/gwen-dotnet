@@ -214,7 +214,7 @@ namespace Gwen.UnitTest
         {
             // todo: how to determine which one was unselected (store somewhere)
             // or pass row as the event param?
-            Control.ListBox list = control as Control.ListBox;
+            //Control.ListBox list = control as Control.ListBox;
             UnitPrint(String.Format("ListBox: OnRowUnselected"));
         }
     }

@@ -148,8 +148,6 @@ namespace Gwen.Input
         {
             KeyboardKeyEventArgs ev = args as KeyboardKeyEventArgs;
 
-            char ch = TranslateChar(ev.Key);
-
             Key iKey = TranslateKeyCode(ev.Key);
 
             return m_Canvas.Input_Key(iKey, false);
