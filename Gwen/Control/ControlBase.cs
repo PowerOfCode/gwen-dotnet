@@ -577,8 +577,8 @@ namespace Gwen.Control
                 return "[MenuItem: " + (this as MenuItem).Text + "]";
             if (this is Label)
                 return "[Label: " + (this as Label).Text + "]";
-            if (this is ControlInternal.Text)
-                return "[Text: " + (this as ControlInternal.Text).String + "]";
+            if (this is ControlInternal.TextControl)
+                return "[Text: " + (this as ControlInternal.TextControl).Text + "]";
             return GetType().ToString();
         }
 

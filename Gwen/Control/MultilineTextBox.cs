@@ -938,7 +938,7 @@ namespace Gwen.Control
 		/// </remarks>
 		public override void Invalidate() {
 			if (text != null) {
-				text.String = Text;
+				text.Text = Text;
 			}
 			if (AutoSizeToContents)
 				SizeToContents();

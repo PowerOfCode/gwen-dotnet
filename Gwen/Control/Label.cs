@@ -11,7 +11,7 @@ namespace Gwen.Control
     [JsonConverter(typeof(Serialization.GwenConverter))]
     public class Label : ControlBase
     {
-        protected readonly Text text;
+        protected readonly TextControl text;
         private Pos align;
         private Padding textPadding;
         private bool autoSizeToContents;
@@ -26,7 +26,7 @@ namespace Gwen.Control
         /// Text.
         /// </summary>
         [JsonProperty]
-        public virtual string Text { get { return text.String; } set { SetText(value); } }
+        public virtual string Text { get { return text.Text; } set { SetText(value); } }
 
         /// <summary>
         /// Font.
@@ -151,7 +151,7 @@ namespace Gwen.Control
         /// <param name="parent">Parent control.</param>
         public Label(ControlBase parent) : base(parent)
         {
-            text = new Text(this);
+            text = new TextControl(this);
             //m_Text.Font = Skin.DefaultFont;
 
 			MouseInputEnabled = false;
@@ -226,7 +226,7 @@ namespace Gwen.Control
             if (Text == str)
                 return;
 
-            text.String = str;
+            text.Text = str;
             if (autoSizeToContents)
                 SizeToContents();
             Invalidate();

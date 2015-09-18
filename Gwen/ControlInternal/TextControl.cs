@@ -12,7 +12,7 @@ namespace Gwen.ControlInternal
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     [JsonConverter(typeof(Serialization.GwenConverter))]
-    public class Text : ControlBase
+    public class TextControl : ControlBase
     {
         private string text;
         private Font font;
@@ -37,7 +37,7 @@ namespace Gwen.ControlInternal
         /// Text to display.
         /// </summary>
         //[JsonProperty]
-        public string String
+        public string Text
         {
             get { return text; }
             set
@@ -60,7 +60,7 @@ namespace Gwen.ControlInternal
         /// <summary>
         /// Text length in characters.
         /// </summary>
-        public int Length { get { return String.Length; } }
+        public int Length { get { return Text.Length; } }
 
         /// <summary>
         /// Text color override - used by tooltips.
@@ -78,10 +78,10 @@ namespace Gwen.ControlInternal
         public bool ShouldCacheText { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Text"/> class.
+        /// Initializes a new instance of the <see cref="TextControl"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Text(ControlBase parent)
+        public TextControl(ControlBase parent)
             : base(parent)
         {
             font = Skin.DefaultFont;
@@ -105,7 +105,7 @@ namespace Gwen.ControlInternal
             else
                 skin.Renderer.DrawColor = TextColorOverride;
 
-            skin.Renderer.RenderText(Font, Point.Empty, TextOverride ?? String, ShouldCacheText);
+            skin.Renderer.RenderText(Font, Point.Empty, TextOverride ?? Text, ShouldCacheText);
 
 #if DEBUG_TEXT_MEASURE
             {
@@ -151,7 +151,7 @@ namespace Gwen.ControlInternal
         /// </summary>
         public void SizeToContents()
         {
-            if (String == null)
+            if (Text == null)
                 return;
 
             if (Font == null)
@@ -163,7 +163,7 @@ namespace Gwen.ControlInternal
 
             if (Length > 0)
             {
-                p = Skin.Renderer.MeasureText(Font, TextOverride ?? String);
+                p = Skin.Renderer.MeasureText(Font, TextOverride ?? Text);
             }
 
             if (p.X == Width && p.Y == Height)
@@ -186,7 +186,7 @@ namespace Gwen.ControlInternal
                 return new Point(0, 0);
             }
 
-			string sub = (TextOverride ?? String).Substring(0, index);
+			string sub = (TextOverride ?? Text).Substring(0, index);
 			Point p = Skin.Renderer.MeasureText(Font, sub);
 
 			//if(p.Y >= Font.Size)
@@ -206,7 +206,7 @@ namespace Gwen.ControlInternal
             int distance = MaxCoord;
             int c = 0;
 
-            for (int i = 0; i < String.Length + 1; i++)
+            for (int i = 0; i < Text.Length + 1; i++)
             {
                 Point cp = GetCharacterPosition(i);
                 int dist = Math.Abs(cp.X - p.X) + Math.Abs(cp.Y - p.Y); // this isn't proper // [omeg] todo: sqrt
