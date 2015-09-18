@@ -128,8 +128,6 @@
     <Compile Include="Control\Layout\Splitter.cs" />
     <Compile Include="Control\Layout\Table.cs" />
     <Compile Include="Control\Layout\TableRow.cs" />
-    <Compile Include="Control\ListBox.cs" />
-    <Compile Include="Control\ListBoxRow.cs" />
     <Compile Include="Control\Menu.cs" />
     <Compile Include="Control\MenuItem.cs" />
     <Compile Include="Control\MenuStrip.cs" />
@@ -196,6 +194,8 @@
   -->
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Control\ListBox.cs" />
+    <None Include="Control\ListBoxRow.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>
