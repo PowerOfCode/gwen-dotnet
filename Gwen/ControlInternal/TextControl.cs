@@ -15,6 +15,7 @@ namespace Gwen.ControlInternal
     public class TextControl : ControlBase
     {
         private string text;
+        private string textOverride;
         private Font font;
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace Gwen.ControlInternal
         /// <summary>
         /// Text override - used to display different string.
         /// </summary>
-        public string TextOverride { get; set; }
+        public string TextOverride { get { return textOverride; } set { textOverride = value; SizeToContents(); } }
 
         /// <summary>
         /// Specifies wheter the renderer should cache this text or not. Set this to false for dynamic or frequently changing texts.
