@@ -148,6 +148,16 @@ namespace Gwen.Control
                 modal.ShouldDrawBackground = false;
         }
 
+        public Point DrawAreaSize
+        {
+            get
+            {
+                // Values aquired by testing!
+                // TODO: dynamically calculate these
+                return new Point(Bounds.Width - 12, Bounds.Height - titleBar.Bottom - 6);
+            }
+        }
+
         /// <summary>
         /// Indicates whether the control is on top of its parent's children.
         /// </summary>

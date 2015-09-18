@@ -32,6 +32,15 @@ namespace Gwen.UnitTest
             window.SetSize(rand.Next(200, 400), rand.Next(200, 400));
             window.SetPosition(rand.Next(700), rand.Next(400));
 
+            Control.Button b1 = new Control.Button(window);
+            b1.Text = "Test";
+            var size = window.DrawAreaSize;
+            b1.SetPosition(size.X - b1.Width, size.Y - b1.Height);
+            window.Resized += (s, e) => {
+                var size2 = window.DrawAreaSize;
+                b1.SetPosition(size2.X - b1.Width, size2.Y - b1.Height);
+            };
+
             m_WindowCount++;
         }
 
