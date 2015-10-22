@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Gwen.NET</id>
+    <version>$version$</version>
+    <authors>der.agemo, robin.haudenhuyse, halfofastaple, Power Of Code</authors>
+    <licenseUrl>https://raw.githubusercontent.com/PowerOfCode/gwen-dotnet/master/LICENCE</licenseUrl>
+    <projectUrl>https://github.com/PowerOfCode/gwen-dotnet/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/PowerOfCode/gwen-dotnet/master/media/gwen.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>
+      GWEN.Net is a .Net port of GWEN. GWEN is a lightweight GUI library aimed at games.
+      It contains rich widget collection and most functionality you'd expect from a GUI framework.
+    </summary>
+    <description>
+      GWEN.Net is a .Net port of GWEN. GWEN is a lightweight GUI library aimed at games.
+      It contains rich widget collection and most functionality you'd expect from a GUI framework.
+
+      Original code is C++ written by Garry Newman.
+      GWEN.Net is NOT a wrapper/binding and does not need the original C++ library.
+      It's a complete rewrite in C# for use by .NET applications.
+    </description>
+    <copyright>Copyright 2015</copyright>
+    <tags>GUI OpenGL</tags>
+    <dependencies>
+      <dependency id="OpenTK" version="1.1" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" />
+      <frameworkAssembly assemblyName="System.Drawing" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="Binaries/Gwen.dll" target="lib/net40" />
+    <file src="Binaries/Gwen.Renderer.OpenTK.dll" target="lib/net40" />
+  </files>
+</package>
