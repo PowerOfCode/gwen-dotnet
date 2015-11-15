@@ -58,6 +58,16 @@ namespace Gwen
             return Equals((Margin) obj);
         }
 
+        public int Height()
+        {
+            return Top + Bottom;
+        }
+
+        public int Width()
+        {
+            return Left + Right;
+        }
+
         public override int GetHashCode()
         {
             unchecked
