@@ -86,6 +86,7 @@ namespace Gwen.Control
         /// <summary>
         /// Specifies wheter the renderer should cache this text or not. Set this to false for dynamic or frequently changing texts.
         /// </summary>
+        [JsonProperty]
         public bool ShouldCacheText { get { return text.ShouldCacheText; } set { text.ShouldCacheText = value; } }
 
         /// <summary>

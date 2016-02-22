@@ -54,6 +54,11 @@ namespace Gwen.Control
         public ListBoxRow this[int index] { get { return table[index] as ListBoxRow; } }
 
         /// <summary>
+        /// Specifies wheter the renderer should cache this text or not. Set this to false for dynamic or frequently changing texts.
+        /// </summary>
+        public bool ShouldCacheText { get { return table.ShouldCacheText; } set { table.ShouldCacheText = value; } }
+
+        /// <summary>
         /// List of selected rows.
         /// </summary>
         public IEnumerable<TableRow> SelectedRows { get { return selectedRows; } }

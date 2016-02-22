@@ -41,6 +41,23 @@ namespace Gwen.Control.Layout
         public string Text { get { return GetText(0); } set { SetCellText(0, value); } }
 
         /// <summary>
+        /// Specifies wheter the renderer should cache this text or not. Set this to false for dynamic or frequently changing texts.
+        /// </summary>
+        public bool ShouldCacheText
+        {
+            get { return m_Columns[0].ShouldCacheText; }
+            set
+            {
+                for (int i = 0; i < m_Columns.Length; i++)
+                {
+                    Label col = m_Columns[i];
+                    if (col != null)
+                        col.ShouldCacheText = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TableRow"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>

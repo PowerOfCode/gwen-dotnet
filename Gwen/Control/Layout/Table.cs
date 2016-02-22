@@ -40,6 +40,19 @@ namespace Gwen.Control.Layout
         public TableRow this[int index] { get { return Children[index] as TableRow; } }
 
         /// <summary>
+        /// Specifies wheter the renderer should cache this text or not. Set this to false for dynamic or frequently changing texts.
+        /// </summary>
+        public bool ShouldCacheText
+        {
+            get { return (Children[0] as TableRow).ShouldCacheText; }
+            set
+            {
+                foreach (var item in Children)
+                    (item as TableRow).ShouldCacheText = value;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Table"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
