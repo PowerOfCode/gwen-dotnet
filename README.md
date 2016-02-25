@@ -1,5 +1,7 @@
 # gwen-dotnet
 
+[![Join the chat at https://gitter.im/PowerOfCode/gwen-dotnet](https://badges.gitter.im/PowerOfCode/gwen-dotnet.svg)](https://gitter.im/PowerOfCode/gwen-dotnet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](http://jenkins.baseplex.de/buildStatus/icon?job=open.gwen-dotnet&.png)](http://jenkins.baseplex.de/job/open.gwen-dotnet)
 [![Gitter](https://badges.gitter.im/PowerOfCode/gwen-dotnet.svg)](https://gitter.im/PowerOfCode/gwen-dotnet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
