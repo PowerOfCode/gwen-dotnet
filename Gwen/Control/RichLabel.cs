@@ -37,7 +37,7 @@ namespace Gwen.Control
         public RichLabel(ControlBase parent)
             : base(parent)
         {
-            newline = new string[] { Environment.NewLine };
+            newline = new string[] { Environment.NewLine, "\n" };
             textBlocks = new List<TextBlock>();
         }
 
@@ -67,12 +67,16 @@ namespace Gwen.Control
                 if (i > 0)
                     AddLineBreak();
 
+                if (String.IsNullOrEmpty(lines[i]))
+                    continue;
+
                 TextBlock block = new TextBlock { Type = BlockType.Text, Text = lines[i], Color = color, Font = font };
 
                 textBlocks.Add(block);
-                needsRebuild = true;
-                Invalidate();
             }
+
+            needsRebuild = true;
+            Invalidate();
         }
 
         /// <summary>
@@ -152,10 +156,7 @@ namespace Gwen.Control
             // This string is too long for us, split it up.
             Point p = Skin.Renderer.MeasureText(font, text);
 
-            if (lineHeight == -1)
-            {
-                lineHeight = p.Y;
-            }
+            lineHeight = p.Y;
 
             if (!noSplit)
             {
