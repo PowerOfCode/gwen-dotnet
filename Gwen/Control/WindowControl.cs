@@ -77,7 +77,7 @@ namespace Gwen.Control
             titleBar.Dock = Pos.Top;
 
             this.title = new Label(titleBar);
-            this.title.Alignment = Pos.Left | Pos.CenterV;
+            this.title.Alignment = Pos.Left;
             this.title.Text = title;
             this.title.Dock = Pos.Fill;
             this.title.Padding = new Padding(8, 4, 0, 0);
