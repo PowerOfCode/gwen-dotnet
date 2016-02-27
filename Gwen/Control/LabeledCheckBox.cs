@@ -94,5 +94,21 @@ namespace Gwen.Control
                 checkBox.IsChecked = !checkBox.IsChecked;
             return true;
         }
+		
+		/// <summary>
+        /// Resizes the control to fit its children.
+        /// </summary>
+        /// <param name="width">Determines whether to change control's width.</param>
+        /// <param name="height">Determines whether to change control's height.</param>
+        /// <returns>True if bounds changed.</returns>
+        public override bool SizeToChildren(bool width = true, bool height = true)
+        {
+            label.SizeToContents();
+
+            int w = width ? label.Width + label.Margin.Left + label.Margin.Right + checkBox.Width + checkBox.Margin.Left + checkBox.Margin.Right : Width;
+            int h = height ? Math.Max(label.Height + label.Margin.Top + label.Margin.Bottom, checkBox.Height + checkBox.Margin.Top + checkBox.Margin.Top) : Height;
+
+            return SetSize(w, h);
+        }
     }
 }
