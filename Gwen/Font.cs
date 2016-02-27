@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace Gwen
 {
@@ -27,8 +28,11 @@ namespace Gwen
         [JsonProperty]
         public bool Smooth { get; set; }
 
-        //public bool Bold { get; set; }
-        //public bool DropShadow { get; set; }
+        /// <summary>
+        /// Set the Style of the Font.
+        /// </summary>
+        [JsonProperty]
+        public FontStyle FontStyle { get; set; }
 
         /// <summary>
         /// This should be set by the renderer if it tries to use a font where it's null.
@@ -60,14 +64,13 @@ namespace Gwen
         /// <param name="renderer">Renderer to use.</param>
         /// <param name="faceName">Face name.</param>
         /// <param name="size">Font size.</param>
-        public Font(Renderer.RendererBase renderer, string faceName, int size = 10)
+        public Font(Renderer.RendererBase renderer, string faceName, int size = 10, FontStyle style = FontStyle.Regular)
         {
             m_Renderer = renderer ?? Defaults.Renderer;
             FaceName = faceName;
             Size = size;
             Smooth = false;
-            //Bold = false;
-            //DropShadow = false;
+            FontStyle = style;
         }
 
         /// <summary>
@@ -97,8 +100,7 @@ namespace Gwen
             f.Size = Size;
             f.RealSize = RealSize;
             f.RendererData = null; // must be reinitialized
-            //f.Bold = Bold;
-            //f.DropShadow = DropShadow;
+            f.FontStyle = FontStyle;
 
             return f;
         }

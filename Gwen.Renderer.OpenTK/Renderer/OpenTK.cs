@@ -362,9 +362,11 @@ namespace Gwen.Renderer
             if (sysFont != null)
                 sysFont.Dispose();
 
-            // apaprently this can't fail @_@
-            // "If you attempt to use a font that is not supported, or the font is not installed on the machine that is running the application, the Microsoft Sans Serif font will be substituted."
-            sysFont = new System.Drawing.Font(font.FaceName, font.Size);
+            sysFont = new System.Drawing.Font(font.FaceName, font.Size, font.FontStyle);
+
+            if (sysFont.Name != sysFont.OriginalFontName)
+                Debug.Print("Font \"" + sysFont.OriginalFontName + "\" could not be loaded!");
+
             font.RendererData = sysFont;
             return true;
         }
