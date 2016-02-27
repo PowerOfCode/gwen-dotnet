@@ -92,7 +92,6 @@ namespace Gwen.Control
         /// <param name="skin">Skin to use.</param>
         protected override void render(Skin.SkinBase skin)
         {
-            base.render(skin);
             skin.DrawCheckBox(this, isChecked, IsDepressed);
         }
 
