@@ -1,0 +1,13 @@
+language: csharp
+solution: GwenNet.sln
+install:
+  - nuget restore GwenNet.sln
+mono:
+  - latest
+notifications:
+  irc:
+    channels:
+      - "irc.quakenet.org#PoC"
+    on_success: change
+    on_failure: change
+
