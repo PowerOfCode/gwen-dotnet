@@ -1,14 +1,22 @@
 language: csharp
 solution: GwenNet.sln
+env:
+  global:
+    - VERSION="${TRAVIS_TAG:-1.1.1}.${TRAVIS_BUILD_NUMBER}"
+    - secure: "D5VKtx5retR2jDH6zTWuHFhTyL72R6lCGNHyE/LnGFdBLL3G/C48VDZRwcS3HP/RRi95lbzxJDe36O1HI+HTyjjoi8g7hgLpRPXX2fywgcRsDYd0VKnl5X0fE5R9NBJORsw7PKkPLiJZsrLoK/Vc/Joypaa3WplnJnoUAt/J9GzDQOqxaa8J0TTQWaOWveqOlFnkE/Edvvoglk2Ej+IPy2ao+gnQc8FuyBtQVGvF07ppZ6Dp10d8bEUahkGHeQ/0q815gqT0DuI9PHDUFzoJPqh69ajkrMIZYQnQHztKJ1T77ZUWZT8KnpAiA+ZzkNotyU96HFh4rwNkI7oWfI8CGP3CH3QHbsikWW6xlCD7/Kge4cXajvEptRUmsY9iBRiLJEHRdoMk7wUOaBIpQWc9qSdu939B0GIcl31OBsWDfBnIVZFCr8jU4kfii2CxZrPdsl1yJA7XUnQ+KymrstEtbPN4O5c/Bzy47l5wrDDpjzibJO61Sa7Y0QjS+HslvDFmJESN5vkvdhHXaiy5VZKoapECCrq9E/hygQZP8Fj7WETwJePvTEnQH7sz+AcmWPAXrutIT7v7vPe0WWvh2fr+ZoFPos0qmeg8csEUiUXIwUIyZbCJarBgWULM+8P7Vv6cwd8tTJVzf98fc78s0zDLe0BNMPSOs2ijFCr+h3IUdZ8="
 install:
-  - mono ./.paket/paket.bootstrapper.exe
-  - mono ./.paket/paket.exe install
+  - mono .paket/paket.bootstrapper.exe
+  - mono .paket/paket.exe install
+after_success:
+  - mono .paket/paket.exe pack output output/ version $VERSION minimum-from-lock-file buildplatform AnyCPU
+  - nuget push output/Gwen.$VERSION.nupkg -ApiKey $NUGET_API_KEY -Source https://www.myget.org/F/powerofcode/api/v2/package
+  - nuget push output/Gwen.Renderer.OpenTK.$VERSION.nupkg -ApiKey $NUGET_API_KEY -Source https://www.myget.org/F/powerofcode/api/v2/package
 mono:
   - latest
 notifications:
+  email: false
   irc:
     channels:
-      - "irc.quakenet.org#PoC"
+      - irc.quakenet.org#PoC
     on_success: change
     on_failure: change
-
