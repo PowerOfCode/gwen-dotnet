@@ -1,5 +1,6 @@
 type project
-id Gwen
+id Gwen.Renderer.OpenTK
+platform AnyCPU
 owners
     PowerOfCode
 authors
@@ -23,3 +24,6 @@ description
     Original code is C++ written by Garry Newman.
     GWEN.Net is NOT a wrapper/binding and does not need the original C++ library.
     It's a complete rewrite in C# for use by .NET applications.
+dependencies
+    Gwen
+    OpenTK ~> CURRENTVERSION

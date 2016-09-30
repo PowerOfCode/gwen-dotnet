@@ -1,0 +1,26 @@
+type project
+id Gwen
+platform AnyCPU
+owners
+    PowerOfCode
+authors
+    der.agemo robin.haudenhuyse halfofastaple PowerOfCode
+projectUrl
+    https://github.com/PowerOfCode/gwen-dotnet/
+iconUrl
+    https://raw.githubusercontent.com/PowerOfCode/gwen-dotnet/master/media/gwen.png
+licenseUrl
+    https://raw.githubusercontent.com/PowerOfCode/gwen-dotnet/master/LICENCE
+requireLicenseAcceptance
+    false
+tags
+    GUI OpenGL
+copyright
+    Copyright 2016
+summary
+    GWEN.Net is a .Net port of GWEN. GWEN is a lightweight GUI library aimed at games.
+    It contains rich widget collection and most functionality you'd expect from a GUI framework.
+description
+    Original code is C++ written by Garry Newman.
+    GWEN.Net is NOT a wrapper/binding and does not need the original C++ library.
+    It's a complete rewrite in C# for use by .NET applications.
