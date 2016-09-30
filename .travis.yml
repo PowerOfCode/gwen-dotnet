@@ -1,7 +1,8 @@
 language: csharp
 solution: GwenNet.sln
 install:
-  - nuget restore GwenNet.sln
+  - mono ./.paket/paket.bootstrapper.exe
+  - mono ./.paket/paket.exe install
 mono:
   - latest
 notifications:
