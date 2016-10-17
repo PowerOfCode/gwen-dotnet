@@ -26,4 +26,4 @@ description
     It's a complete rewrite in C# for use by .NET applications.
 dependencies
     Gwen
-    OpenTK ~> CURRENTVERSION
+    OpenTK
