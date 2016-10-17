@@ -101,7 +101,6 @@ publish/
 
 # NuGet Packages Directory + paket package manager
 packages/
-*.lock
 .paket/paket.exe
 
 # Windows Azure Build Output

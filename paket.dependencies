@@ -1,5 +1,5 @@
 source https://www.nuget.org/api/v2/
 framework >= net40
 
-nuget Newtonsoft.Json >= 9.0.1
-nuget OpenTK >= 2.0.0
+nuget Newtonsoft.Json
+nuget OpenTK >= 2.0
